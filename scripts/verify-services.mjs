@@ -262,6 +262,10 @@ try {
     "/usage",
     "/apps",
     "/notifications",
+    "/photos",
+    "/messages",
+    "/contacts",
+    "/call-history",
     "/screen",
     "/camera",
     "/audio",
@@ -276,11 +280,19 @@ try {
       `child route ${section}`,
     );
   }
-  await expect(
-    await b.request(`/dashboard/children/${id}/camera`),
-    404,
-    "cross-family child route",
-  );
+  for (const section of [
+    "camera",
+    "photos",
+    "messages",
+    "contacts",
+    "call-history",
+  ]) {
+    await expect(
+      await b.request(`/dashboard/children/${id}/${section}`),
+      404,
+      `cross-family ${section} route`,
+    );
+  }
   await expect(
     await a.request(`/dashboard/children/${id}/unknown`),
     404,

@@ -14,15 +14,19 @@ Routes under `/dashboard/children/:id`:
 | `/usage` | Digital wellbeing |
 | `/apps` | Installed applications |
 | `/notifications` | Authorized notifications |
+| `/photos` | Photo gallery for explicitly shared photos (sync pending) |
+| `/messages` | Supported SMS view (feasibility review pending) |
+| `/contacts` | Optional contact-sharing view (sync pending) |
+| `/call-history` | Call records, not recordings (feasibility review pending) |
 | `/screen` | View-only screen viewer |
 | `/camera` | Shared phone-shaped viewer, front/back lens choice |
 | `/audio` | Microphone session view |
 | `/accounts` | Authorized account-label view |
 | `/services` | Supported device services/permission status |
-| `/devices` | Companion pairing explanation |
+| `/devices` | Pairing codes, parent approval and device check-in status |
 | `/settings` | Profile edit, private avatar and archive/restore |
 
-The pages are real routes with server-side ownership checks. Device data, pairing, pause enforcement and live media are not implemented. Controls requiring a phone remain disabled with an explanation. Camera selection changes the UI's requested lens only. A profile is not a paired device; one profile can eventually contain multiple devices. Account credentials and private account content are never collected.
+The pages are real routes with server-side ownership checks. Device content syncing, pause enforcement and live media are not implemented. Web pairing and heartbeat APIs are implemented; see [pairing](PAIRING.md). Controls requiring a phone remain disabled with an explanation. Camera selection changes the UI's requested lens only. A profile is not a paired device; one profile can contain multiple paired devices. Account credentials and private account content are never collected.
 
 ## Database compatibility
 
@@ -40,3 +44,11 @@ The child API intentionally rejects legacy daily_limit request fields. Existing 
 - Screenshots use synthetic QA data. No real device was accessed or controlled.
 
 Screenshots: [desktop camera](previews/child-camera-desktop.png), [mobile camera](previews/child-camera-mobile.png).
+
+## Content sections
+
+Photo gallery, Messages, Contacts and Call history are linked from the child sidebar and overview, with independent owner-authorized routes. Each displays its own empty state, intended scope and permission explanation. Gallery outlines are decorative placeholders, not sample or uploaded photos. There are no content ingestion endpoints, database tables, permission toggles, sync actions or uploads in this milestone. SMS/call logs remain subject to Android feasibility and distribution rules; messages do not imply private messaging-app history. Android Studio is installed on the developer machine; emulator setup and the companion implementation remain the next milestone.
+
+Validation for the content-section update: production build and TypeScript checks passed; live service checks passed all 15 child routes, including cross-family 404 responses for Photos, Messages, Contacts and Call history. Existing Auth, Storage, Realtime and profile checks still passed. No schema changes were needed.
+
+Gallery browser review passed at 1440×1000 and 390×844; mobile document width was 375px within a 390px viewport. Synthetic previews: [desktop gallery](previews/child-gallery-desktop.png), [mobile gallery](previews/child-gallery-mobile.png).
