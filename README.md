@@ -8,7 +8,7 @@ Sideby helps parents manage multiple children and their devices through a shared
 
 ## Status
 
-Project foundation only: documentation, brand assets, repository workflow, and application directories. There is no running application, database, authentication, Android app, or streaming service yet. No paid services have been provisioned.
+An interactive parent-web prototype is available with clearly labeled synthetic data. It includes family and child views, device allowance editing, extra-time requests, routine toggles, and adding demo profiles. All changes are in memory and reset on reload. Authentication, database integration, Android companion, and live streaming are not implemented. No paid services have been provisioned.
 
 ## Structure
 
@@ -30,7 +30,23 @@ Next.js and TypeScript for both websites; Tailwind CSS for styling; Neon Postgre
 2. Follow [contribution guidance](CONTRIBUTING.md) and [Git workflow](docs/GIT_WORKFLOW.md).
 3. Follow [AI instructions](AGENTS.md) when using coding assistants.
 
-There is no install or run command until application scaffolding is implemented. Example configuration names are in `.env.example`; never commit real secrets.
+## Run the parent dashboard
+
+Use Node.js 22 or newer (validated locally with Node.js 24).
+
+```sh
+npm ci
+npm run dev
+```
+
+Open http://127.0.0.1:3000. No credentials or environment variables are required for demo mode.
+
+```sh
+npm run build
+npm run typecheck
+```
+
+The landing website remains a separate reserved directory. Example future configuration names are in `.env.example`; never commit real secrets.
 
 ## Brand assets
 

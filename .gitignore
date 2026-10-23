@@ -20,3 +20,5 @@ local.properties
 *.key
 recordings/
 dumps/
+
+*.tsbuildinfo

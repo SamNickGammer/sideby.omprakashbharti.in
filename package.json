@@ -1,0 +1,12 @@
+{
+  "name": "sideby",
+  "private": true,
+  "workspaces": [
+    "apps/parent-web"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=@sideby/parent-web",
+    "build": "npm run build --workspace=@sideby/parent-web",
+    "typecheck": "npm run typecheck --workspace=@sideby/parent-web"
+  }
+}

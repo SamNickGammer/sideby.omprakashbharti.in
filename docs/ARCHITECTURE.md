@@ -1,6 +1,6 @@
 # Sideby architecture
 
-Status: proposed architecture; no services provisioned or integrations implemented.
+Status: Next.js parent-web prototype implemented using client-side sample state. The remaining architecture is proposed; no external services provisioned or integrations implemented.
 
 ## Components
 
