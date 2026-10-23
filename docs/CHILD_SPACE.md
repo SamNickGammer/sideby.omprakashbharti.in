@@ -15,7 +15,7 @@ Routes under `/dashboard/children/:id`:
 | `/apps` | Installed applications |
 | `/notifications` | Authorized notifications |
 | `/photos` | Photo gallery for explicitly shared photos (sync pending) |
-| `/messages` | Supported SMS view (feasibility review pending) |
+| `/messages` | SMS and Social notifications tabs, with app filters (sync pending) |
 | `/contacts` | Optional contact-sharing view (sync pending) |
 | `/call-history` | Call records, not recordings (feasibility review pending) |
 | `/screen` | View-only screen viewer |
@@ -52,3 +52,9 @@ Photo gallery, Messages, Contacts and Call history are linked from the child sid
 Validation for the content-section update: production build and TypeScript checks passed; live service checks passed all 15 child routes, including cross-family 404 responses for Photos, Messages, Contacts and Call history. Existing Auth, Storage, Realtime and profile checks still passed. No schema changes were needed.
 
 Gallery browser review passed at 1440×1000 and 390×844; mobile document width was 375px within a 390px viewport. Synthetic previews: [desktop gallery](previews/child-gallery-desktop.png), [mobile gallery](previews/child-gallery-mobile.png).
+
+## Messages tabs
+
+Messages now separates SMS from Social notifications. Social filters include All apps, WhatsApp, Telegram, Instagram, Facebook and Other apps. Selection updates the empty view; no notification ingestion or SMS collection is implemented. Social represents notification-exposed content only, not complete conversations, hidden text or historical messages. SMS and Contacts permissions remain separate from notification access. Filter state is local to the page and resets on reload.
+
+Messages validation: production build, TypeScript and diff checks passed. Browser QA verified both message modes, all six app filters and keyboard activation at 1440×1000 and 390×844. Mobile document width was 375px, with no horizontal overflow. Synthetic test accounts were removed after verification. Previews: [desktop messages](previews/messages-social-desktop.png), [mobile messages](previews/messages-social-mobile.png).

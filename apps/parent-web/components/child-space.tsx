@@ -63,7 +63,7 @@ const featureDescriptions: Record<string, string> = {
   camera: "Front or back, one at a time",
   accounts: "Authorized account information",
   photos: "Photos shared from their device",
-  messages: "Supported SMS · Coming later",
+  messages: "SMS & social notifications",
   contacts: "Optional contact sharing",
   "call-history": "Call records · Coming later",
 };

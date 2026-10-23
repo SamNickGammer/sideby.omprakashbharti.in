@@ -1,4 +1,5 @@
 import Link from "next/link";
+import MessageCenter from "./message-center";
 import {
   Images,
   MessageSquare,
@@ -69,6 +70,8 @@ export default function ChildContent({
   deviceHref: string;
   archived: boolean;
 }) {
+  if (section === "messages")
+    return <MessageCenter deviceHref={deviceHref} archived={archived} />;
   const page = contentPages[section],
     Icon = page.icon;
   return (
