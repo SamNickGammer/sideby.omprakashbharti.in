@@ -18,4 +18,8 @@ Validate local Markdown links and SVG XML. Inspect the brand preview in a browse
 - Microphone/camera OS indicators and required notifications remain visible.
 - Essential contact paths remain accessible under device restrictions.
 
-Use unit tests for deterministic rules, integration tests for authorization and persistence, browser tests for key parent flows, and real Android hardware tests for enforcement and media. No such application tests have run at the foundation stage.
+Use unit tests for deterministic rules, integration tests for authorization and persistence, browser tests for key parent flows, and real Android hardware tests for enforcement and media. Web service, authorization, pairing and browser tests have run; see [recorded evidence](VERIFICATION.md). Android, enforcement and media acceptance checks above are planned, not completed.
+
+## Routine web checks
+
+Run `npm run build` and `npm run typecheck` from the repository root; both web workspaces must pass. Check the public website at desktop and mobile widths, anchor navigation, keyboard FAQ activation, missing assets and horizontal overflow. Follow NEON_SETUP.md before live service tests and clean up only recorded synthetic fixtures. See PARENT_WEB_READINESS.md for the first companion connection acceptance path.

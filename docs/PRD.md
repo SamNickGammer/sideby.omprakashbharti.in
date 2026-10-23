@@ -10,7 +10,7 @@ Help guardians establish healthy device habits and stay connected with their chi
 
 ## Product surfaces
 
-Sideby Parent starts as a web app, with a mobile app later using the same account and family data. Sideby Connect is the Android child companion. A separate public website explains the product. No equivalent iPhone monitoring coverage is promised.
+Sideby Parent starts as a web app, with a mobile app later using the same account and family data. Sideby Connect is the Android child companion. A separate static public website now explains the product, current status, planned pairing journey and permission model. It has no signup, tracking forms or device-data access. No equivalent iPhone monitoring coverage is promised.
 
 ## Family model
 

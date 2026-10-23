@@ -1,0 +1,8 @@
+.env*
+**/.env*
+.test-*
+**/.test-*
+recordings/
+dumps/
+*.log
+**/*.tsbuildinfo
