@@ -26,15 +26,27 @@ import {
   SwitchCamera,
   Check,
   Archive,
+  Images,
+  MessageSquare,
+  ContactRound,
+  Phone,
 } from "lucide-react";
 import type { Child } from "../lib/types";
 import LiveUpdates from "./live-updates";
 import DevicePairing from "./device-pairing";
+import ChildContent, {
+  contentPages,
+  type ContentSection,
+} from "./child-content";
 const sections = [
   { id: "overview", label: "Their space", icon: LayoutDashboard },
   { id: "usage", label: "Digital wellbeing", icon: Activity },
   { id: "apps", label: "Installed apps", icon: Grid2X2 },
   { id: "notifications", label: "Notifications", icon: Bell },
+  { id: "photos", label: "Photo gallery", icon: Images },
+  { id: "messages", label: "Messages", icon: MessageSquare },
+  { id: "contacts", label: "Contacts", icon: ContactRound },
+  { id: "call-history", label: "Call history", icon: Phone },
   { id: "screen", label: "Screen view", icon: Monitor },
   { id: "camera", label: "Camera", icon: Camera },
   { id: "audio", label: "Microphone", icon: Mic },
@@ -43,6 +55,18 @@ const sections = [
   { id: "devices", label: "Devices", icon: Smartphone },
   { id: "settings", label: "Profile settings", icon: Settings },
 ];
+const featureDescriptions: Record<string, string> = {
+  usage: "Understand their daily habits",
+  apps: "Know what’s on their device",
+  notifications: "Device-shared notifications",
+  screen: "View-only, authorized sharing",
+  camera: "Front or back, one at a time",
+  accounts: "Authorized account information",
+  photos: "Photos shared from their device",
+  messages: "Supported SMS · Coming later",
+  contacts: "Optional contact sharing",
+  "call-history": "Call records · Coming later",
+};
 const familyNav = [
   { name: "Overview", icon: LayoutDashboard },
   { name: "Children", icon: Users },
@@ -291,6 +315,10 @@ export default function ChildSpace({
                       "screen",
                       "camera",
                       "accounts",
+                      "photos",
+                      "messages",
+                      "contacts",
+                      "call-history",
                     ].includes(s.id),
                   )
                   .map(({ id, label, icon: Icon }) => (
@@ -304,19 +332,7 @@ export default function ChildSpace({
                       </span>
                       <div>
                         <h3>{label}</h3>
-                        <p>
-                          {id === "usage"
-                            ? "Understand their daily habits"
-                            : id === "apps"
-                              ? "Know what’s on their device"
-                              : id === "notifications"
-                                ? "Device-shared notifications"
-                                : id === "screen"
-                                  ? "View-only, authorized sharing"
-                                  : id === "camera"
-                                    ? "Front or back, one at a time"
-                                    : "Authorized account information"}
-                        </p>
+                        <p>{featureDescriptions[id]}</p>
                       </div>
                       <ArrowUpRight size={18} />
                     </Link>
@@ -512,6 +528,13 @@ export default function ChildSpace({
                 </Link>
               </div>
             </section>
+          )}
+          {Object.hasOwn(contentPages, section) && (
+            <ChildContent
+              section={section as ContentSection}
+              deviceHref={href("devices")}
+              archived={child.archived}
+            />
           )}
           {section === "devices" && (
             <DevicePairing key={child.id} child={child} userId={userId} />

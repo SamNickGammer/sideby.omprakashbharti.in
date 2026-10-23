@@ -50,3 +50,7 @@ Hidden apps, disguised system services, stealth recording, bypassing device perm
 ## Routed Child Space
 
 Each child has a direct, owner-authorized URL with a contextual sidebar. Family navigation collapses to an icon rail. Separate sections cover overview, digital wellbeing, installed apps, notifications, screen viewing, camera, microphone, authorized account labels, supported services, device setup and profile settings. Screen and camera share a phone-shaped viewer. Front/back lens selection chooses a future requested camera and does not access a camera before authorization. The Devices section supports real pairing and check-in states; data and media sections remain unavailable until companion integration. Notification collection requires explicit device permission; account passwords/tokens/private content are excluded. Android may limit account/app/service visibility; no full inventory is promised.
+
+## Planned child content, dashboard views available
+
+The web dashboard includes separate Photo gallery, Messages, Contacts and Call history routes. No content is collected yet. Photos initially cover explicitly selected/shared images; contacts are optional and permission-based. SMS and call-log support requires Android/distribution feasibility review. Call history excludes recordings; SMS does not imply access to private conversations in other apps. Device-side disclosure, authorization, revocation and retention must be specified before ingestion is built.
