@@ -12,4 +12,4 @@ Read README.md, docs/PRD.md, docs/ARCHITECTURE.md, and docs/SECURITY.md before c
 - Establish API contracts before implementing endpoints. Use applicable Postman skills for API work; keep contracts and tests versioned locally.
 - Update relevant docs with behavior changes. Test meaningful security and behavior boundaries; do not fabricate test results.
 - Ask before paid purchases, production deployment, or destructive data changes unless explicitly authorized. Do not weaken security to resolve setup friction.
-- No application stack is installed yet. Do not invent existing build commands or claim placeholders are functional.
+- The parent web app is a demo-only Next.js workspace. Run npm run build and npm run typecheck from the root. Do not claim authentication, device integration, or landing-site implementation exists.
