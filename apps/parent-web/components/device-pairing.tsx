@@ -128,8 +128,7 @@ export default function DevicePairing({
           confirm the match here.
         </p>
         <p className="pairing-note">
-          The Android companion is being built. This web flow is ready for
-          integration; there is no app download yet.
+          Sideby Connect is in early testing. Public downloads are not available yet.
         </p>
         {error && (
           <p className="error-box" role="alert">

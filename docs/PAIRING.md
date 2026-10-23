@@ -1,6 +1,6 @@
 # Device pairing contract
 
-This milestone connects device identities and reports heartbeats. It does not collect usage, notifications, location or media, and does not enforce pause. Sideby Connect for Android is still to be built.
+This milestone connects device identities and reports heartbeats. It does not collect usage, notifications, location or media, and does not enforce pause. Sideby Connect for Android implements this contract with foreground-only check-ins; see [setup](../apps/child-android/README.md) and [verification](ANDROID_CONNECTION.md).
 
 ## Parent endpoints
 

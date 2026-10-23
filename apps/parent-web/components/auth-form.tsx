@@ -213,7 +213,7 @@ export default function AuthForm({ mode }: { mode: string }) {
             private account.
           </div>
           <p className="beta-note">
-            Early access · Device connections are coming next.
+            Early access · Android connection testing is underway.
           </p>
         </div>
       </section>
