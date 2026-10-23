@@ -5,8 +5,8 @@ All /api/family, /api/children, /api/routines, /api/avatar, /api/export and /api
 - GET /api/family: current parent, optional family, active/archived children and saved routines.
 - POST /api/family: {name}; create the signed-in parent's family once.
 - PATCH /api/family: {name}; rename family.
-- POST /api/children: {name, age, color, daily_limit}; create a profile (not a device).
-- PATCH /api/children/:id: {name, age, color, daily_limit, archived}; edit or archive/restore own profile.
+- POST /api/children: {name, age, color}; create a profile (not a device).
+- PATCH /api/children/:id: {name, age, color, archived}; edit or archive/restore own profile.
 - POST /api/routines: {name, start_time, end_time, days, enabled}; save family routine.
 - PATCH /api/routines/:id: same fields; edit saved routine.
 - DELETE /api/routines/:id: remove own routine after UI confirmation.
@@ -16,7 +16,7 @@ All /api/family, /api/children, /api/routines, /api/avatar, /api/export and /api
 - GET /api/export: authenticated family data as downloadable JSON.
 - /api/auth/*: Neon SDK same-origin auth proxy. No custom password storage.
 
-Database schema and revision updates are transactional. A family revision subscription invalidates the authenticated family snapshot. Child archive is reversible. Limits/routines are saved preferences, not enforced until a real device companion exists. No public device ingestion or media endpoints exist yet.
+Database schema and revision updates are transactional. A family revision subscription invalidates the authenticated family snapshot. Child archive is reversible. Routines are saved preferences, not enforced until a real device companion exists. No public device ingestion or media endpoints exist yet.
 
 ## Child Space revision
 
