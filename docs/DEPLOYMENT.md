@@ -33,4 +33,15 @@ Use Vercel's previously verified deployment for rollback, then revert the corres
 
 ## Verified deployment state
 
-Pending this milestone's deployment checks. Parent web has not been publicly deployed by this milestone.
+Verified 24 October 2026:
+
+- Public URL: https://sideby.omprakashbharti.in — HTTPS 200 with the expected homepage; also rendered in the browser.
+- Vercel project: `samnickgammers-projects/sideby-website`; root `apps/website`, Next.js, Node 24.x.
+- GitHub repository connected: `SamNickGammer/sideby.omprakashbharti.in`.
+- Initial production deployment: `dpl_9C1PdcXzTm1dDXkWLES9DLraN6AJ`, app source commit `7aadf9b`, deployed explicitly from `feat/public-website` with owner authorization. [PR #11](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/11) remains for owner review and merge; merge it before relying on main as the source for subsequent deployments.
+- Fallback production URL: https://sideby-website.vercel.app — HTTP 200.
+- Cloudflare added one DNS-only CNAME: `sideby` → `2db42550695ad324.vercel-dns-017.com`. No prior Sideby record existed; unrelated records/nameservers were preserved. Vercel reports `configured_correctly` and verified ownership.
+- The first HTTPS attempt happened before certificate provisioning completed; the later HTTPS request and browser load succeeded without bypassing certificate validation.
+- No environment secrets were configured for the website. Local CLI linking adds an ignored Vercel token to the root environment; existing backend configuration was confirmed present. Never commit that file.
+
+Parent web has not been publicly deployed by this milestone. The live public site does not provide the pairing backend.
