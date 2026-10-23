@@ -4,7 +4,7 @@ Sideby Parent is the web/mobile guardian experience. Sideby Connect is the clear
 
 ## Visual identity
 
-Two connected rounded forms represent family members side by side. Parent and Connect variants use distinct backgrounds while sharing the same mark. The vector assets are an original starter identity, not a trademark-cleared final brand.
+Two open, rounded links form an abstract S and represent family members side by side. Parent and Connect variants use distinct backgrounds while sharing the same mark. The vector assets are an original starter identity, not a trademark-cleared final brand.
 
 Colors: deep teal #0F766E, navy #12313A, pale mint #E8F6F2, coral #F58A75, white #FFFFFF. Use dark text for important content; coral is an accent, not small body text. Use a system sans-serif stack initially.
 
@@ -16,4 +16,4 @@ Support keyboard navigation, visible focus, screen-reader labels, responsive lay
 
 ## Assets
 
-See assets/brand for the wordmark, standalone symbol, parent app icon, Connect app icon, and tokens. SVGs are starter artwork; app-store export sizes and platform adaptive icons will be generated during mobile implementation.
+See [the asset guide](../assets/brand/README.md) for light/dark wordmarks, product lockups, standalone and monochrome symbols, Parent and Connect icons, favicon, social banner, pattern, and color tokens. Native app-icon sizes and raster social exports will be generated during integration. Wordmarks currently use live system-font text.

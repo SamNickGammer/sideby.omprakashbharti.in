@@ -1,5 +1,7 @@
 # Sideby
 
+![Sideby logo](assets/brand/wordmark.svg)
+
 Connected families. Healthy habits.
 
 Sideby helps parents manage multiple children and their devices through a shared parent account on web and, later, mobile. The child companion is **Sideby Connect**. The parent experience is **Sideby Parent**.
@@ -29,6 +31,18 @@ Next.js and TypeScript for both websites; Tailwind CSS for styling; Neon Postgre
 3. Follow [AI instructions](AGENTS.md) when using coding assistants.
 
 There is no install or run command until application scaffolding is implemented. Example configuration names are in `.env.example`; never commit real secrets.
+
+## Brand assets
+
+![Sideby brand banner](assets/brand/social-banner.svg)
+
+| Sideby Parent | Sideby Connect |
+| --- | --- |
+| ![Parent icon](assets/brand/parent-icon.svg) | ![Connect icon](assets/brand/connect-icon.svg) |
+
+The logo uses two open links that form an abstract **S**, representing family members side by side. The kit includes light/dark logos, product lockups, distinct app icons, monochrome symbols, a favicon, a social banner, and a background pattern.
+
+Browse the [asset guide](assets/brand/README.md) or open [the brand gallery](assets/brand/preview.html) locally. SVG sources stay editable; native mobile and raster social exports will be added during integration.
 
 ## Brand and domain
 
