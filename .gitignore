@@ -22,3 +22,6 @@ recordings/
 dumps/
 
 *.tsbuildinfo
+.neon
+
+.test-*.json

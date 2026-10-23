@@ -1,13 +1,13 @@
 # Sideby architecture
 
-Status: Next.js parent-web prototype implemented using client-side sample state. The remaining architecture is proposed; no external services provisioned or integrations implemented.
+Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Device and multi-guardian architecture below remains planned.
 
 ## Components
 
 - Next.js + TypeScript: independent parent-web and website applications.
 - Tailwind CSS and shared UI package: consistent web design.
 - Neon Postgres: durable accounts-related application data, families, guardian memberships, children, devices, rules, requests, and audit metadata.
-- Authentication: provider undecided; require server-verified sessions, recovery, revocation, and compatibility with web and future mobile clients. Do not implement custom password cryptography.
+- Authentication: Neon Auth with its Next.js server adapter and secure session cookies. Server routes verify sessions. Native mobile compatibility remains to be validated.
 - Next.js server routes: initial application backend, with contract-first APIs before client integration.
 - Vercel: candidate web host; not a host for the media server.
 - Kotlin Android app: permission handling, usage collection, validated enforcement, local rules, and live-media publishing.
@@ -33,4 +33,12 @@ Database traffic stores settings and metadata. Audio/video travels through WebRT
 
 ## Storage and operations
 
-Use bundled avatars and SVG branding initially. If uploads or recordings are later approved, select object storage with restricted access, retention, and deletion policies. Do not put media blobs in Postgres. Select deployment region, backup/restore plan, retention periods, and production budget before handling real child data.
+Private profile photos use Neon Object Storage. Uploads are limited to 2 MB, decoded and re-encoded to 256px WebP, stripping metadata. Authenticated owner-only routes stream images; no public bucket URLs or browser storage credentials. Recordings are not implemented. Do not put media blobs in Postgres. Select deployment region, backup/restore plan, retention periods, and production budget before handling real child data.
+
+## Implemented web data path
+
+The current schema has one owner per family, multiple children and family routines. Every resource query checks the owner server-side. Multi-guardian membership is a later migration, not an implied capability. `db/migrations/001_family.sql` is the baseline. Neon HTTP queries serve request/response routes; writes that change children or routines increment the family revision in a transaction.
+
+Realtime uses a server-sealed owner-filtered query for the family revision. Browser subscriptions trigger a fresh authenticated family fetch. Broad Realtime secrets stay on the server. Realtime carries account changes, never media. Client creation and teardown tolerate React development effect remounts.
+
+Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and typed input. The UI separately labels saved preferences and unpaired devices. Frontend deployment is not configured; Neon deployment only provisions backend services.

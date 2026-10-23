@@ -12,4 +12,4 @@ Read README.md, docs/PRD.md, docs/ARCHITECTURE.md, and docs/SECURITY.md before c
 - Establish API contracts before implementing endpoints. Use applicable Postman skills for API work; keep contracts and tests versioned locally.
 - Update relevant docs with behavior changes. Test meaningful security and behavior boundaries; do not fabricate test results.
 - Ask before paid purchases, production deployment, or destructive data changes unless explicitly authorized. Do not weaken security to resolve setup friction.
-- The parent web app is a demo-only Next.js workspace. Run npm run build and npm run typecheck from the root. Do not claim authentication, device integration, or landing-site implementation exists.
+- The parent web app is connected to Neon Auth, Postgres, private Object Storage and Realtime. Run npm run build and npm run typecheck from the root. Device integration, co-parent invitations and the landing site remain unimplemented. Saved rules are not device enforcement. See docs/NEON_SETUP.md before running live service tests, which create synthetic accounts.
