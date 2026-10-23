@@ -9,6 +9,7 @@ Read README.md, docs/PRD.md, docs/ARCHITECTURE.md, and docs/SECURITY.md before c
 - Never put secrets, real child data, location histories, recordings, or production database dumps in Git, test fixtures, logs, or screenshots.
 - Distinguish implemented, planned, and platform-dependent capabilities. Label demo data visibly.
 - Work on feat/, fix/, docs/, chore/, or refactor/ branches; use Conventional Commits. Inspect existing changes before editing. Never force-push main.
+- Reuse fix/maintenance for small fixes, polish, and routine documentation updates, bringing in latest origin/main before work. Do not open a PR for each small change. Brand-new features use a dedicated feat/ branch and PR for the owner to merge. Do not merge into main automatically.
 - Establish API contracts before implementing endpoints. Use applicable Postman skills for API work; keep contracts and tests versioned locally.
 - Update relevant docs with behavior changes. Test meaningful security and behavior boundaries; do not fabricate test results.
 - Ask before paid purchases, production deployment, or destructive data changes unless explicitly authorized. Do not weaken security to resolve setup friction.

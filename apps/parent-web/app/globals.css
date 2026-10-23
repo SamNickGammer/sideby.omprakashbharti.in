@@ -1904,7 +1904,6 @@ label {
   height: 54px;
   font-size: 23px;
   border-radius: 18px;
-  display: flex;
   margin-bottom: 15px;
 }
 .child-identity h2 {
@@ -2476,7 +2475,6 @@ label {
 .profile-photo-preview .avatar {
   width: 75px;
   height: 75px;
-  display: flex;
   font-size: 30px;
 }
 .child-shell button:disabled {
