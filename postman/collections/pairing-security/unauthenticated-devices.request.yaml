@@ -1,0 +1,14 @@
+$kind: http-request
+method: GET
+url: '{{base_url}}/api/children/00000000-0000-4000-8000-000000000000/devices'
+order: 1000
+headers:
+  - key: Origin
+    value: '{{base_url}}'
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Reject unauthorized or invalid request", () => pm.response.to.have.status(401));
+      pm.test("No shared cache", () => pm.expect(pm.response.headers.get("Cache-Control")).to.eql("no-store"));
+      pm.test("Safe error shape", () => pm.expect(pm.response.json().error).to.be.a("string"));

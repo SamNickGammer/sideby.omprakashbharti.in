@@ -16,10 +16,10 @@ All /api/family, /api/children, /api/routines, /api/avatar, /api/export and /api
 - GET /api/export: authenticated family data as downloadable JSON.
 - /api/auth/*: Neon SDK same-origin auth proxy. No custom password storage.
 
-Database schema and revision updates are transactional. A family revision subscription invalidates the authenticated family snapshot. Child archive is reversible. Routines are saved preferences, not enforced until a real device companion exists. No public device ingestion or media endpoints exist yet.
+Database schema and revision updates are transactional. A family revision subscription invalidates the authenticated family snapshot. Child archive is reversible. Routines are saved preferences, not enforced until a real device companion exists. Companion pairing and heartbeat endpoints are documented in [PAIRING.md](PAIRING.md); no usage ingestion or media endpoints exist yet.
 
 ## Child Space revision
 
 Child creation/update now accepts `{name, age, color, archived?}` only. `daily_limit` is no longer a request or response field: children have unrestricted usage by default. Legacy stored preferences are retained but are not enforced. Migration 002 makes the legacy column nullable with a NULL default for new profiles.
 
-Child pages use `/dashboard/children/:id` (overview) and `/dashboard/children/:id/:section` for usage, apps, notifications, screen, camera, audio, accounts, services, devices and settings. Every direct URL verifies the session and family ownership on the server; unknown child IDs/sections return 404. Child is not a device. No pause, media or device-data API is exposed until companion pairing, permission checks and delivery acknowledgement exist. Unpaired controls are disabled; selecting a camera only changes the requested lens in the UI.
+Child pages use `/dashboard/children/:id` (overview) and `/dashboard/children/:id/:section` for usage, apps, notifications, screen, camera, audio, accounts, services, devices and settings. Every direct URL verifies the session and family ownership on the server; unknown child IDs/sections return 404. Child is not a device. Pairing and heartbeat APIs exist; pause, media and usage APIs remain unimplemented. Unpaired controls are disabled; selecting a camera only changes the requested lens in the UI.

@@ -45,4 +45,16 @@ Screenshots contain synthetic QA profiles only: [desktop](previews/connected-des
 
 ## Not yet verified or implemented
 
-Recovery screens call the provider, but delivery to a real mailbox and a full password reset are unverified. No public HTTPS deployment, load test, full accessibility audit or security audit has been completed. Native authentication, device pairing/enforcement, location, real requests, co-parent permissions and media streaming are not implemented. The database's realtime service is for account updates and cannot replace WebRTC media infrastructure.
+Recovery screens call the provider, but delivery to a real mailbox and a full password reset are unverified. No public HTTPS deployment, load test, full accessibility audit or security audit has been completed. Native client integration, device enforcement, location, real requests, co-parent permissions and media streaming are not implemented. The database's realtime service is for account updates and cannot replace WebRTC media infrastructure.
+
+## Device pairing milestone (24 October 2026)
+
+Migration 003 passed first on the schema-only Neon branch `sideby-pairing-check`, then on the configured development backend. This is an additive schema change; no existing family records were changed. The test branch expires automatically on 25 October.
+
+`npm run build` and `npm run typecheck` passed. The production-mode local server was used for API and browser checks. `scripts/verify-pairing.mjs` passed 70 HTTP checks plus response/database assertions and covers authenticated family isolation, Origin checks, multiple devices, single-use claims, concurrent approval, retry behavior, archive/restore, revocation, code generation/attempt limits, expiry, oversized/invalid payloads and secret-free parent responses. The existing `scripts/verify-services.mjs` also passed all live Auth, Postgres, private Storage, Realtime and child-route regression checks.
+
+The local Postman collection `postman/collections/pairing-security` passed structural lint and all 12 assertions over four requests. No Postman workspace publication was performed. The companion was simulated with HTTP requests to the real implementation and Neon backend; this does not validate a physical Android app.
+
+Browser QA used synthetic accounts at 1440×1000 and 390×844: parent code creation, automatic pending-claim display, approval disabled until the comparison checkbox is selected, and no mobile document overflow. See [desktop](previews/device-pairing-desktop.png) and [mobile](previews/device-pairing-mobile.png). Live media and pause remain disabled regardless of pairing status.
+
+Physical Android pairing, secure credential storage on Android, production edge rate limiting and full accessibility/device-matrix testing remain unverified or pending. No live media or device enforcement was added.

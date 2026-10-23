@@ -4,6 +4,7 @@ export type Child = {
   age: number;
   color: "mint" | "peach" | "lavender" | "sky";
   avatar_key: string | null;
+  device_count?: number;
   archived: boolean;
 };
 export type Routine = {
