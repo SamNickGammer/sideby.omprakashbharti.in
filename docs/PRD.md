@@ -1,6 +1,8 @@
 # Sideby product requirements
 
-Status: initial product baseline, 23 October 2026. This document describes intended behavior, not shipped functionality.
+Status: product baseline with connected web milestone, 24 October 2026. Requirements below include planned functionality.
+
+Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, allowance preferences, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Not implemented: co-parent invitations, account deletion, device pairing/enforcement, usage/location, requests or media.
 
 ## Purpose and audience
 

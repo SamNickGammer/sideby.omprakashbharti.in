@@ -8,8 +8,9 @@ Sideby helps parents manage multiple children and their devices through a shared
 
 ## Status
 
-An interactive parent-web prototype is available with clearly labeled synthetic data. It includes family and child views, device allowance editing, extra-time requests, routine toggles, and adding demo profiles. All changes are in memory and reset on reload. Authentication, database integration, Android companion, and live streaming are not implemented. No paid services have been provisioned.
+The parent web app now uses Neon for real accounts, family profiles, routines, private profile photos and live updates across signed-in browsers. It supports multiple children, editable allowances, archive/restore, family settings and JSON export. Its minimal responsive interface works on desktop and mobile browsers.
 
+**This is a connected early-access foundation, not a finished parental-control release.** Allowances and routines are saved preferences only. Device pairing, enforcement, requests from devices, location and live screen/camera/microphone sessions depend on the future Android companion. Co-parent invitations, account deletion, launch hardening and the separate landing website remain pending.
 ## Structure
 
 - `apps/parent-web/`: parent dashboard, built first.
@@ -20,9 +21,9 @@ An interactive parent-web prototype is available with clearly labeled synthetic 
 - `assets/brand/`: editable SVG brand assets and color tokens.
 - `docs/`: product, architecture, security, roadmap, and delivery guidance.
 
-## Proposed technology
+## Technology
 
-Next.js and TypeScript for both websites; Tailwind CSS for styling; Neon Postgres for family data; Vercel for web hosting; Kotlin for the Android companion. Authentication provider selection is pending a web/mobile compatibility review. LiveKit is the candidate for visible, authorized live media sessions, subject to a real-device feasibility milestone.
+Next.js and TypeScript for both websites; Tailwind CSS for styling; Neon Postgres for family data; Vercel for web hosting; Kotlin for the Android companion. Neon Auth manages web sessions; native mobile authentication still needs a compatibility milestone. LiveKit is the candidate for visible, authorized live media sessions, subject to a real-device feasibility milestone.
 
 ## Start here
 
@@ -36,17 +37,21 @@ Use Node.js 22 or newer (validated locally with Node.js 24).
 
 ```sh
 npm ci
+npx neon@latest deploy
+# Follow docs/NEON_SETUP.md to prepare the app environment and schema.
 npm run dev
 ```
 
-Open http://127.0.0.1:3000. No credentials or environment variables are required for demo mode.
+Open http://127.0.0.1:3000. Create a parent account and a family. Environment setup is required; see [Neon setup](docs/NEON_SETUP.md).
 
 ```sh
 npm run build
 npm run typecheck
 ```
 
-The landing website remains a separate reserved directory. Example future configuration names are in `.env.example`; never commit real secrets.
+The landing website remains a separate reserved directory. Configuration names are in `.env.example`; never commit real secrets.
+
+See [API contracts](docs/API.md) and [verification results](docs/VERIFICATION.md).
 
 ## Brand assets
 
