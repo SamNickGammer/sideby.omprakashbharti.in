@@ -2,12 +2,15 @@
   "name": "sideby",
   "private": true,
   "workspaces": [
-    "apps/parent-web"
+    "apps/parent-web",
+    "apps/website"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=@sideby/parent-web",
-    "build": "npm run build --workspace=@sideby/parent-web",
-    "typecheck": "npm run typecheck --workspace=@sideby/parent-web"
+    "build": "npm run build --workspaces",
+    "typecheck": "npm run typecheck --workspaces",
+    "dev:website": "npm run dev --workspace=@sideby/website",
+    "build:website": "npm run build --workspace=@sideby/website"
   },
   "dependencies": {
     "@neon/config": "^1.9.3",

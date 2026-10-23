@@ -58,3 +58,9 @@ The local Postman collection `postman/collections/pairing-security` passed struc
 Browser QA used synthetic accounts at 1440×1000 and 390×844: parent code creation, automatic pending-claim display, approval disabled until the comparison checkbox is selected, and no mobile document overflow. See [desktop](previews/device-pairing-desktop.png) and [mobile](previews/device-pairing-mobile.png). Live media and pause remain disabled regardless of pairing status.
 
 Physical Android pairing, secure credential storage on Android, production edge rate limiting and full accessibility/device-matrix testing remain unverified or pending. No live media or device enforcement was added.
+
+## Public website and documentation (24 October 2026)
+
+Added a separate Next.js static website workspace and updated the parent app README, roadmap and readiness guidance. Root `npm run build` and `npm run typecheck` passed for both applications. The final website build passed after fixing mobile overflow from decorative rings. Browser checks covered navigation, FAQ expansion by pointer and keyboard, missing images/anchor targets, and 1440×1000 / 390×844 layouts. The mobile document width was 375px within the 390px viewport. No accounts, database records or device content were created by these website checks.
+
+Synthetic illustration previews: [desktop website](previews/website-desktop.png), [mobile website](previews/website-mobile.png). Deployment verification is tracked in [DEPLOYMENT.md](DEPLOYMENT.md). These checks do not replace a full accessibility audit.

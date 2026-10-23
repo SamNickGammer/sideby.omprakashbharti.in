@@ -10,7 +10,7 @@ Sideby helps parents manage multiple children and their devices through a shared
 
 The parent web app now uses Neon for real accounts, family profiles, routines, private profile photos and live updates across signed-in browsers. It supports multiple children, unrestricted usage by default, archive/restore, family settings and JSON export. Its minimal responsive interface works on desktop and mobile browsers.
 
-**This is a connected early-access foundation, not a finished parental-control release.** Routines are saved preferences only. Child creation has no allowance field. Each child has a direct Child’s Space URL with dedicated sections, including Photo gallery, Messages, Contacts and Call history (content syncing pending); pause and media actions remain unavailable until a device is connected. The web pairing flow now supports expiring codes, parent confirmation, multiple devices, check-in status and credential revocation. Enforcement, requests from devices, location and live screen/camera/microphone sessions still depend on the future Android companion. See [device pairing](docs/PAIRING.md) for the contract and test workflow. Co-parent invitations, account deletion, launch hardening and the separate landing website remain pending.
+**This is a connected early-access foundation, not a finished parental-control release.** Routines are saved preferences only. Child creation has no allowance field. Each child has a direct Child’s Space URL with dedicated sections, including Photo gallery, Messages, Contacts and Call history (content syncing pending); pause and media actions remain unavailable until a device is connected. The web pairing flow now supports expiring codes, parent confirmation, multiple devices, check-in status and credential revocation. Enforcement, requests from devices, location and live screen/camera/microphone sessions still depend on the future Android companion. See [device pairing](docs/PAIRING.md) for the contract and test workflow. Co-parent invitations, account deletion and parent-app launch hardening remain pending. The separate public website is implemented with a product overview, truthful roadmap and FAQ. See [parent readiness](docs/PARENT_WEB_READINESS.md).
 ## Structure
 
 - `apps/parent-web/`: parent dashboard, built first.
@@ -49,7 +49,7 @@ npm run build
 npm run typecheck
 ```
 
-The landing website remains a separate reserved directory. Configuration names are in `.env.example`; never commit real secrets.
+Run the separate landing website with `npm run dev:website` at http://127.0.0.1:3001. Root build/type checks cover both apps. See the [website README](apps/website/README.md), [parent-web README](apps/parent-web/README.md) and [deployment guide](docs/DEPLOYMENT.md). Configuration names are in `.env.example`; never commit real secrets.
 
 See [API contracts](docs/API.md) and [verification results](docs/VERIFICATION.md).
 
@@ -71,7 +71,7 @@ Browse the [asset guide](assets/brand/README.md) or open [the brand gallery](ass
 
 ## Brand and domain
 
-Sideby is the selected working brand. Trademark and domain availability have not been verified. `sideby.omprakashbharti.in` is the intended landing address; deployment and DNS are not configured. A parent dashboard subdomain remains to be configured.
+Sideby is the selected working brand. Trademark and domain availability have not been verified. `sideby.omprakashbharti.in` is the landing address. See [deployment state](docs/DEPLOYMENT.md) for verified hosting and DNS details. A separate public parent dashboard host remains to be configured.
 
 ## Ownership
 

@@ -5,7 +5,7 @@ Status: connected parent-web foundation implemented on 24 October 2026. Neon Pos
 ## Components
 
 - Next.js + TypeScript: independent parent-web and website applications.
-- Tailwind CSS and shared UI package: consistent web design.
+- Parent web uses Tailwind CSS and custom styles; the static website uses its own responsive stylesheet and copied master brand SVGs. packages/ui remains reserved, not an implemented shared component library.
 - Neon Postgres: durable accounts-related application data, families, guardian memberships, children, devices, rules, requests, and audit metadata.
 - Authentication: Neon Auth with its Next.js server adapter and secure session cookies. Server routes verify sessions. Native mobile compatibility remains to be validated.
 - Next.js server routes: initial application backend, with contract-first APIs before client integration.
@@ -17,7 +17,7 @@ Status: connected parent-web foundation implemented on 24 October 2026. Neon Pos
 
 Every protected operation verifies the authenticated guardian's membership and role for the requested family. Device credentials are narrowly scoped and revocable. A child is a profile; a device is a paired installation. Foreign keys and ownership checks must enforce relationships. Database credentials stay server-side. The public marketing site receives no family-data database access.
 
-Before implementing endpoints, define versioned contracts for authentication integration, family membership, children, device pairing, rules, requests, device acknowledgements, and session authorization. Contracts must specify errors, authorization, pagination when relevant, and idempotency for retried actions. No wire format is fixed by this foundation.
+Before implementing endpoints, define versioned contracts for authentication integration, family membership, children, device pairing, rules, requests, device acknowledgements, and session authorization. Contracts must specify errors, authorization, pagination when relevant, and idempotency for retried actions. Implemented wire formats are documented in API.md and PAIRING.md; future endpoints require their own contracts.
 
 ## Synchronization
 
@@ -41,7 +41,7 @@ The current schema has one owner per family, multiple children and family routin
 
 Realtime uses a server-sealed owner-filtered query for the family revision. Browser subscriptions trigger a fresh authenticated family fetch. Broad Realtime secrets stay on the server. Realtime carries account changes, never media. Client creation and teardown tolerate React development effect remounts.
 
-Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and typed input. The UI separately labels saved preferences and unpaired devices. Frontend deployment is not configured; Neon deployment only provisions backend services.
+Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and typed input. The UI separately labels saved preferences and unpaired devices. See DEPLOYMENT.md for current frontend hosting state. Neon deployment only provisions backend services. The website is a separate static export without backend secrets.
 
 ## Child Space routing
 
