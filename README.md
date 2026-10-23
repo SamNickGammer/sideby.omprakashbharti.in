@@ -53,6 +53,10 @@ The landing website remains a separate reserved directory. Configuration names a
 
 See [API contracts](docs/API.md) and [verification results](docs/VERIFICATION.md).
 
+## Sample data for testing
+
+Create your parent account, then follow [sample-data setup and cleanup](docs/DEMO_DATA.md). The optional seed adds three demo children and three routines without overwriting your existing records.
+
 ## Brand assets
 
 ![Sideby brand banner](assets/brand/social-banner.svg)
