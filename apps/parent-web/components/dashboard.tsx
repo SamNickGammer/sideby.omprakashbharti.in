@@ -378,10 +378,13 @@ export default function Dashboard({
                   </article>
                   <article>
                     <span>
-                      <Link2 size={18} /> Connected devices
+                      <Link2 size={18} /> Paired devices
                     </span>
                     <strong>
-                      0<small> devices</small>
+                      {data.children
+                        .filter((c) => !c.archived)
+                        .reduce((total, c) => total + (c.device_count || 0), 0)}
+                      <small> devices</small>
                     </strong>
                     <p>Android companion coming next</p>
                   </article>
@@ -447,7 +450,10 @@ export default function Dashboard({
                             <small>Connect a device to see activity</small>
                           </div>
                           <div className="unpaired">
-                            <Smartphone size={15} /> No device connected
+                            <Smartphone size={15} />{" "}
+                            {c.device_count
+                              ? `${c.device_count} paired device${c.device_count === 1 ? "" : "s"}`
+                              : "No device paired"}
                           </div>
                           <Link
                             className="card-footer"

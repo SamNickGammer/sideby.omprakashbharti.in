@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import type { Child } from "../lib/types";
 import LiveUpdates from "./live-updates";
+import DevicePairing from "./device-pairing";
 const sections = [
   { id: "overview", label: "Their space", icon: LayoutDashboard },
   { id: "usage", label: "Digital wellbeing", icon: Activity },
@@ -209,7 +210,10 @@ export default function ChildSpace({
               </p>
             </div>
             <span className="status neutral">
-              <Smartphone size={14} /> No device connected
+              <Smartphone size={14} />{" "}
+              {child.device_count
+                ? `${child.device_count} paired device${child.device_count === 1 ? "" : "s"}`
+                : "No device paired"}
             </span>
           </div>
           {error && (
@@ -255,8 +259,8 @@ export default function ChildSpace({
                 </section>
                 <section className="panel">
                   <Smartphone size={20} />
-                  <p>Connected devices</p>
-                  <strong>0 devices</strong>
+                  <p>Paired devices</p>
+                  <strong>{child.device_count || 0} devices</strong>
                   <small>One child can have multiple devices</small>
                 </section>
                 <section className="panel pause-card">
@@ -270,7 +274,7 @@ export default function ChildSpace({
                     <Pause size={16} /> Pause device
                   </button>
                   <small id="pause-reason">
-                    Connect a device before pausing
+                    Pause controls are coming with Android
                   </small>
                 </section>
               </div>
@@ -342,7 +346,7 @@ export default function ChildSpace({
                 </nav>
                 <div
                   className="phone-viewer"
-                  aria-label={`${active.label} display — no connected device`}
+                  aria-label={`${active.label} display — live sharing not available`}
                 >
                   <div className="phone-island" />
                   <span className="viewer-idle">
@@ -359,8 +363,8 @@ export default function ChildSpace({
                         : "A moment to listen."}
                   </h2>
                   <p>
-                    Connect an authorized device to begin a visible sharing
-                    session.
+                    Live sharing will be available after the Android companion
+                    and its permission flow are ready.
                   </p>
                   <span className="phone-status">No live session</span>
                   <div className="phone-home" />
@@ -381,11 +385,12 @@ export default function ChildSpace({
                   <label className="device-selector">
                     Device
                     <select disabled aria-describedby="device-hint">
-                      <option>No devices connected</option>
+                      <option>Live sharing coming next</option>
                     </select>
                   </label>
                   <p id="device-hint" className="muted">
-                    Device connection is required.
+                    Pairing alone does not enable screen, camera or microphone
+                    access.
                   </p>
                   {section === "camera" && (
                     <fieldset className="lens-picker">
@@ -509,49 +514,7 @@ export default function ChildSpace({
             </section>
           )}
           {section === "devices" && (
-            <section className="panel device-setup">
-              <span className="empty-icon">
-                <Smartphone size={34} />
-              </span>
-              <p className="eyebrow">NEXT, THEIR DEVICE</p>
-              <h2>One profile. Room for every device.</h2>
-              <p>
-                {child.name}’s profile is ready. Sideby Connect for Android is
-                the next step; device pairing is not available in this web
-                release.
-              </p>
-              <ol>
-                <li>
-                  <span>1</span>
-                  <div>
-                    <strong>Install Sideby Connect</strong>
-                    <p>The child companion will explain the access it needs.</p>
-                  </div>
-                </li>
-                <li>
-                  <span>2</span>
-                  <div>
-                    <strong>Pair with your family</strong>
-                    <p>
-                      A single-use code will connect a device to this profile.
-                    </p>
-                  </div>
-                </li>
-                <li>
-                  <span>3</span>
-                  <div>
-                    <strong>Review access together</strong>
-                    <p>Enable supported permissions on the child device.</p>
-                  </div>
-                </li>
-              </ol>
-              <button className="primary" disabled>
-                Pairing available with Android companion
-              </button>
-              <p className="muted">
-                No download or pairing code is available yet.
-              </p>
-            </section>
+            <DevicePairing key={child.id} child={child} userId={userId} />
           )}
           {section === "settings" && (
             <div className="settings-grid">

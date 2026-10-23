@@ -2,7 +2,7 @@
 
 Status: product baseline with connected web milestone, 24 October 2026. Requirements below include planned functionality.
 
-Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, unrestricted child profiles, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Not implemented: co-parent invitations, account deletion, device pairing/enforcement, usage/location, requests or media.
+Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, unrestricted child profiles, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Implemented pairing milestone: web codes, parent confirmation, multiple devices, credential revocation and heartbeat APIs. Not implemented: Android client, co-parent invitations, account deletion, device enforcement, usage/location, requests or media.
 
 ## Purpose and audience
 
@@ -49,4 +49,4 @@ Hidden apps, disguised system services, stealth recording, bypassing device perm
 
 ## Routed Child Space
 
-Each child has a direct, owner-authorized URL with a contextual sidebar. Family navigation collapses to an icon rail. Separate sections cover overview, digital wellbeing, installed apps, notifications, screen viewing, camera, microphone, authorized account labels, supported services, device setup and profile settings. Screen and camera share a phone-shaped viewer. Front/back lens selection chooses a future requested camera and does not access a camera before authorization. All device sections currently show honest unpaired states. Notification collection requires explicit device permission; account passwords/tokens/private content are excluded. Android may limit account/app/service visibility; no full inventory is promised.
+Each child has a direct, owner-authorized URL with a contextual sidebar. Family navigation collapses to an icon rail. Separate sections cover overview, digital wellbeing, installed apps, notifications, screen viewing, camera, microphone, authorized account labels, supported services, device setup and profile settings. Screen and camera share a phone-shaped viewer. Front/back lens selection chooses a future requested camera and does not access a camera before authorization. The Devices section supports real pairing and check-in states; data and media sections remain unavailable until companion integration. Notification collection requires explicit device permission; account passwords/tokens/private content are excluded. Android may limit account/app/service visibility; no full inventory is promised.

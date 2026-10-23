@@ -29,7 +29,7 @@ for (const id of ids) {
   await sql`DELETE FROM sideby_families WHERE owner_id=${id}`;
   count++;
 }
-for (const name of [".test-users.json", ".test-session.json"])
+for (const name of [".test-users.json", ".test-session.json", ".test-pairing.json"])
   rmSync(name, { force: true });
 console.log(
   `PASS removed ${count} synthetic test accounts, their family data and profile uploads`,

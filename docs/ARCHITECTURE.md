@@ -1,6 +1,6 @@
 # Sideby architecture
 
-Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Device and multi-guardian architecture below remains planned.
+Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; Android and multi-guardian architecture below remains planned.
 
 ## Components
 
@@ -47,4 +47,8 @@ Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and ty
 
 `/dashboard/children/[id]/[[...section]]` validates the UUID and section allowlist, then checks the current session and family owner before loading a profile. Missing/inaccessible children and unsupported sections return 404. Client links retain bookmarkable sections and browser history. The family dashboard accepts an allowlisted `view` query to return to the right family section.
 
-Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. No pause/device ingestion/media backend is implemented by the routed web views.
+Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. No pause, usage ingestion or media backend is implemented by the routed web views.
+
+## Pairing milestone
+
+Migration 003 adds pairing offers and multiple devices per child. See [pairing contract](PAIRING.md) for code lifecycle, confirmation, scoped credential expiry/revocation and check-in semantics. Pairing uses database row locks and atomic approval; only SHA-256 hashes of codes and device credentials persist. Companion credentials authorize only heartbeat, never family reads or monitoring.

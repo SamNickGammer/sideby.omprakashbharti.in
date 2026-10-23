@@ -2738,3 +2738,155 @@ label {
   gap: 7px;
   width: fit-content;
 }
+
+/* Device pairing shares the Child Space cards and control styles. */
+.pairing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.pairing-card {
+  min-width: 0;
+  padding: 28px;
+}
+.pairing-card > h2 {
+  margin: 16px 0 10px;
+}
+.pairing-card > p {
+  line-height: 1.65;
+}
+.pairing-note {
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #f4f7f5;
+  font-size: 13px;
+  color: #64756d;
+  margin: 18px 0;
+}
+.pairing-code-box,
+.pairing-review {
+  background: #f5f9f6;
+  border: 1px solid #dfeae2;
+  border-radius: 18px;
+  padding: 24px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 22px 0;
+  align-items: flex-start;
+}
+.pairing-code-box > span {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: #64756d;
+}
+.pairing-code {
+  font-family: ui-monospace, monospace;
+  font-size: clamp(16px, 1.7vw, 25px);
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+  user-select: all;
+}
+.pairing-code-box small,
+.paired-device small {
+  color: #64756d;
+}
+.pairing-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 18px 0;
+}
+.pairing-match {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.pairing-match input {
+  min-height: 18px;
+  padding: 0;
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: #3b7861;
+}
+.pairing-footnote {
+  display: flex;
+  gap: 9px;
+  font-size: 12px;
+  color: #64756d;
+  margin-top: 24px;
+}
+.pairing-footnote svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+.pairing-empty {
+  text-align: center;
+  padding: 44px 12px;
+  color: #64756d;
+}
+.pairing-empty svg {
+  margin: auto;
+}
+.pairing-empty h3 {
+  margin: 14px 0 8px;
+  color: #1e3d37;
+}
+.paired-device {
+  border-top: 1px solid #e8ede9;
+  padding: 22px 0 4px;
+  margin-top: 20px;
+}
+.paired-device-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.paired-device-heading h3 {
+  margin: 0 0 5px;
+  overflow-wrap: anywhere;
+}
+.paired-device-heading .empty-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+.paired-device .muted {
+  font-size: 12px;
+  margin: 12px 0;
+}
+.paired-device .text-button {
+  margin-top: 14px;
+}
+.disconnect-confirm {
+  margin-top: 15px;
+  padding: 14px;
+  background: #fff5ef;
+  border-radius: 12px;
+  font-size: 13px;
+}
+@media (max-width: 1000px) {
+  .pairing-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .pairing-card {
+    padding: 20px;
+  }
+  .pairing-code {
+    font-size: 17px;
+    letter-spacing: 0;
+  }
+  .pairing-actions > button {
+    width: 100%;
+    justify-content: center;
+  }
+}
