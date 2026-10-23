@@ -8,7 +8,6 @@ export const childSchema = z
     name: z.string().trim().min(1).max(40),
     age: z.number().int().min(1).max(17),
     color: z.enum(["mint", "peach", "lavender", "sky"]),
-    daily_limit: z.number().int().min(15).max(720).multipleOf(15),
     archived: z.boolean().optional(),
   })
   .strict();

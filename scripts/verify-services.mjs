@@ -98,7 +98,6 @@ try {
     name: "Test child",
     age: 11,
     color: "mint",
-    daily_limit: 120,
   };
   let r = await expect(
     await a.request("/api/children", "POST", child),
@@ -258,6 +257,48 @@ try {
     0,
   );
   console.log("PASS profile archive/restore and routine update/delete persist");
+  for (const section of [
+    "",
+    "/usage",
+    "/apps",
+    "/notifications",
+    "/screen",
+    "/camera",
+    "/audio",
+    "/accounts",
+    "/services",
+    "/devices",
+    "/settings",
+  ]) {
+    await expect(
+      await a.request(`/dashboard/children/${id}${section}`),
+      200,
+      `child route ${section}`,
+    );
+  }
+  await expect(
+    await b.request(`/dashboard/children/${id}/camera`),
+    404,
+    "cross-family child route",
+  );
+  await expect(
+    await a.request(`/dashboard/children/${id}/unknown`),
+    404,
+    "unknown section",
+  );
+  assert.equal(
+    "daily_limit" in
+      (await (await a.request("/api/family")).json()).children[0],
+    false,
+  );
+  await expect(
+    await a.request("/api/children", "POST", { ...child, daily_limit: 120 }),
+    400,
+    "legacy allowance rejected",
+  );
+  console.log(
+    "PASS child deep links, cross-family 404, unknown section 404 and unrestricted child contract",
+  );
   const before = await fetch(base + "/api/family", {
     method: "PATCH",
     headers: {

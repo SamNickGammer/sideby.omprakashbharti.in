@@ -14,7 +14,7 @@ export const GET = () =>
         routines: [],
       });
     const [children, routines] = await Promise.all([
-      sql`SELECT id,name,age,color,daily_limit,avatar_key,archived FROM sideby_children WHERE family_id=${f.id} ORDER BY created_at,id`,
+      sql`SELECT id,name,age,color,avatar_key,archived FROM sideby_children WHERE family_id=${f.id} ORDER BY created_at,id`,
       sql`SELECT id,name,start_time,end_time,days,enabled FROM sideby_routines WHERE family_id=${f.id} ORDER BY created_at,id`,
     ]);
     return json({
