@@ -3,7 +3,6 @@ export type Child = {
   name: string;
   age: number;
   color: "mint" | "peach" | "lavender" | "sky";
-  daily_limit: number;
   avatar_key: string | null;
   archived: boolean;
 };

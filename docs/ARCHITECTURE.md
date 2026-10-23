@@ -42,3 +42,9 @@ The current schema has one owner per family, multiple children and family routin
 Realtime uses a server-sealed owner-filtered query for the family revision. Browser subscriptions trigger a fresh authenticated family fetch. Broad Realtime secrets stay on the server. Realtime carries account changes, never media. Client creation and teardown tolerate React development effect remounts.
 
 Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and typed input. The UI separately labels saved preferences and unpaired devices. Frontend deployment is not configured; Neon deployment only provisions backend services.
+
+## Child Space routing
+
+`/dashboard/children/[id]/[[...section]]` validates the UUID and section allowlist, then checks the current session and family owner before loading a profile. Missing/inaccessible children and unsupported sections return 404. Client links retain bookmarkable sections and browser history. The family dashboard accepts an allowlisted `view` query to return to the right family section.
+
+Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. No pause/device ingestion/media backend is implemented by the routed web views.

@@ -2,7 +2,7 @@
 
 Status: product baseline with connected web milestone, 24 October 2026. Requirements below include planned functionality.
 
-Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, allowance preferences, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Not implemented: co-parent invitations, account deletion, device pairing/enforcement, usage/location, requests or media.
+Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, unrestricted child profiles, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Not implemented: co-parent invitations, account deletion, device pairing/enforcement, usage/location, requests or media.
 
 ## Purpose and audience
 
@@ -21,7 +21,7 @@ One family supports multiple guardians and multiple children. One child supports
 - Parent signup, login, account recovery, and family creation.
 - Add, edit, and remove child profiles; pair a device through an expiring single-use code with explicit parent confirmation.
 - Family dashboard: per-child usage summaries, device health, pending requests, and timestamped last location where enabled.
-- Daily limits and school, homework, bedtime, and weekend schedules. Rules initially apply per device; shared cross-device allowance is deferred.
+- Child creation asks only for profile details. Usage is unrestricted by default. A parent reviews activity and can request a pause on a supported connected device; display pending delivery separately from an acknowledged pause. Emergency/contact paths remain available. Saved routines do not imply enforcement.
 - Extra-time and access requests with approval/decline states and expiry. Display pending delivery separately from applied changes.
 - Child app: rules, remaining time where reliably measurable, requests, check-ins, and clear explanation of guardian access.
 - Visible status for offline devices, disabled permissions, stale location, and protection limitations.
@@ -46,3 +46,7 @@ A parent can manage three child profiles with independent rules, including one c
 ## Exclusions
 
 Hidden apps, disguised system services, stealth recording, bypassing device permissions, adult partner surveillance, sale of child data, advertising in the child app, and guaranteed emergency-response service.
+
+## Routed Child Space
+
+Each child has a direct, owner-authorized URL with a contextual sidebar. Family navigation collapses to an icon rail. Separate sections cover overview, digital wellbeing, installed apps, notifications, screen viewing, camera, microphone, authorized account labels, supported services, device setup and profile settings. Screen and camera share a phone-shaped viewer. Front/back lens selection chooses a future requested camera and does not access a camera before authorization. All device sections currently show honest unpaired states. Notification collection requires explicit device permission; account passwords/tokens/private content are excluded. Android may limit account/app/service visibility; no full inventory is promised.

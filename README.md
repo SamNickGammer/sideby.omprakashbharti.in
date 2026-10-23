@@ -8,9 +8,9 @@ Sideby helps parents manage multiple children and their devices through a shared
 
 ## Status
 
-The parent web app now uses Neon for real accounts, family profiles, routines, private profile photos and live updates across signed-in browsers. It supports multiple children, editable allowances, archive/restore, family settings and JSON export. Its minimal responsive interface works on desktop and mobile browsers.
+The parent web app now uses Neon for real accounts, family profiles, routines, private profile photos and live updates across signed-in browsers. It supports multiple children, unrestricted usage by default, archive/restore, family settings and JSON export. Its minimal responsive interface works on desktop and mobile browsers.
 
-**This is a connected early-access foundation, not a finished parental-control release.** Allowances and routines are saved preferences only. Device pairing, enforcement, requests from devices, location and live screen/camera/microphone sessions depend on the future Android companion. Co-parent invitations, account deletion, launch hardening and the separate landing website remain pending.
+**This is a connected early-access foundation, not a finished parental-control release.** Routines are saved preferences only. Child creation has no allowance field. Each child has a direct Child’s Space URL with dedicated sections; pause and media actions remain unavailable until a device is connected. Device pairing, enforcement, requests from devices, location and live screen/camera/microphone sessions depend on the future Android companion. Co-parent invitations, account deletion, launch hardening and the separate landing website remain pending.
 ## Structure
 
 - `apps/parent-web/`: parent dashboard, built first.

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
+import Link from "next/link";
 import {
   LayoutDashboard,
   Users,
@@ -12,9 +13,6 @@ import {
   ShieldCheck,
   Settings,
   LogOut,
-  ArrowLeft,
-  Camera,
-  Archive,
   Download,
   RefreshCw,
   Check,
@@ -22,7 +20,6 @@ import {
   Link2,
   X,
   Trash2,
-  Monitor,
 } from "lucide-react";
 import { authClient } from "../lib/auth-client";
 import type { FamilyData, Child, Routine } from "../lib/types";
@@ -34,10 +31,15 @@ const nav = [
   { name: "Requests", icon: Inbox },
   { name: "Settings", icon: Settings },
 ];
-export default function Dashboard({ userId }: { userId: string }) {
+export default function Dashboard({
+  userId,
+  initialTab = "Overview",
+}: {
+  userId: string;
+  initialTab?: string;
+}) {
   const [data, setData] = useState<FamilyData | null>(null),
-    [tab, setTab] = useState("Overview"),
-    [selected, setSelected] = useState<string | null>(null),
+    [tab, setTab] = useState(initialTab),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
@@ -47,6 +49,7 @@ export default function Dashboard({ userId }: { userId: string }) {
     [editRoutine, setEditRoutine] = useState<Routine | null>(null),
     [showArchived, setShowArchived] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  useEffect(() => setTab(initialTab), [initialTab]);
   const load = useCallback(async () => {
     try {
       const r = await fetch("/api/family", { cache: "no-store" });
@@ -114,12 +117,10 @@ export default function Dashboard({ userId }: { userId: string }) {
   }
   function go(t: string) {
     setTab(t);
-    setSelected(null);
     setError("");
     setMessage("");
   }
   const children = data?.children.filter((c) => !c.archived) || [];
-  const child = data?.children.find((c) => c.id === selected);
   function avatar(c: Child) {
     return (
       <div className={`avatar ${c.color}`}>
@@ -280,37 +281,29 @@ export default function Dashboard({ userId }: { userId: string }) {
             <div>
               <p className="eyebrow">A LITTLE CLOSER, EVERY DAY</p>
               <h1>
-                {child
-                  ? `${child.name}’s space`
-                  : tab === "Overview"
-                    ? "Your family, at a glance."
-                    : tab === "Children"
-                      ? "Room for everyone."
-                      : tab === "Routines"
-                        ? "Find your family’s rhythm."
-                        : tab === "Requests"
-                          ? "A little give and take."
-                          : "Your space. Your settings."}
+                {tab === "Overview"
+                  ? "Your family, at a glance."
+                  : tab === "Children"
+                    ? "Room for everyone."
+                    : tab === "Routines"
+                      ? "Find your family’s rhythm."
+                      : tab === "Requests"
+                        ? "A little give and take."
+                        : "Your space. Your settings."}
               </h1>
               <p>
-                {child
-                  ? "Thoughtful boundaries, made just for them."
-                  : tab === "Overview"
-                    ? `Welcome back, ${data.user.name.split(" ")[0]}. Let’s make room for what matters.`
-                    : tab === "Children"
-                      ? "A little independence. A little guidance."
-                      : tab === "Routines"
-                        ? "Save routines now. Connect devices when the companion is ready."
-                        : tab === "Requests"
-                          ? "A place to listen, understand, and decide together."
-                          : "Manage your family’s details and your account."}
+                {tab === "Overview"
+                  ? `Welcome back, ${data.user.name.split(" ")[0]}. Let’s make room for what matters.`
+                  : tab === "Children"
+                    ? "A little independence. A little guidance."
+                    : tab === "Routines"
+                      ? "Save routines now. Connect devices when the companion is ready."
+                      : tab === "Requests"
+                        ? "A place to listen, understand, and decide together."
+                        : "Manage your family’s details and your account."}
               </p>
             </div>
-            {child ? (
-              <button className="secondary" onClick={() => setSelected(null)}>
-                <ArrowLeft size={16} /> Back
-              </button>
-            ) : tab === "Overview" || tab === "Children" ? (
+            {tab === "Overview" || tab === "Children" ? (
               <button className="primary" onClick={() => openChild()}>
                 <Plus size={18} /> Add child
               </button>
@@ -334,461 +327,323 @@ export default function Dashboard({ userId }: { userId: string }) {
               {message}
             </div>
           )}
-          {child ? (
-            <>
-              <section className="panel detail-heading">
-                {avatar(child)}
-                <div>
+          <>
+            {tab === "Overview" && (
+              <>
+                <section className="welcome-strip">
+                  <div>
+                    <span className="status good">
+                      Your family space is ready
+                    </span>
+                    <h2>A good place to grow, together.</h2>
+                    <p>
+                      Add your children and set a gentle rhythm.
+                      <br />
+                      We’ll take device connection one step at a time.
+                    </p>
+                    <button onClick={() => go("Routines")}>
+                      Set your first routine <ArrowUpRight size={16} />
+                    </button>
+                  </div>
+                  <div className="welcome-art" aria-hidden="true">
+                    <span className="art-orbit" />
+                    <span className="art-person tall" />
+                    <span className="art-person short" />
+                    <span className="art-star">✦</span>
+                  </div>
+                </section>
+                <section className="stats">
+                  <article>
+                    <span>
+                      <Users size={18} /> Your circle
+                    </span>
+                    <strong>
+                      {children.length}
+                      <small>
+                        {" "}
+                        {children.length === 1 ? "child" : "children"}
+                      </small>
+                    </strong>
+                    <p>One space for everyone</p>
+                  </article>
+                  <article>
+                    <span>
+                      <Clock3 size={18} /> Family routines
+                    </span>
+                    <strong>
+                      {data.routines.filter((v) => v.enabled).length}
+                      <small> enabled</small>
+                    </strong>
+                    <p>Saved, ready for device setup</p>
+                  </article>
+                  <article>
+                    <span>
+                      <Link2 size={18} /> Connected devices
+                    </span>
+                    <strong>
+                      0<small> devices</small>
+                    </strong>
+                    <p>Android companion coming next</p>
+                  </article>
+                </section>
+              </>
+            )}
+            {(tab === "Overview" || tab === "Children") && (
+              <section>
+                <div className="section-heading">
                   <h2>
-                    {child.name}, {child.age}
+                    Your children{" "}
+                    <span className="count">{children.length}</span>
                   </h2>
-                  <p>
-                    {child.archived
-                      ? "Archived profile"
-                      : "No device paired yet"}
-                  </p>
+                  {tab === "Children" && (
+                    <button
+                      className="text-button"
+                      onClick={() => setShowArchived((v) => !v)}
+                    >
+                      {showArchived ? "Hide archived" : "Show archived"}
+                    </button>
+                  )}
                 </div>
-                <button className="secondary" onClick={() => openChild(child)}>
-                  Edit profile
-                </button>
+                {children.length === 0 && !showArchived ? (
+                  <section className="panel empty-state">
+                    <span className="empty-icon">
+                      <Users size={30} />
+                    </span>
+                    <h2>Every family starts with a hello.</h2>
+                    <p>
+                      Add your first child to make this space yours. Their
+                      device can be connected later.
+                    </p>
+                    <button className="primary" onClick={() => openChild()}>
+                      <Plus size={17} /> Add your first child
+                    </button>
+                  </section>
+                ) : (
+                  <div className="children-grid">
+                    {data.children
+                      .filter((c) => !c.archived || showArchived)
+                      .map((c) => (
+                        <article className="child-card real-card" key={c.id}>
+                          <div className="child-top">
+                            {avatar(c)}
+                            <div>
+                              <h3>{c.name}</h3>
+                              <p>
+                                {c.age} years old
+                                {c.archived ? " · Archived" : ""}
+                              </p>
+                            </div>
+                            <Link
+                              className="icon-button"
+                              aria-label={`Open ${c.name}'s profile`}
+                              href={`/dashboard/children/${c.id}`}
+                            >
+                              <ArrowUpRight size={20} />
+                            </Link>
+                          </div>
+                          <div className="profile-allowance">
+                            <span>Device usage</span>
+                            <strong>Unrestricted</strong>
+                            <small>Connect a device to see activity</small>
+                          </div>
+                          <div className="unpaired">
+                            <Smartphone size={15} /> No device connected
+                          </div>
+                          <Link
+                            className="card-footer"
+                            href={`/dashboard/children/${c.id}`}
+                          >
+                            View their space <ChevronRight size={16} />
+                          </Link>
+                        </article>
+                      ))}
+                  </div>
+                )}
               </section>
-              <div className="detail-columns">
+            )}
+            {(tab === "Routines" || tab === "Overview") && (
+              <section className="routine-section">
+                <div className="section-heading">
+                  <h2>
+                    {tab === "Overview"
+                      ? "A little structure goes a long way"
+                      : "Your routines"}
+                  </h2>
+                  {tab === "Overview" && (
+                    <button
+                      className="text-button"
+                      onClick={() => go("Routines")}
+                    >
+                      Manage routines <ArrowUpRight size={15} />
+                    </button>
+                  )}
+                </div>
+                {data.routines.length ? (
+                  <div className="routine-grid">
+                    {data.routines.map((v) => (
+                      <article className="panel saved-routine" key={v.id}>
+                        <div className="routine-title">
+                          <span className="routine-icon">
+                            <Clock3 size={20} />
+                          </span>
+                          <strong>{v.name}</strong>
+                          <button
+                            disabled={busy}
+                            className={`toggle ${v.enabled ? "on" : ""}`}
+                            role="switch"
+                            aria-label={`${v.name} enabled`}
+                            aria-checked={v.enabled}
+                            onClick={() =>
+                              mutate(`/api/routines/${v.id}`, "PATCH", {
+                                name: v.name,
+                                start_time: v.start_time,
+                                end_time: v.end_time,
+                                days: v.days,
+                                enabled: !v.enabled,
+                              })
+                            }
+                          >
+                            <span />
+                          </button>
+                        </div>
+                        <h3>
+                          {v.start_time} <span>—</span> {v.end_time}
+                        </h3>
+                        <p>
+                          {v.days === "weekdays"
+                            ? "Monday – Friday"
+                            : v.days === "weekends"
+                              ? "Saturday & Sunday"
+                              : "Every day"}
+                          {v.end_time < v.start_time ? " · Overnight" : ""}
+                        </p>
+                        <div className="routine-bottom">
+                          <small>Saved · Not applied to a device</small>
+                          <button
+                            className="text-button"
+                            aria-label={`Edit ${v.name}`}
+                            onClick={() => openRoutine(v)}
+                          >
+                            Edit
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ) : (
+                  <section className="panel routine-empty">
+                    <span className="empty-icon">
+                      <Clock3 size={25} />
+                    </span>
+                    <div>
+                      <h2>Homework, bedtime, or a little quiet time.</h2>
+                      <p>
+                        Build routines that fit your family. Start with one.
+                      </p>
+                    </div>
+                    <button className="secondary" onClick={() => openRoutine()}>
+                      Create a routine <Plus size={16} />
+                    </button>
+                  </section>
+                )}
+              </section>
+            )}
+            {tab === "Requests" && (
+              <section className="panel empty-state">
+                <span className="empty-icon">
+                  <Inbox size={30} />
+                </span>
+                <h2>Nothing asking for your attention.</h2>
+                <p>
+                  When Sideby Connect is available, your children can ask for
+                  extra time and app access. Their requests will arrive here.
+                </p>
+                <span className="status neutral">
+                  Waiting for a connected device
+                </span>
+              </section>
+            )}
+            {tab === "Settings" && (
+              <div className="settings-grid">
                 <section className="panel">
-                  <div className="section-heading">
-                    <h2>Daily allowance</h2>
-                    <Clock3 size={19} />
-                  </div>
-                  <div className="large-number">
-                    {Math.floor(child.daily_limit / 60)}
-                    <small>h</small> {child.daily_limit % 60}
-                    <small>m</small>
-                  </div>
-                  <p className="muted">
-                    Saved preference for future device setup. Not currently
-                    enforced.
+                  <h2>Family details</h2>
+                  <form
+                    className="settings-form"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      mutate("/api/family", "PATCH", {
+                        name: String(new FormData(e.currentTarget).get("name")),
+                      });
+                    }}
+                  >
+                    <label>
+                      Family name
+                      <input
+                        name="name"
+                        defaultValue={data.family.name}
+                        required
+                        maxLength={60}
+                      />
+                    </label>
+                    <button disabled={busy} className="primary">
+                      Save changes
+                    </button>
+                  </form>
+                </section>
+                <section className="panel">
+                  <h2>Your account</h2>
+                  <p className="account-name">{data.user.name}</p>
+                  <p className="muted">{data.user.email}</p>
+                  <button
+                    className="secondary spaced"
+                    disabled={busy}
+                    onClick={signOut}
+                  >
+                    <LogOut size={16} /> Sign out
+                  </button>
+                  <a
+                    className="text-button spaced"
+                    href="/auth/forgot-password"
+                  >
+                    Reset your password
+                  </a>
+                </section>
+                <section className="panel">
+                  <h2>Your data, in your hands.</h2>
+                  <p className="muted spaced">
+                    Download your saved family profiles and routines. Profile
+                    photos stay in private storage.
                   </p>
+                  <a href="/api/export" className="secondary spaced">
+                    <Download size={16} /> Export family data
+                  </a>
                   <button
                     className="text-button spaced"
-                    onClick={() => openChild(child)}
+                    onClick={() => {
+                      go("Children");
+                      setShowArchived(true);
+                    }}
                   >
-                    Adjust allowance <ArrowUpRight size={15} />
+                    Manage archived profiles
                   </button>
                 </section>
                 <section className="panel">
-                  <h2>Profile photo</h2>
-                  <p className="muted spaced">
-                    A photo makes their space feel familiar. Stored privately,
-                    visible only in your account.
+                  <h2>Connection status</h2>
+                  <p className="account-name">{live}</p>
+                  <p className="muted">
+                    Family changes sync between your signed-in browser sessions.
+                    This is account data, not phone screen sharing.
                   </p>
-                  <label className="upload-control">
-                    <Camera size={18} />{" "}
-                    {busy ? "Uploading…" : "Choose a photo"}
-                    <input
-                      aria-label="Upload profile photo"
-                      type="file"
-                      accept="image/png,image/jpeg,image/webp"
-                      disabled={busy}
-                      onChange={async (e) => {
-                        const file = e.target.files?.[0];
-                        if (!file) return;
-                        setBusy(true);
-                        setError("");
-                        try {
-                          const f = new FormData();
-                          f.set("file", file);
-                          const res = await fetch(`/api/avatar/${child.id}`, {
-                            method: "POST",
-                            body: f,
-                            headers: { "x-sideby-user": userId },
-                          });
-                          if (!res.ok)
-                            throw new Error((await res.json()).error);
-                          await load();
-                          setMessage("Profile photo saved privately.");
-                        } catch (e) {
-                          setError(
-                            e instanceof Error ? e.message : "Upload failed.",
-                          );
-                        } finally {
-                          setBusy(false);
-                        }
-                      }}
-                    />
-                  </label>
-                  <small className="muted">
-                    JPEG, PNG or WebP · Up to 2 MB
-                  </small>
+                  <button
+                    className="text-button spaced"
+                    onClick={() => window.location.reload()}
+                  >
+                    <RefreshCw size={15} /> Reconnect
+                  </button>
                 </section>
               </div>
-              <section className="panel empty-state">
-                <span className="empty-icon">
-                  <Smartphone size={30} />
-                </span>
-                <h2>Their device belongs here.</h2>
-                <p>
-                  Sideby Connect for Android is the next milestone. Usage,
-                  location and device controls will appear once a real device is
-                  paired.
-                </p>
-                <span className="status neutral">Not connected</span>
-              </section>
-              <section className="panel live-note">
-                <Monitor />
-                <div>
-                  <h2>Live sharing is not available yet</h2>
-                  <p>
-                    Screen, camera and microphone sessions require the Android
-                    companion and device authorization. Your web account does
-                    not have access to any phone.
-                  </p>
-                </div>
-              </section>
-              <button
-                disabled={busy}
-                className="text-button archive-action"
-                onClick={() =>
-                  mutate(`/api/children/${child.id}`, "PATCH", {
-                    name: child.name,
-                    age: child.age,
-                    color: child.color,
-                    daily_limit: child.daily_limit,
-                    archived: !child.archived,
-                  })
-                }
-              >
-                <Archive size={16} />
-                {child.archived
-                  ? "Restore profile"
-                  : "Archive profile (you can restore it)"}
-              </button>
-            </>
-          ) : (
-            <>
-              {tab === "Overview" && (
-                <>
-                  <section className="welcome-strip">
-                    <div>
-                      <span className="status good">
-                        Your family space is ready
-                      </span>
-                      <h2>A good place to grow, together.</h2>
-                      <p>
-                        Add your children and set a gentle rhythm.
-                        <br />
-                        We’ll take device connection one step at a time.
-                      </p>
-                      <button onClick={() => go("Routines")}>
-                        Set your first routine <ArrowUpRight size={16} />
-                      </button>
-                    </div>
-                    <div className="welcome-art" aria-hidden="true">
-                      <span className="art-orbit" />
-                      <span className="art-person tall" />
-                      <span className="art-person short" />
-                      <span className="art-star">✦</span>
-                    </div>
-                  </section>
-                  <section className="stats">
-                    <article>
-                      <span>
-                        <Users size={18} /> Your circle
-                      </span>
-                      <strong>
-                        {children.length}
-                        <small>
-                          {" "}
-                          {children.length === 1 ? "child" : "children"}
-                        </small>
-                      </strong>
-                      <p>One space for everyone</p>
-                    </article>
-                    <article>
-                      <span>
-                        <Clock3 size={18} /> Family routines
-                      </span>
-                      <strong>
-                        {data.routines.filter((v) => v.enabled).length}
-                        <small> enabled</small>
-                      </strong>
-                      <p>Saved, ready for device setup</p>
-                    </article>
-                    <article>
-                      <span>
-                        <Link2 size={18} /> Connected devices
-                      </span>
-                      <strong>
-                        0<small> devices</small>
-                      </strong>
-                      <p>Android companion coming next</p>
-                    </article>
-                  </section>
-                </>
-              )}
-              {(tab === "Overview" || tab === "Children") && (
-                <section>
-                  <div className="section-heading">
-                    <h2>
-                      Your children{" "}
-                      <span className="count">{children.length}</span>
-                    </h2>
-                    {tab === "Children" && (
-                      <button
-                        className="text-button"
-                        onClick={() => setShowArchived((v) => !v)}
-                      >
-                        {showArchived ? "Hide archived" : "Show archived"}
-                      </button>
-                    )}
-                  </div>
-                  {children.length === 0 && !showArchived ? (
-                    <section className="panel empty-state">
-                      <span className="empty-icon">
-                        <Users size={30} />
-                      </span>
-                      <h2>Every family starts with a hello.</h2>
-                      <p>
-                        Add your first child to make this space yours. Their
-                        device can be connected later.
-                      </p>
-                      <button className="primary" onClick={() => openChild()}>
-                        <Plus size={17} /> Add your first child
-                      </button>
-                    </section>
-                  ) : (
-                    <div className="children-grid">
-                      {data.children
-                        .filter((c) => !c.archived || showArchived)
-                        .map((c) => (
-                          <article className="child-card real-card" key={c.id}>
-                            <div className="child-top">
-                              {avatar(c)}
-                              <div>
-                                <h3>{c.name}</h3>
-                                <p>
-                                  {c.age} years old
-                                  {c.archived ? " · Archived" : ""}
-                                </p>
-                              </div>
-                              <button
-                                className="icon-button"
-                                aria-label={`Open ${c.name}'s profile`}
-                                onClick={() => setSelected(c.id)}
-                              >
-                                <ArrowUpRight size={20} />
-                              </button>
-                            </div>
-                            <div className="profile-allowance">
-                              <span>Daily allowance</span>
-                              <strong>
-                                {Math.floor(c.daily_limit / 60)}h{" "}
-                                {c.daily_limit % 60}m
-                              </strong>
-                              <small>Saved preference · Not enforced yet</small>
-                            </div>
-                            <div className="unpaired">
-                              <Smartphone size={15} /> No device connected
-                            </div>
-                            <button
-                              className="card-footer"
-                              onClick={() => setSelected(c.id)}
-                            >
-                              View their space <ChevronRight size={16} />
-                            </button>
-                          </article>
-                        ))}
-                    </div>
-                  )}
-                </section>
-              )}
-              {(tab === "Routines" || tab === "Overview") && (
-                <section className="routine-section">
-                  <div className="section-heading">
-                    <h2>
-                      {tab === "Overview"
-                        ? "A little structure goes a long way"
-                        : "Your routines"}
-                    </h2>
-                    {tab === "Overview" && (
-                      <button
-                        className="text-button"
-                        onClick={() => go("Routines")}
-                      >
-                        Manage routines <ArrowUpRight size={15} />
-                      </button>
-                    )}
-                  </div>
-                  {data.routines.length ? (
-                    <div className="routine-grid">
-                      {data.routines.map((v) => (
-                        <article className="panel saved-routine" key={v.id}>
-                          <div className="routine-title">
-                            <span className="routine-icon">
-                              <Clock3 size={20} />
-                            </span>
-                            <strong>{v.name}</strong>
-                            <button
-                              disabled={busy}
-                              className={`toggle ${v.enabled ? "on" : ""}`}
-                              role="switch"
-                              aria-label={`${v.name} enabled`}
-                              aria-checked={v.enabled}
-                              onClick={() =>
-                                mutate(`/api/routines/${v.id}`, "PATCH", {
-                                  name: v.name,
-                                  start_time: v.start_time,
-                                  end_time: v.end_time,
-                                  days: v.days,
-                                  enabled: !v.enabled,
-                                })
-                              }
-                            >
-                              <span />
-                            </button>
-                          </div>
-                          <h3>
-                            {v.start_time} <span>—</span> {v.end_time}
-                          </h3>
-                          <p>
-                            {v.days === "weekdays"
-                              ? "Monday – Friday"
-                              : v.days === "weekends"
-                                ? "Saturday & Sunday"
-                                : "Every day"}
-                            {v.end_time < v.start_time ? " · Overnight" : ""}
-                          </p>
-                          <div className="routine-bottom">
-                            <small>Saved · Not applied to a device</small>
-                            <button
-                              className="text-button"
-                              aria-label={`Edit ${v.name}`}
-                              onClick={() => openRoutine(v)}
-                            >
-                              Edit
-                            </button>
-                          </div>
-                        </article>
-                      ))}
-                    </div>
-                  ) : (
-                    <section className="panel routine-empty">
-                      <span className="empty-icon">
-                        <Clock3 size={25} />
-                      </span>
-                      <div>
-                        <h2>Homework, bedtime, or a little quiet time.</h2>
-                        <p>
-                          Build routines that fit your family. Start with one.
-                        </p>
-                      </div>
-                      <button
-                        className="secondary"
-                        onClick={() => openRoutine()}
-                      >
-                        Create a routine <Plus size={16} />
-                      </button>
-                    </section>
-                  )}
-                </section>
-              )}
-              {tab === "Requests" && (
-                <section className="panel empty-state">
-                  <span className="empty-icon">
-                    <Inbox size={30} />
-                  </span>
-                  <h2>Nothing asking for your attention.</h2>
-                  <p>
-                    When Sideby Connect is available, your children can ask for
-                    extra time and app access. Their requests will arrive here.
-                  </p>
-                  <span className="status neutral">
-                    Waiting for a connected device
-                  </span>
-                </section>
-              )}
-              {tab === "Settings" && (
-                <div className="settings-grid">
-                  <section className="panel">
-                    <h2>Family details</h2>
-                    <form
-                      className="settings-form"
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        mutate("/api/family", "PATCH", {
-                          name: String(
-                            new FormData(e.currentTarget).get("name"),
-                          ),
-                        });
-                      }}
-                    >
-                      <label>
-                        Family name
-                        <input
-                          name="name"
-                          defaultValue={data.family.name}
-                          required
-                          maxLength={60}
-                        />
-                      </label>
-                      <button disabled={busy} className="primary">
-                        Save changes
-                      </button>
-                    </form>
-                  </section>
-                  <section className="panel">
-                    <h2>Your account</h2>
-                    <p className="account-name">{data.user.name}</p>
-                    <p className="muted">{data.user.email}</p>
-                    <button
-                      className="secondary spaced"
-                      disabled={busy}
-                      onClick={signOut}
-                    >
-                      <LogOut size={16} /> Sign out
-                    </button>
-                    <a
-                      className="text-button spaced"
-                      href="/auth/forgot-password"
-                    >
-                      Reset your password
-                    </a>
-                  </section>
-                  <section className="panel">
-                    <h2>Your data, in your hands.</h2>
-                    <p className="muted spaced">
-                      Download your saved family profiles and routines. Profile
-                      photos stay in private storage.
-                    </p>
-                    <a href="/api/export" className="secondary spaced">
-                      <Download size={16} /> Export family data
-                    </a>
-                    <button
-                      className="text-button spaced"
-                      onClick={() => {
-                        go("Children");
-                        setShowArchived(true);
-                      }}
-                    >
-                      Manage archived profiles
-                    </button>
-                  </section>
-                  <section className="panel">
-                    <h2>Connection status</h2>
-                    <p className="account-name">{live}</p>
-                    <p className="muted">
-                      Family changes sync between your signed-in browser
-                      sessions. This is account data, not phone screen sharing.
-                    </p>
-                    <button
-                      className="text-button spaced"
-                      onClick={() => window.location.reload()}
-                    >
-                      <RefreshCw size={15} /> Reconnect
-                    </button>
-                  </section>
-                </div>
-              )}
-            </>
-          )}
+            )}
+          </>
           <footer className="page-footer">
             <ShieldCheck size={15} /> Your family. Your space.
             <span>Sideby Parent · Early access</span>
@@ -839,7 +694,6 @@ export default function Dashboard({ userId }: { userId: string }) {
                 name: String(f.get("name")),
                 age: Number(f.get("age")),
                 color: String(f.get("color")),
-                daily_limit: Number(f.get("daily_limit")),
                 archived: editChild?.archived || false,
               };
               if (
@@ -885,21 +739,9 @@ export default function Dashboard({ userId }: { userId: string }) {
                 </select>
               </label>
             </div>
-            <label>
-              Daily allowance · minutes
-              <input
-                name="daily_limit"
-                type="number"
-                min="15"
-                max="720"
-                step="15"
-                required
-                defaultValue={editChild?.daily_limit || 120}
-              />
-            </label>
             <p className="muted">
-              A saved starting point for future device setup. You can adjust it
-              anytime.
+              No daily limit. Add their profile now, then connect their device
+              from their space.
             </p>
             <button className="primary" disabled={busy}>
               {busy ? "Saving…" : editChild ? "Save changes" : "Add child"}
