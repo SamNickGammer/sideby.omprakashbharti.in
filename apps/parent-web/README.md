@@ -28,7 +28,7 @@ Root `npm run build` and `npm run typecheck` check both web applications. Websit
 - Unrestricted usage by default; saved routines are preferences, not device enforcement.
 - Bookmarkable Child’s Space sections with server-side owner checks and responsive contextual navigation.
 - Photo gallery, Contacts, Call history and Messages empty views. Messages separates SMS and Social notifications, with six source filters. No device content is collected.
-- Expiring pairing codes, parent confirmation, multiple devices per child, heartbeat status and revocation. Simulated companion HTTP tests pass; Android integration is still pending.
+- Expiring pairing codes, parent confirmation, multiple devices per child, heartbeat status and revocation. Simulated companion tests and the first Android emulator integration pass; see [Android evidence](../../docs/ANDROID_CONNECTION.md).
 
 ## Routes and source map
 
@@ -52,7 +52,7 @@ Build and type checks are safe local checks. Live service tests create synthetic
 
 ## Before Android and before public launch
 
-The next Android milestone is only visible installation, pairing, confirmation, secure credential storage, heartbeat and revocation. It does not require notification, SMS, contacts, camera or microphone permissions. See [readiness](../../docs/PARENT_WEB_READINESS.md).
+The implemented Android connection milestone covers only visible installation, pairing, confirmation, secure credential storage, heartbeat and revocation. It does not require notification, SMS, contacts, camera or microphone permissions. See [readiness](../../docs/PARENT_WEB_READINESS.md).
 
 Recovery email delivery, account deletion, retention, production rate limits, backups, monitoring and a wider accessibility/security review remain launch gates. Co-parent invitations, device activity, enforcement and media are not implemented. Pairing does not enable disabled controls.
 

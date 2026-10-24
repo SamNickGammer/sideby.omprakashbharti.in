@@ -1,0 +1,5 @@
+simulation: android-pairing
+routing: path
+mocks:
+  - routeKey: api
+    path: ../mocks/sideby-pairing/config.yaml

@@ -1,6 +1,6 @@
 # Sideby architecture
 
-Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; Android and multi-guardian architecture below remains planned.
+Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; the Kotlin Android companion now implements pairing and foreground check-ins with Keystore-encrypted session storage. Android content/enforcement/media and multi-guardian architecture below remain planned. See [Android connection](ANDROID_CONNECTION.md).
 
 ## Components
 
@@ -10,7 +10,7 @@ Status: connected parent-web foundation implemented on 24 October 2026. Neon Pos
 - Authentication: Neon Auth with its Next.js server adapter and secure session cookies. Server routes verify sessions. Native mobile compatibility remains to be validated.
 - Next.js server routes: initial application backend, with contract-first APIs before client integration.
 - Vercel: candidate web host; not a host for the media server.
-- Kotlin Android app: permission handling, usage collection, validated enforcement, local rules, and live-media publishing.
+- Kotlin Android app: implemented visible pairing, secure session storage and foreground heartbeat. Permission handling, usage collection, validated enforcement, local rules and live-media publishing remain planned.
 - LiveKit: candidate WebRTC media service. Managed cloud first for a prototype; choose paid hosting only after estimating session minutes and traffic.
 
 ## Data and authorization

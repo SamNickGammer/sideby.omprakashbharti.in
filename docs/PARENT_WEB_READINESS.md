@@ -1,6 +1,6 @@
 # Parent web readiness
 
-Reviewed 24 October 2026. The parent web foundation is ready to serve as the integration target for the first Android pairing test. It is not ready for an unrestricted public parental-control launch.
+Reviewed 24 October 2026. The parent web foundation is ready to serve as the integration target for Android connection testing; the first API 37 emulator pairing/check-in flow now passes against the local parent server. It is not ready for an unrestricted public parental-control launch.
 
 ## Ready for companion integration
 
@@ -17,7 +17,7 @@ Reviewed 24 October 2026. The parent web foundation is ready to serve as the int
 1. Install the visible Sideby Connect app on an emulator or test phone.
 2. Parent creates a pairing code for a synthetic child.
 3. Companion claims the code; parent compares details and approves.
-4. Companion stores the returned credential securely, sends heartbeat, and parent sees updated check-in status.
+4. Companion generates and securely stores its credential before claiming, sends heartbeat, and parent sees updated check-in status.
 5. Restart the companion and check reconnection. Test expired/reused codes, offline recovery and revoked credentials.
 6. Confirm that another family's account cannot access the device.
 

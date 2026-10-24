@@ -66,3 +66,7 @@ Added a separate Next.js static website workspace and updated the parent app REA
 Synthetic illustration previews: [desktop website](previews/website-desktop.png), [mobile website](previews/website-mobile.png). Deployment verification is tracked in [DEPLOYMENT.md](DEPLOYMENT.md). These checks do not replace a full accessibility audit.
 
 Public hosting verification: Vercel production deployment reached READY, the Cloudflare CNAME passed Vercel verification, and both the Vercel URL and custom domain returned HTTP 200 with expected content. A live browser load passed at 390×844 with a 375px document width and zero missing images. See [live mobile preview](previews/website-live-mobile.png).
+
+## Android companion connection — 24 October 2026
+
+The native Sideby Connect app now passes local emulator pairing, approval, heartbeat, process restart, interrupted-network recovery and parent revocation. Debug/release compilation, five policy unit tests and Android lint passed. Encrypted preference storage and removal after revocation were inspected without exposing credentials. See [Android evidence and limits](ANDROID_CONNECTION.md). Earlier simulated-companion results above remain historical backend checks; physical devices, older APIs and background operation remain unverified.
