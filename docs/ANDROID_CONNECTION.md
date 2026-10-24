@@ -42,3 +42,19 @@ Physical phones, API 26–36, background syncing, battery behavior, accessibilit
 ## Next milestones
 
 Test a real Android phone and older supported Android versions; decide background check-in design and battery tradeoffs; establish device credential renewal and recovery; then implement each additional permission-based capability independently. Minimum build API is 26, but a build setting alone is not a tested support matrix.
+
+## Repeat installation and pairing audit
+
+Repeated on 24 October 2026 after the initial PR, using a newly created synthetic family and pairing code:
+
+- Reinstalled the debug APK on API 37; entered the fresh code in the Android UI.
+- Both screens displayed the same confirmation fingerprint; approved in the parent browser.
+- Android displayed paired/check-in received; the local parent dashboard displayed one device, Seen recently and a new last-seen timestamp.
+- Audited the Android manifest, request payloads and parent heartbeat implementation: only INTERNET is declared. The app sends device name/platform during claim and its credential during heartbeat; the server records the check-in time. No runtime permission checklist, permission-status upload, phone content, location or live media is implemented.
+- Found and corrected a stale success message that continued to say waiting for a check-in after one had arrived. The Devices page now explicitly explains the data available in this version.
+
+The requested full onboarding flow is **not complete**. It must distinguish device pairing, individual permission decisions, collection/sync success and active media sessions. Runtime permissions should be requested in context for implemented features, remain optional and reflect revocation. Accessibility and device-admin activation are separate mechanisms, not blanket grants. Screen sharing requires Android consent for each session, not a permanent setup checkbox. See Android's [permission guidance](https://developer.android.com/training/permissions/requesting) and [media projection guidance](https://developer.android.com/media/grow/media-projection).
+
+Repeat-test evidence: ![Parent receives the new device check-in](previews/android-pairing-retest.png)
+
+The manual check-in advanced last-seen time again. Root web build and type checks passed after the status-copy correction.
