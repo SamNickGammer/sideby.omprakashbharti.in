@@ -63,3 +63,7 @@ Backend-outage drill: stopping the local web backend during an active camera ses
 ### Viewer presentation
 
 The video occupies the full inner bezel without an inset panel. Screen mode follows the incoming video dimensions, including rotation, to preserve the complete screen without stretching or cropping. Camera mode fills the phone display with a centered crop. Decorative notch/home/status overlays are hidden during video so they do not cover the device’s own UI; live status remains in the caption. Idle/ended icons and copy are centered together. Layout was checked with synthetic display dimensions at desktop and mobile widths; this polish did not change session authorization or capture.
+
+Android screen capture uses LiveKit’s native display dimensions (`VideoCaptureParameter(0, 0, 10)`) rather than a fixed 16:9 virtual display. This avoids Android embedding black side bars around taller phones; the parent viewer follows the resulting video ratio. Native resolution can increase bandwidth and encoder load; physical-device performance remains to be measured. Android may still letterbox a single shared app whose bounds differ from the display.
+
+Verified the capture correction on API 37: encoder logs report 1080 × 2400 input/output and a fresh, OS-approved entire-screen session displayed without side bars in the signed-in parent dashboard. Debug/release builds, 13 unit tests, lint, root build and typecheck passed. The updated APK preserves the emulator pairing.

@@ -132,7 +132,9 @@ class LiveActivity:Activity(){
     api(id,"approve");withContext(Dispatchers.IO){PairingApi().reportPermissions(connection!!,PermissionSnapshot.report(this@LiveActivity))};val grant=api(id,"join");ensureActive()
     val r=LiveKit.create(applicationContext);room=r
     r.videoTrackCaptureDefaults=LocalVideoTrackOptions(deviceId=if(kind=="camera")cameraDevice(s.getString("desired_lens")) else null,position=if(s.getString("desired_lens")=="back")CameraPosition.BACK else CameraPosition.FRONT,captureParams=VideoCaptureParameter(640,480,15))
-    r.screenShareTrackCaptureDefaults=LocalVideoTrackOptions(isScreencast=true,captureParams=VideoCaptureParameter(1280,720,10))
+    // LiveKit uses (0, 0) to follow real display dimensions, including rotation.
+    // A fixed 16:9 capture makes Android letterbox tall phone screens inside the video.
+    r.screenShareTrackCaptureDefaults=LocalVideoTrackOptions(isScreencast=true,captureParams=VideoCaptureParameter(0,0,10))
     r.connect(grant.getString("url"),grant.getString("token"));ensureActive()
     if(ended||(!visible&&kind!="screen"))error("Session stopped")
     val success=when(kind){"screen"->r.localParticipant.setScreenShareEnabled(true,ScreenCaptureParams(projection?:error("Missing system approval"),620,screenNotification(),onStop={scope.launch{if(request?.optString("id")==id)finishSession("Screen sharing stopped by Android.")}}));"camera"->r.localParticipant.setCameraEnabled(true);else->r.localParticipant.setMicrophoneEnabled(true)}

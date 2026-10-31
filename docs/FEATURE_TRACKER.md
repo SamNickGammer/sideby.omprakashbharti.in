@@ -187,6 +187,8 @@ Final handoff check (2026-10-31): the final APK installed successfully, but the 
 - [x] Follow-up UI fix: reset the placeholder heading to block layout (global h2 was flex). Verified actual dashboard screenshot plus text-range centering for ready, ended and multiline approval messages at 1440px and 390px; offsets within 0.01px. Root build/typecheck passed.
 - [x] UI polish: edge-to-edge display inside the bezel, native screen proportions and centered idle/ended content. Browser layout checks at 390px and 1440px verified zero centering offset, bezel-only video inset and no mobile horizontal overflow; root build/typecheck passed.
 
+- [x] Screen capture aspect-ratio fix: native display capture removes encoded side bars. Updated APK installed with pairing preserved; API 37 emulator emitted 1080 × 2400 frames and the actual parent viewer displayed the screen edge-to-edge within its rounded bezel. Debug/release builds, 13 unit tests, lint and root web build/typecheck passed. Physical-device bandwidth and single-app window modes remain unverified.
+
 Active work: visible Start Screen/Camera/Audio sessions under [the live contract](LIVE_SHARING.md). Dedicated `feat/live-sharing` branch depends on unmerged PR #19. Local LiveKit integration, device approvals, media supervisor and isolation tests are implemented. Not merged or deployed.
 
 - [ ] End-to-end visible, stoppable screen session.
