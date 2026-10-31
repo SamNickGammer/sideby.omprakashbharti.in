@@ -3158,7 +3158,7 @@ label {
   pointer-events: none;
 }
 .live-placeholder svg { flex-shrink:0; }
-.live-placeholder h2, .live-placeholder p { width:100%; text-align:center; }
+.live-placeholder h2, .live-placeholder p { display:block; width:100%; text-align:center; }
 .live-phone .phone-status { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 32px); margin:0; z-index:2; }
 .live-phone.has-video .phone-island,
 .live-phone.has-video .phone-home,

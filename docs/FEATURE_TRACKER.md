@@ -184,6 +184,7 @@ Final handoff check (2026-10-31): the final APK installed successfully, but the 
 
 ### F13 · View-only screen sharing — local milestone in review
 
+- [x] Follow-up UI fix: reset the placeholder heading to block layout (global h2 was flex). Verified actual dashboard screenshot plus text-range centering for ready, ended and multiline approval messages at 1440px and 390px; offsets within 0.01px. Root build/typecheck passed.
 - [x] UI polish: edge-to-edge display inside the bezel, native screen proportions and centered idle/ended content. Browser layout checks at 390px and 1440px verified zero centering offset, bezel-only video inset and no mobile horizontal overflow; root build/typecheck passed.
 
 Active work: visible Start Screen/Camera/Audio sessions under [the live contract](LIVE_SHARING.md). Dedicated `feat/live-sharing` branch depends on unmerged PR #19. Local LiveKit integration, device approvals, media supervisor and isolation tests are implemented. Not merged or deployed.
