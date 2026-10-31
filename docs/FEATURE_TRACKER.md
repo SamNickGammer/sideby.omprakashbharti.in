@@ -11,7 +11,7 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current milestone: **F13–F15 — visible live sharing implemented locally**, on `feat/live-sharing`, pending owner review and dependent on PR #19. Physical-device and production release gates remain unchecked.
+Current milestone: **F13–F15 — visible live sharing implemented locally**, on `feat/live-sharing`; [PR #20](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/20) awaits owner review and depends on PR #19. Physical-device and production release gates remain unchecked.
 
 Previous content milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; [PR #19](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/19) awaits owner review and depends on #17. SMS/call access remains installer-dependent.
 
