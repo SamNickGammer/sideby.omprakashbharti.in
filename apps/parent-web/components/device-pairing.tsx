@@ -2,6 +2,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { Copy, Link2, Smartphone, ShieldCheck, RefreshCw } from "lucide-react";
 import type { Child } from "../lib/types";
+import DevicePermissions from "./device-permissions";
+import type { PermissionReport } from "../lib/device-permissions";
 type Device = {
   id: string;
   name: string;
@@ -10,6 +12,8 @@ type Device = {
   last_seen_at: string | null;
   revoked_at: string | null;
   credential_expires_at: string;
+  permission_report: PermissionReport | null;
+  permissions_updated_at: string | null;
 };
 type Offer = {
   id: string;
@@ -55,6 +59,7 @@ export default function DevicePairing({
   useEffect(() => {
     const controller = new AbortController();
     const load = () => {
+      setNow(Date.now());
       if (!document.hidden)
         refresh(controller.signal).catch((e) => {
           if (!controller.signal.aborted) setError(e.message);
@@ -267,7 +272,7 @@ export default function DevicePairing({
         <p>One child, room for more than one device.</p>
         <p className="pairing-note">
           This version receives the device name, Android platform and last
-          check-in time while Sideby Connect is open. Permission status, location,
+          check-in time and permission reports while Sideby Connect is open. Location,
           phone content and live screen, camera or microphone access are not
           available yet. A paired device does not mean those features are enabled.
         </p>
@@ -315,6 +320,9 @@ export default function DevicePairing({
                   Last seen {new Date(device.last_seen_at).toLocaleString()}
                 </p>
               )}
+              <DevicePermissions name={device.name} report={device.permission_report}
+                updatedAt={device.permissions_updated_at} now={now}
+                inactive={!!device.revoked_at || expired || child.archived} />
               {!device.revoked_at &&
                 (confirm === device.id ? (
                   <div className="disconnect-confirm">

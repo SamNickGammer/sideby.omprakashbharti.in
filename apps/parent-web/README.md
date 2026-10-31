@@ -61,3 +61,7 @@ For hosting and canonical origins, see [deployment](../../docs/DEPLOYMENT.md). D
 ## Development and recovery
 
 Use Git `dev` with Neon `dev`; see [environment setup](../../docs/ENVIRONMENTS.md). Local dev starts at port 3005. Forgot password now uses an emailed six-digit code, password confirmation, resend cooldown and generic acknowledgement. Email delivery and a completed real-mailbox reset must be verified by the account holder.
+
+## Device permissions
+
+Each device card now opens a permission-status dialog. Recent grants are green, missing grants/session consent amber, and unavailable or stale reports gray. Reports expire visually after two minutes; historical grants are never presented as current. This is status visibility, not content collection. Apply `db/migrations/004_device_permissions.sql` before running this version. See [contract and validation](../../docs/DEVICE_PERMISSIONS.md).

@@ -56,3 +56,7 @@ Each child has a direct, owner-authorized URL with a contextual sidebar. Family 
 The web dashboard includes separate Photo gallery, Messages, Contacts and Call history routes. No content is collected yet. Photos initially cover explicitly selected/shared images; contacts are optional and permission-based. SMS and call-log support requires Android/distribution feasibility review. Call history excludes recordings; SMS does not imply access to private conversations in other apps. Device-side disclosure, authorization, revocation and retention must be specified before ingestion is built.
 
 Messages has separate SMS and Social notifications tabs. The Social view filters notification previews by source app (WhatsApp, Telegram, Instagram, Facebook, other apps or all apps). It does not provide complete chat histories or content hidden from notifications. The web controls are implemented; collection and syncing await the Android companion.
+
+## Device permission status
+
+The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.

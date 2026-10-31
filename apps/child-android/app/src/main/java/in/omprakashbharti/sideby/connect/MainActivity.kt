@@ -119,12 +119,18 @@ class MainActivity : Activity() {
             content.label(if(message.isNotEmpty())message else if(busy)"Checking connection…" else "Ready to check in.",13f,muted); content.space(20)
             content.addView(button(if(s.connected)"Check in now" else "Check approval") { sync() }.apply { isEnabled=!busy }); content.space(12)
             content.addView(button(if(s.connected)"Forget this connection" else "Cancel on this device",true) { confirmForget() })
+            content.space(12)
+            content.addView(button("Permissions on this device",true) {
+                AlertDialog.Builder(this).setTitle("Your permission status")
+                    .setMessage(PermissionSnapshot.description(this) + "\n\nThese statuses are shared with your parent at check-in. They do not mean phone content is being shared. Screen sharing needs consent for each session when supported.")
+                    .setPositiveButton("Done",null).show()
+            })
             if(BuildConfig.DEBUG) { content.space(20); content.label("Local test server\n${s.origin}",11f,muted) }
         }
         content.space(30)
         val info=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL; setPadding(dp(18),dp(18),dp(18),dp(18)); background=background(Color.rgb(242,244,238),12) }
         info.label("A connection you can see.",14f,ink,true); info.space(8)
-        info.label("This version shares only the device name, Android platform and check-in time. It does not read messages, contacts, photos or location, and cannot use the camera or microphone.",12f,muted)
+        info.label("This version shares the device name, Android version, app version, check-in time and this app’s permission status. It does not read messages, contacts, photos or location, and cannot use the camera or microphone.",12f,muted)
         info.space(10); info.label("Check-ins run while this app is open. Background syncing is not included yet.",12f,muted)
         if(BuildConfig.DEBUG) { info.space(10); info.label("Development build · local connection testing",10f,green,true) }
         content.addView(info)
@@ -155,6 +161,12 @@ class MainActivity : Activity() {
                     updated=current.copy(connected=true,code="",lastSeen=seen)
                     note="Check-in received. Your parent can see this device’s latest status."
                     delay=60000L
+                    try {
+                        api.reportPermissions(updated, PermissionSnapshot.report(this))
+                        note="Check-in and permission status received by your parent."
+                    } catch (_: Exception) {
+                        note="Check-in received, but permission status could not sync. We’ll retry at the next check-in."
+                    }
                 } catch(e:ApiFailure) {
                     if(e.status!=401)throw e
                     if(current.connected) { remove=true; note="This connection is no longer authorised. Ask your parent for a new pairing code." }

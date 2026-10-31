@@ -48,8 +48,9 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Multiple device records for each child.
 - Scoped device credentials, heartbeat status and revocation.
 - Server-side family ownership checks and tested pairing boundaries.
+- Device permission summaries and a detailed popup showing recent, unavailable and stale states. See [permission reporting](docs/DEVICE_PERMISSIONS.md).
 
-Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Recovery email delivery and a full password reset still require verification.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 

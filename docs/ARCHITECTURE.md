@@ -52,3 +52,7 @@ Migration 002 removes the default and NOT NULL constraint from the legacy `daily
 ## Pairing milestone
 
 Migration 003 adds pairing offers and multiple devices per child. See [pairing contract](PAIRING.md) for code lifecycle, confirmation, scoped credential expiry/revocation and check-in semantics. Pairing uses database row locks and atomic approval; only SHA-256 hashes of codes and device credentials persist. Companion credentials authorize only heartbeat, never family reads or monitoring.
+
+## Device permission status
+
+The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.

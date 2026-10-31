@@ -34,3 +34,7 @@ node --env-file=.env.local scripts/cleanup-test-data.mjs
 ```
 
 The checked-in Markdown contract is authoritative. The Postman collection checks public rejection boundaries; the Node script exercises the full authenticated lifecycle and concurrency against the real local server. Native clients must generate a fresh credential for each pairing and show `SHA256("verify:" + credential).slice(0, 8).toUpperCase()` for comparison.
+
+## Device permission status
+
+The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.
