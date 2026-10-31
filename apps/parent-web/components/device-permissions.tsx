@@ -30,7 +30,7 @@ export default function DevicePermissions({ name, report, updatedAt, now, inacti
         <button type="button" className="icon-button" aria-label="Close permissions" onClick={() => dialog.current?.close()}><X size={20} /></button>
       </div>
       <p className="permission-device-name">{name}</p>
-      <p id={description} className="muted">These are device-reported permissions, not proof that a feature is sharing data. Permissions are controlled on the device.</p>
+      <p id={description} className="muted">These are device-reported permissions, not proof that a feature is sharing data. Permissions are controlled on the device. Open Sideby Connect → Permissions on this device to review access, then refresh and send status.</p>
       <div className="permission-report-info">
         {!report ? "No report yet. Update Sideby Connect and keep it open to check in." : <>
           <strong>{fresh ? "Recent device report" : "Historical report — permissions may have changed"}</strong>
@@ -46,6 +46,7 @@ export default function DevicePermissions({ name, report, updatedAt, now, inacti
           {state ? `${!fresh ? "Last reported: " : ""}${permissionStatusLabels[state]}` : "Not reported"}
         </span></li>;
       })}</ul>
+      <p className="permission-help">Usage Access setup is optional. A grant does not enable usage reports in this version. Unavailable features cannot be enabled yet.</p>
       <p className="permission-help">Green: granted · Amber: not allowed or session approval needed · Gray: unavailable or unconfirmed. Screen sharing needs approval for each session.</p>
       <button className="secondary" onClick={() => dialog.current?.close()}>Done</button>
     </dialog>

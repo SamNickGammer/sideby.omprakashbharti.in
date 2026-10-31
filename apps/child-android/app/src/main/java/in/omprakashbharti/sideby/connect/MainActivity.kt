@@ -121,9 +121,7 @@ class MainActivity : Activity() {
             content.addView(button(if(s.connected)"Forget this connection" else "Cancel on this device",true) { confirmForget() })
             content.space(12)
             content.addView(button("Permissions on this device",true) {
-                AlertDialog.Builder(this).setTitle("Your permission status")
-                    .setMessage(PermissionSnapshot.description(this) + "\n\nThese statuses are shared with your parent at check-in. They do not mean phone content is being shared. Screen sharing needs consent for each session when supported.")
-                    .setPositiveButton("Done",null).show()
+                startActivity(android.content.Intent(this, PermissionActivity::class.java))
             })
             if(BuildConfig.DEBUG) { content.space(20); content.label("Local test server\n${s.origin}",11f,muted) }
         }

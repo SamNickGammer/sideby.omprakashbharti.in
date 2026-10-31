@@ -65,3 +65,5 @@ Use Git `dev` with Neon `dev`; see [environment setup](../../docs/ENVIRONMENTS.m
 ## Device permissions
 
 Each device card now opens a permission-status dialog. Recent grants are green, missing grants/session consent amber, and unavailable or stale reports gray. Reports expire visually after two minutes; historical grants are never presented as current. This is status visibility, not content collection. Apply `db/migrations/004_device_permissions.sql` before running this version. See [contract and validation](../../docs/DEVICE_PERMISSIONS.md).
+
+Usage Access may now show granted/not allowed after optional Android setup. The popup explains how to refresh status on the device; this does not indicate that usage history is syncing.

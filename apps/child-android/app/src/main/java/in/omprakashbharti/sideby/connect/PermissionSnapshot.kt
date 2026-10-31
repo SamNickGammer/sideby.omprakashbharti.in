@@ -1,5 +1,6 @@
 package `in`.omprakashbharti.sideby.connect
 
+import android.app.AppOpsManager
 import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
@@ -14,6 +15,15 @@ object PermissionSnapshot {
         "photos" to "Photos", "contacts" to "Contacts", "sms" to "SMS messages",
         "call_history" to "Call history", "screen_share" to "Screen sharing"
     )
+    fun usageGranted(context: Context): Boolean = try {
+        val ops = context.getSystemService(AppOpsManager::class.java)
+        @Suppress("DEPRECATION")
+        val mode = if (Build.VERSION.SDK_INT >= 29)
+            ops.unsafeCheckOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), context.packageName)
+        else ops.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), context.packageName)
+        mode == AppOpsManager.MODE_ALLOWED
+    } catch (_: SecurityException) { false }
+
     fun states(context: Context): Map<String, String> {
         @Suppress("DEPRECATION")
         val declared = context.packageManager.getPackageInfo(context.packageName, PackageManager.GET_PERMISSIONS).requestedPermissions?.toSet() ?: emptySet()
@@ -25,7 +35,7 @@ object PermissionSnapshot {
             "camera" to permission(Manifest.permission.CAMERA),
             "microphone" to permission(Manifest.permission.RECORD_AUDIO),
             "location" to permission(Manifest.permission.ACCESS_COARSE_LOCATION),
-            "notifications" to "not_available", "usage" to "not_available", "photos" to "not_available",
+            "notifications" to "not_available", "usage" to if (usageGranted(context)) "granted" else "not_granted", "photos" to "not_available",
             "contacts" to permission(Manifest.permission.READ_CONTACTS),
             "sms" to permission(Manifest.permission.READ_SMS),
             "call_history" to permission(Manifest.permission.READ_CALL_LOG), "screen_share" to "not_available"

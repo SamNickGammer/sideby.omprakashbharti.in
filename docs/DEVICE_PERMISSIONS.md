@@ -1,6 +1,6 @@
 # Device permission visibility
 
-This milestone reports permission state only. It does not collect messages, call logs, installed-app inventories, photos, location or media, enable Accessibility/device admin, or request new sensitive permissions.
+This milestone reports permission state only. It does not collect messages, call logs, installed-app inventories, photos, location or media, enable Accessibility/device admin, or request camera, microphone, location or content permissions. Optional Usage Access setup is available; it reports the grant state without reading usage history.
 
 ## Contract
 
@@ -16,10 +16,16 @@ Owner-authorized `GET /api/children/:id/devices` includes nullable `permission_r
 
 A color-coded device-card summary opens a native modal dialog with text labels, timestamp, device/app version and a row per capability. Green means a recent device-reported grant, amber means not allowed or session consent needed, gray means unsupported/missing/stale. Color is not the only indication. Escape and close return focus to the opening button.
 
-Android checks only permissions declared by this build. Unsupported features report not_available, not denied. INTERNET is automatically granted at installation. All other features in the current build are unavailable; reporting does not request them. The child app visibly lists the same snapshot and sends it after each foreground check-in. Failure to send the report does not erase a successful pairing. Reports are self-reported status, not hardware attestation or proof that content syncing works.
+Android checks only permissions declared by this build. Unsupported features report not_available, not denied. INTERNET is automatically granted at installation. Usage Access is optional and user-controlled through Android settings. Its grant is checked through AppOps and reported as granted/not_granted. The permission setup page explains that no usage history is collected, supports skipping setup, refreshes on returning from settings, and can send status manually. All remaining capabilities are unavailable. The child app visibly lists the same snapshot and sends it after each foreground check-in and when the permission page resumes. Failure to send the report does not erase a successful pairing. Reports are self-reported status, not hardware attestation or proof that content syncing works.
 
 ## Validation
 
 Verified on Neon dev: root web build and TypeScript checks; Android debug/release builds, unit tests and lint; 87 HTTP checks plus snapshot assertions in `scripts/verify-pairing.mjs`. Coverage includes strict report validation, latest snapshot replacement, owner isolation, pending/archived/revoked/expired credential rejection, body limits and legacy heartbeats.
 
 An existing paired API 37 emulator was upgraded without clearing its session. Its real report arrived in dev (Internet granted, ten unsupported capabilities), and the Android permission dialog matched. Browser QA used synthetic accounts: modal content, current and historical reports, Escape close and focus restoration. The parent popup was visually checked at desktop width; mobile-browser, physical-device and older-Android validation remain pending. Apply migration 004 before deploying the updated backend; production was not migrated or deployed.
+
+## Optional Usage Access setup
+
+Android 0.2.1 adds a dedicated permission page with explanation, optional system-settings navigation, grant/revoke detection and manual refresh. It does not call UsageStatsManager or collect app activity. Actual digital-wellbeing data remains F06 in the tracker. Returning without granting access leaves pairing usable. No backend schema or contract change is required. See [Android UsageStatsManager](https://developer.android.com/reference/android/app/usage/UsageStatsManager) for the special settings-based access model.
+
+0.2.1 validation: Android debug/release builds, existing unit tests and lint passed; root web builds and type checks passed. Emulator installation stalled both with streamed and non-streaming installs. A cold boot using software rendering reached Android boot completion but did not establish successful APK installation or the new grant/revoke/dashboard flow. These runtime acceptance checks remain pending; no data wipe was performed.
