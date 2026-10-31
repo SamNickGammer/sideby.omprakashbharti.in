@@ -7,7 +7,7 @@ import { permissionReportSchema } from "./device-permissions";
 
 export const digest = (value: string) =>
   createHash("sha256").update(value).digest("hex");
-export async function smallBody(req: Request) {
+export async function smallBody(req: Request, limit = 2048) {
   const reader = req.body?.getReader();
   if (!reader) throw new HttpError(400, "JSON body required.");
   let size = 0;
@@ -16,7 +16,7 @@ export async function smallBody(req: Request) {
     const { done, value } = await reader.read();
     if (done) break;
     size += value.length;
-    if (size > 2048) {
+    if (size > limit) {
       await reader.cancel();
       throw new HttpError(413, "Request too large.");
     }
@@ -148,7 +148,11 @@ export async function reportPermissions(req: Request) {
   if (!token) throw new HttpError(401, "Device is not authorized.");
   const report = permissionReportSchema.parse(await smallBody(req));
   const [row] = await sql`UPDATE sideby_devices d
-    SET permission_report=${JSON.stringify(report)}::jsonb,permissions_updated_at=now()
+    SET permission_report=${JSON.stringify(report)}::jsonb,permissions_updated_at=now(),
+    usage_report=CASE WHEN ${report.permissions.usage}='granted' THEN usage_report ELSE NULL END,
+    content_reports=(SELECT COALESCE(jsonb_object_agg(key,CASE
+      WHEN key IN ('contacts','notifications','sms','calls') AND COALESCE(${JSON.stringify(report.permissions)}::jsonb->>(CASE WHEN key='calls' THEN 'call_history' ELSE key END),'')<>'granted'
+      THEN value || jsonb_build_object('status','no_permission','items','[]'::jsonb,'omitted',0) ELSE value END),'{}'::jsonb) FROM jsonb_each(d.content_reports))
     WHERE credential_hash=${digest(token)} AND revoked_at IS NULL AND credential_expires_at>now()
     AND EXISTS(SELECT 1 FROM sideby_children c WHERE c.id=d.child_id AND NOT c.archived)
     RETURNING permissions_updated_at AS received_at`;

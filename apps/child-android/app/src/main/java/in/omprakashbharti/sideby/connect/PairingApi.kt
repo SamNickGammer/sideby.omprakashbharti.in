@@ -38,6 +38,11 @@ class PairingApi {
             return JSONObject(text)
         } finally { connection.disconnect() }
     }
+    fun live(s:Session,id:String?=null,action:String="poll",lens:String?=null):JSONObject {
+        val body=JSONObject().put("action",action)
+        if(lens!=null)body.put("lens",lens)
+        return request(s,"/api/device/live"+(id?.let { "/$it" }?:""),body,authenticated=true)
+    }
     fun claim(s: Session) {
         val result=request(s,"/api/device/claim",JSONObject().put("code",s.code).put("credential",s.credential).put("name",s.name).put("platform","android"))
         require(result.getString("status") in listOf("pending","approved") && result.getString("verification")==ConnectionPolicy.fingerprint(s.credential)) { "Unexpected pairing response" }
@@ -45,6 +50,13 @@ class PairingApi {
     fun reportPermissions(s: Session, report: JSONObject) {
         val result = request(s, "/api/device/permissions", report, authenticated = true)
         require(result.getString("status") == "received")
+    }
+    fun reportUsage(s: Session, report: JSONObject) {
+        val result = request(s, "/api/device/usage", report, authenticated = true)
+        require(result.getString("status") == "received")
+    }
+    fun reportContent(s:Session,kind:String,report:JSONObject) {
+        require(request(s,"/api/device/content/$kind",report,authenticated=true).getString("status")=="received")
     }
     fun heartbeat(s: Session): String {
         val result=request(s,"/api/device/heartbeat")

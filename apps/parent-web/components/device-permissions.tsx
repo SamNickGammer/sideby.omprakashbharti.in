@@ -46,7 +46,7 @@ export default function DevicePermissions({ name, report, updatedAt, now, inacti
           {state ? `${!fresh ? "Last reported: " : ""}${permissionStatusLabels[state]}` : "Not reported"}
         </span></li>;
       })}</ul>
-      <p className="permission-help">Usage Access setup is optional. A grant does not enable usage reports in this version. Unavailable features cannot be enabled yet.</p>
+      <p className="permission-help">Usage Access alone does not start sharing. On Sideby Connect 0.3.0 or newer, separately enable usage sharing to see activity in Digital wellbeing. In 0.4.0, Manage data sharing controls installed apps, notifications, contacts, supported SMS/calls and selected photos. Photos use a system picker rather than a broad gallery permission. Unavailable camera/media features cannot be enabled yet.</p>
       <p className="permission-help">Green: granted · Amber: not allowed or session approval needed · Gray: unavailable or unconfirmed. Screen sharing needs approval for each session.</p>
       <button className="secondary" onClick={() => dialog.current?.close()}>Done</button>
     </dialog>

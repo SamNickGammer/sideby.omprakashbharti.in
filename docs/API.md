@@ -29,3 +29,15 @@ Child pages use `/dashboard/children/:id` (overview) and `/dashboard/children/:i
 The existing `/api/auth/[...path]` Neon adapter proxies the SDK. `emailOtp.sendVerificationOtp({email,type:"forget-password"})` requests a recovery code. A generic success acknowledgement does not reveal account existence or prove email delivery. `emailOtp.resetPassword({email,otp,password})` submits the code and new password. The provider validates the code, expiry and attempts; the UI confirms passwords match, enforces 12–128 characters and disables resending for 60 seconds. Code/password values are not saved in browser storage. Provider errors remain visible and retryable. This replaces the default forgot-password reset-link request while preserving the legacy reset-link route.
 
 Device permission status reporting is implemented separately from heartbeat: see [permission contract](DEVICE_PERMISSIONS.md). It accepts status metadata only, with the same active-device credential boundary.
+
+## Opt-in Digital wellbeing
+
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.
+
+## Optional device content sharing (0.4.0, local development)
+
+The companion adds separate sharing controls for launcher-visible apps, selected-source notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. The parent pages use authenticated device snapshots with source, timestamps, search/filter, empty/error states and clear controls. No hidden collection or permission bypass. Foreground sync only; notification collection is limited to the visible sharing screen. SMS/call availability is device/installer-dependent, and Google Play eligibility is unverified. See [device content contract](DEVICE_CONTENT.md) and the feature tracker for actual QA status.
+
+## Live sharing local milestone (0.5.0)
+
+Screen, camera and microphone routes now have a local LiveKit integration under [LIVE_SHARING.md](LIVE_SHARING.md). Android explicitly approves each request; screen capture retains OS consent and a visible foreground notification. Camera/audio remain foreground-only. Short-lived source-scoped tokens, two-sided leases and a required room-cleanup supervisor bound access; no recordings or remote control. A permission grant is not session approval. Production hosting, physical-device quality and operational failure drills remain pending. Screen permission reports use `session_required`, never a permanent granted state.

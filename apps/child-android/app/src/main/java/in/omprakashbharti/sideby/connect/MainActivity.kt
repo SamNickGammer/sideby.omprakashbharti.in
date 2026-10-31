@@ -123,12 +123,14 @@ class MainActivity : Activity() {
             content.addView(button("Permissions on this device",true) {
                 startActivity(android.content.Intent(this, PermissionActivity::class.java))
             })
+            content.space(12); content.addView(button("Manage data sharing",true) { startActivity(android.content.Intent(this,SharingActivity::class.java)) })
+            content.space(12); content.addView(button("Live sharing",true) { startActivity(android.content.Intent(this,LiveActivity::class.java)) })
             if(BuildConfig.DEBUG) { content.space(20); content.label("Local test server\n${s.origin}",11f,muted) }
         }
         content.space(30)
         val info=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL; setPadding(dp(18),dp(18),dp(18),dp(18)); background=background(Color.rgb(242,244,238),12) }
         info.label("A connection you can see.",14f,ink,true); info.space(8)
-        info.label("This version shares the device name, Android version, app version, check-in time and this app’s permission status. It does not read messages, contacts, photos or location, and cannot use the camera or microphone.",12f,muted)
+        info.label("This version shares the device name, Android version, app version, check-in time and permission status. If you enable usage sharing, it also shares today’s per-app foreground time. Other sharing (apps, notification previews, contacts, supported SMS/call records and selected photos) is separately enabled in Manage data sharing. Live screen, camera and microphone sessions are separately approved in Live sharing. Location remains unavailable.",12f,muted)
         info.space(10); info.label("Check-ins run while this app is open. Background syncing is not included yet.",12f,muted)
         if(BuildConfig.DEBUG) { info.space(10); info.label("Development build · local connection testing",10f,green,true) }
         content.addView(info)
@@ -161,9 +163,9 @@ class MainActivity : Activity() {
                     delay=60000L
                     try {
                         api.reportPermissions(updated, PermissionSnapshot.report(this))
-                        note="Check-in and permission status received by your parent."
+                        note="Check-in received. " + UsageSharing.sync(this,updated,api) + "\n" + ContentSharing.sync(this,updated,api)
                     } catch (_: Exception) {
-                        note="Check-in received, but permission status could not sync. We’ll retry at the next check-in."
+                        note="Check-in received, but permissions or usage could not sync. We’ll retry at the next check-in."
                     }
                 } catch(e:ApiFailure) {
                     if(e.status!=401)throw e
@@ -180,7 +182,7 @@ class MainActivity : Activity() {
             runOnUiThread {
                 if(isDestroyed||version!=generation)return@runOnUiThread
                 busy=false
-                try { if(remove) { storage.clear(); session=null } else { storage.save(updated); session=updated }; message=note }
+                try { if(remove) { UsageSharing.forget(this,current); ContentSharing.forget(this,current); storage.clear(); session=null } else { storage.save(updated); session=updated }; message=note }
                 catch(_:Exception) { message="Could not save the connection securely. Close the app and try again." }
                 render()
                 if(active&&session!=null)handler.postDelayed(tick,delay)
@@ -191,7 +193,7 @@ class MainActivity : Activity() {
         AlertDialog.Builder(this).setTitle("Forget this connection?")
             .setMessage("This removes the saved key from this device and stops check-ins here. Your parent must also disconnect or cancel it in Sideby Parent to revoke access on the server.")
             .setNegativeButton("Keep connection",null).setPositiveButton("Forget") { _,_ ->
-                generation++; handler.removeCallbacks(tick); storage.clear(); session=null; busy=false; message="Connection removed from this device."; render()
+                generation++; handler.removeCallbacks(tick); session?.let { UsageSharing.forget(this,it); ContentSharing.forget(this,it) }; storage.clear(); session=null; busy=false; message="Connection removed from this device."; render()
             }.show()
     }
 }

@@ -1,6 +1,6 @@
 # Sideby Connect — Android
 
-Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. This version reports its grant state only. No phone content is collected and no restrictions are enforced.
+Visible Kotlin companion for testing device connection to Sideby Parent. It supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.5.0 supports separately opted-in usage/content snapshots and visible live sessions described below. Location and device restrictions remain unimplemented.
 
 ## Open and build
 
@@ -48,8 +48,26 @@ The local Postman simulation models pending approval only; see `postman/mocks/si
 
 ## Permission reports (0.2.0)
 
-After each successful foreground check-in, the app sends its own permission statuses, app version and Android API version. Open **Permissions on this device** to inspect the same information locally. Internet is automatically granted; version 0.2.1 adds optional Usage Access setup described below. Remaining listed capabilities are unavailable. No phone content is read. Report failures retry on the next check-in without removing the pairing. Upgrade with `adb install -r` to preserve the existing connection. The backend requires migration 004. See [permission contract](../../docs/DEVICE_PERMISSIONS.md).
+After each successful foreground check-in, the app sends its own permission statuses, app version and Android API version. Open **Permissions on this device** to inspect the same information locally. Internet is automatically granted; version 0.2.1 adds optional Usage Access setup described below. Permission reports themselves contain no phone content. Version 0.4.0 adds separately enabled data sharing; see below. Report failures retry on the next check-in without removing the pairing. Upgrade with `adb install -r` to preserve the existing connection. The backend requires migration 004. See [permission contract](../../docs/DEVICE_PERMISSIONS.md).
 
 ## Permission setup (0.2.1)
 
-Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location, photos, contacts, notifications, SMS, calls and screen sharing remain unavailable. The app does not read usage history yet.
+Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Location remains unavailable. Camera, microphone and screen sessions are approved separately in Live sharing. Contacts, notifications, supported SMS/calls and selected photos have separate controls in Manage data sharing. Permission alone does not enable collection; use the separate sharing control below.
+
+## Digital wellbeing (0.3.0)
+
+Open **Permissions on this device**, allow Usage Access, then separately choose **Enable usage sharing** and confirm the disclosure. This sends today's app names/package IDs and estimated foreground durations to **Child’s Space → Digital wellbeing** at check-in or manual refresh while Sideby is open. Use another app, return to Sideby and check in to update the dashboard. Sharing is off by default, including upgrades from 0.2.x. The permission alone does not enable it.
+
+**Stop usage sharing** stops collection immediately; the latest server snapshot is cleared on the next successful sync. Permission revocation also clears app data when reported; parent disconnect clears it immediately. Offline changes cannot erase the server until delivered. Queries stay local; only a bounded summary is uploaded, not raw events. Limited launcher-app visibility is used to label observed apps; this is not a full installed-app inventory. See [usage contract and accuracy limits](../../docs/USAGE.md). Migration 005 must be applied before backend use.
+
+## Data sharing in 0.4.0
+
+Open **Manage data sharing**. Each category starts off; grant Android access where required and separately enable sharing. Installed apps covers launcher-visible apps only. Notification previews require Notification Access and a nonempty source selection, and are collected only while this screen is visible. Private/code-like content is withheld. Contacts contain names/numbers only; SMS and call logs require supported installer permissions and cover at most 100 recent records. No call recording or chat scraping.
+
+Use **Choose a photo**, inspect the preview, then **Share this selected photo**. Only that selection is uploaded; a new selection replaces the old one. Clear shared photos removes the parent's copy, not the original. Stop controls clear other categories on successful connection. Use **Sync shared data now** and inspect the per-category result. Failed/offline requests are not reported as successful.
+
+Migration 006 is required. Direct APK distribution is the current development choice; Play permission eligibility is not approved. Debug-only ContentTestActivity contains explicit synthetic QA tools, absent from release APKs. See [contract](../../docs/DEVICE_CONTENT.md).
+
+## Live sharing in 0.5.0
+
+Open **Live sharing** while the parent presses Start Screen/Camera/Audio. Review the request, tap Continue, and complete the Android permission dialog. Screen capture gets fresh OS approval each session and a notification with Stop sharing. Camera/audio stop on leaving this activity. Front/back switches acknowledge the actual camera callback. Sessions last at most five minutes and stop on control-plane loss. No recording, accessibility approval, boot capture or background request delivery. See [local media setup and contract](../../docs/LIVE_SHARING.md).

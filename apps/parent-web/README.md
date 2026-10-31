@@ -27,7 +27,7 @@ Root `npm run build` and `npm run typecheck` check both web applications. Websit
 - Signup, sign-in/out, family creation/rename, multiple child profiles, profile editing, archive/restore, private profile photos, JSON export and live account updates.
 - Unrestricted usage by default; saved routines are preferences, not device enforcement.
 - Bookmarkable Child’s Space sections with server-side owner checks and responsive contextual navigation.
-- Photo gallery, Contacts, Call history and Messages empty views. Messages separates SMS and Social notifications, with six source filters. No device content is collected.
+- Optional Photo gallery, Contacts, Call history and Messages sharing views. Messages separates SMS and Social notifications, filtering actual shared sources.
 - Expiring pairing codes, parent confirmation, multiple devices per child, heartbeat status and revocation. Simulated companion tests and the first Android emulator integration pass; see [Android evidence](../../docs/ANDROID_CONNECTION.md).
 
 ## Routes and source map
@@ -52,7 +52,7 @@ Build and type checks are safe local checks. Live service tests create synthetic
 
 ## Before Android and before public launch
 
-The implemented Android connection milestone covers only visible installation, pairing, confirmation, secure credential storage, heartbeat and revocation. It does not require notification, SMS, contacts, camera or microphone permissions. See [readiness](../../docs/PARENT_WEB_READINESS.md).
+The Android connection foundation covers visible installation, pairing, confirmation, secure credential storage, heartbeat and revocation. Optional data sharing is described below. It does not require notification, SMS, contacts, camera or microphone permissions. See [readiness](../../docs/PARENT_WEB_READINESS.md).
 
 Recovery email delivery, account deletion, retention, production rate limits, backups, monitoring and a wider accessibility/security review remain launch gates. Co-parent invitations, device activity, enforcement and media are not implemented. Pairing does not enable disabled controls.
 
@@ -67,3 +67,15 @@ Use Git `dev` with Neon `dev`; see [environment setup](../../docs/ENVIRONMENTS.m
 Each device card now opens a permission-status dialog. Recent grants are green, missing grants/session consent amber, and unavailable or stale reports gray. Reports expire visually after two minutes; historical grants are never presented as current. This is status visibility, not content collection. Apply `db/migrations/004_device_permissions.sql` before running this version. See [contract and validation](../../docs/DEVICE_PERMISSIONS.md).
 
 Usage Access may now show granted/not allowed after optional Android setup. The popup explains how to refresh status on the device; this does not indicate that usage history is syncing.
+
+## Digital wellbeing
+
+The usage route now shows per-device, explicitly shared daily app foreground durations, app names/package IDs, sample/receive timestamps and stale/off/denied/empty states. It polls every 15 seconds and never remotely wakes the companion. Requires migrations 004 and 005, companion 0.3.0, Android Usage Access and separate child-device sharing opt-in. Full installed-app inventory remains separate. See [usage contract](../../docs/USAGE.md).
+
+## Device content pages
+
+Companion 0.4.0 and migration 006 connect installed apps, notification/social previews, selected photos, contacts and supported SMS/call records to their existing routes. Choose the source device; search/filter records and inspect sample/receipt times. **Clear shared data** removes the current snapshot; stop on the device prevents later uploads. Photos are owner-authenticated private images. All categories require separate device opt-in; SMS/calls may remain unavailable because of Android/installer restrictions. See [contract and test scope](../../docs/DEVICE_CONTENT.md).
+
+## Live screen, camera and audio
+
+The three live routes now use real LiveKit subscriptions after device approval. Choose a paired device, press Start, and accept on Sideby Connect. The parent cannot publish tracks or control touch input. Stop is available on both sides; lens changes show requested versus acknowledged state. Requires migration 007, companion 0.5.0 and the separate media supervisor. Camera/screen have no implicit microphone track. See [live contract and local startup](../../docs/LIVE_SHARING.md). Production media hosting remains pending.
