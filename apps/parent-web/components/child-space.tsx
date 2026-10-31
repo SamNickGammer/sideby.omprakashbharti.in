@@ -34,6 +34,7 @@ import {
 import type { Child } from "../lib/types";
 import LiveUpdates from "./live-updates";
 import DevicePairing from "./device-pairing";
+import DeviceUsage from "./device-usage";
 import ChildContent, {
   contentPages,
   type ContentSection,
@@ -453,46 +454,7 @@ export default function ChildSpace({
               </aside>
             </section>
           )}
-          {section === "usage" && (
-            <>
-              <div className="usage-heading">
-                <div className="segmented-static" aria-label="Activity period">
-                  <span>Today</span>
-                </div>
-                <span className="muted">
-                  Device local time · Available after pairing
-                </span>
-              </div>
-              <section className="panel usage-empty">
-                <Activity size={32} />
-                <h2>Every day has a rhythm.</h2>
-                <p>
-                  Screen time, app activity and device pickups will help you
-                  understand it. Connect a device to start receiving real
-                  activity.
-                </p>
-                <div className="empty-chart" aria-hidden="true">
-                  <span />
-                  <span />
-                  <span />
-                  <span />
-                </div>
-                <span className="status neutral">No activity received</span>
-              </section>
-              <section className="panel child-inline">
-                <div>
-                  <h2>Freedom first. A break when needed.</h2>
-                  <p>
-                    No daily time allowance. Pause will be available for
-                    supported connected devices, with delivery status.
-                  </p>
-                </div>
-                <button className="secondary" disabled>
-                  <Pause size={16} /> Pause device
-                </button>
-              </section>
-            </>
-          )}
+          {section === "usage" && <DeviceUsage key={child.id} childId={child.id} userId={userId} />}
           {["apps", "notifications", "accounts", "services"].includes(
             section,
           ) && (
@@ -516,7 +478,7 @@ export default function ChildSpace({
                 </h2>
                 <p>
                   {section === "apps"
-                    ? "Installed apps and app details will appear when a paired companion is authorized to report them."
+                    ? "Full installed-app inventory is not available yet. Digital wellbeing shows apps with recorded usage when the companion shares activity."
                     : section === "notifications"
                       ? "Notifications require explicit device permission. No notification content has been collected."
                       : section === "accounts"

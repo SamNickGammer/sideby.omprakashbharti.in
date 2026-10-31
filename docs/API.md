@@ -29,3 +29,7 @@ Child pages use `/dashboard/children/:id` (overview) and `/dashboard/children/:i
 The existing `/api/auth/[...path]` Neon adapter proxies the SDK. `emailOtp.sendVerificationOtp({email,type:"forget-password"})` requests a recovery code. A generic success acknowledgement does not reveal account existence or prove email delivery. `emailOtp.resetPassword({email,otp,password})` submits the code and new password. The provider validates the code, expiry and attempts; the UI confirms passwords match, enforces 12–128 characters and disables resending for 60 seconds. Code/password values are not saved in browser storage. Provider errors remain visible and retryable. This replaces the default forgot-password reset-link request while preserving the legacy reset-link route.
 
 Device permission status reporting is implemented separately from heartbeat: see [permission contract](DEVICE_PERMISSIONS.md). It accepts status metadata only, with the same active-device credential boundary.
+
+## Opt-in Digital wellbeing
+
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.

@@ -16,7 +16,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import java.util.concurrent.Executors
 
-/** Visible, optional setup. This screen never collects usage or phone content. */
+/** Visible, optional setup. Usage collection requires explicit sharing opt-in and Android Usage Access. */
 class PermissionActivity : Activity() {
     private val executor = Executors.newSingleThreadExecutor()
     private var busy = false
@@ -89,8 +89,22 @@ class PermissionActivity : Activity() {
                 if(granted) Color.rgb(40,101,79) else if(state == "not_granted") Color.rgb(137,83,20) else Color.rgb(97,115,106))
             if (key == "internet") label("Android grants Internet access at installation. There is no permission popup for it.", 12f)
             if (key == "usage") {
-                label("Optional setup for digital wellbeing. Android Usage Access can allow reading app activity. This version checks and shares only whether access is allowed; it does not read or upload usage history. You can wait until usage sharing is available.", 12f)
+                label("Optional setup for digital wellbeing. Android Usage Access can allow reading app activity. With usage sharing enabled below, Sideby shares today’s app names, package identifiers and estimated foreground time while this app is open. No message content or browsing history is shared.", 12f)
                 button(if(granted) "Manage Usage Access" else "Set up Usage Access") { explainUsage() }
+                val session = try { SecureSession(this).load() } catch (_: Exception) { null }
+                if (session?.connected == true) {
+                    val enabled = UsageSharing.enabled(this,session)
+                    label(if(enabled) "Usage sharing is ON" else "Usage sharing is OFF", 14f)
+                    button(if(enabled) "Stop usage sharing" else "Enable usage sharing") {
+                        AlertDialog.Builder(this).setTitle(if(enabled) "Stop usage sharing?" else "Share today's app usage?")
+                            .setMessage(if(enabled) "Stops collection now and clears the latest server snapshot when this device next connects. If offline, the parent may still see the old snapshot until then." else "Your paired parent will see today's app names, package identifiers, estimated foreground time and device timezone. Android Usage Access is also needed. Sync runs while Sideby is open. The server keeps only the latest snapshot. You can stop here at any time.")
+                            .setNegativeButton("Cancel",null)
+                            .setPositiveButton(if(enabled) "Stop sharing" else "Enable sharing") { _,_ ->
+                                UsageSharing.setEnabled(this,session,!enabled)
+                                render(); syncStatus()
+                            }.show()
+                    }.isEnabled = !busy
+                }
             }
         }
         label("Unavailable features cannot be enabled here. Screen sharing will require consent for each session. Accessibility and device admin are not required for this setup.", 12f)
@@ -99,7 +113,7 @@ class PermissionActivity : Activity() {
 
     private fun explainUsage() {
         AlertDialog.Builder(this).setTitle("Optional Usage Access")
-            .setMessage("Android will open a settings page where you can allow or remove access to app-usage information. Sideby currently sends only the granted/not-allowed status to your parent. Usage history is not collected in this version. You may skip this step and stay paired.")
+            .setMessage("Android will open a settings page where you can allow or remove access to app-usage information. Permission status is shared with your parent. App usage is shared only if you separately enable usage sharing in Sideby. You may skip this step and stay paired.")
             .setNegativeButton("Not now", null)
             .setPositiveButton("Open Android settings") { _, _ ->
                 try {
@@ -127,10 +141,11 @@ class PermissionActivity : Activity() {
         status.text = "Sending current permission status…"
         executor.execute {
             val result = try {
-                PairingApi().reportPermissions(session, PermissionSnapshot.report(this))
-                "Permission status sent. Your parent's Devices page refreshes automatically."
+                val api = PairingApi()
+                api.reportPermissions(session, PermissionSnapshot.report(this))
+                "Permission status sent. " + UsageSharing.sync(this,session,api)
             } catch (_: Exception) {
-                "Status could not be sent. Check your connection and tap Refresh. Your saved pairing is unchanged."
+                "Permissions or usage could not be sent. Check your connection and tap Refresh. Your saved pairing is unchanged."
             }
             runOnUiThread {
                 if (isDestroyed || isFinishing) return@runOnUiThread

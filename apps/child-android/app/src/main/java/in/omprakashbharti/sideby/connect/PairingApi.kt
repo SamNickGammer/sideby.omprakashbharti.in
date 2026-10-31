@@ -46,6 +46,10 @@ class PairingApi {
         val result = request(s, "/api/device/permissions", report, authenticated = true)
         require(result.getString("status") == "received")
     }
+    fun reportUsage(s: Session, report: JSONObject) {
+        val result = request(s, "/api/device/usage", report, authenticated = true)
+        require(result.getString("status") == "received")
+    }
     fun heartbeat(s: Session): String {
         val result=request(s,"/api/device/heartbeat")
         require(result.getString("status")=="connected")

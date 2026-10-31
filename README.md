@@ -18,7 +18,7 @@ Sideby brings family profiles, device connections and digital habits into one pl
 
 The project is developed as a monorepo with independent public website, parent web, child Android and future parent mobile applications.
 
-> **Development status:** the public website is live, and the connected parent web foundation is implemented. The first Android connection milestone is implemented and tested against the local parent dashboard on an emulator. Device monitoring, enforcement and live media are not available yet.
+> **Development status:** the public website is live, and the connected parent web foundation is implemented. The first Android connection milestone is implemented and tested against the local parent dashboard on an emulator. Opt-in app-usage sharing is implemented locally; enforcement and live media are not available yet.
 
 ## Applications
 
@@ -48,10 +48,10 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Multiple device records for each child.
 - Scoped device credentials, heartbeat status and revocation.
 - Server-side family ownership checks and tested pairing boundaries.
-- Optional Android Usage Access setup with grant/revoke status reporting; activity collection remains planned.
+- Optional Android Usage Access setup and separate opt-in for today’s app-usage summaries in Digital wellbeing.
 - Device permission summaries and a detailed popup showing recent, unavailable and stale states. See [permission reporting](docs/DEVICE_PERMISSIONS.md).
 
-Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Digital wellbeing receives opted-in per-app foreground-time summaries. Other content pages still show empty states. Saved routines are preferences, not enforced restrictions. Pause, location and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 

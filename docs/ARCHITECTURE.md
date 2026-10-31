@@ -10,7 +10,7 @@ Status: connected parent-web foundation implemented on 24 October 2026. Neon Pos
 - Authentication: Neon Auth with its Next.js server adapter and secure session cookies. Server routes verify sessions. Native mobile compatibility remains to be validated.
 - Next.js server routes: initial application backend, with contract-first APIs before client integration.
 - Vercel: candidate web host; not a host for the media server.
-- Kotlin Android app: implemented visible pairing, secure session storage and foreground heartbeat. Permission handling, usage collection, validated enforcement, local rules and live-media publishing remain planned.
+- Kotlin Android app: implemented visible pairing, secure session storage and foreground heartbeat. Permission status and separately opted-in daily usage summaries are implemented locally. Validated enforcement, local rules and live-media publishing remain planned.
 - LiveKit: candidate WebRTC media service. Managed cloud first for a prototype; choose paid hosting only after estimating session minutes and traffic.
 
 ## Data and authorization
@@ -47,12 +47,16 @@ Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and ty
 
 `/dashboard/children/[id]/[[...section]]` validates the UUID and section allowlist, then checks the current session and family owner before loading a profile. Missing/inaccessible children and unsupported sections return 404. Client links retain bookmarkable sections and browser history. The family dashboard accepts an allowlisted `view` query to return to the right family section.
 
-Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. No pause, usage ingestion or media backend is implemented by the routed web views.
+Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. Pause and media backends remain unimplemented; usage ingestion is described below.
 
 ## Pairing milestone
 
-Migration 003 adds pairing offers and multiple devices per child. See [pairing contract](PAIRING.md) for code lifecycle, confirmation, scoped credential expiry/revocation and check-in semantics. Pairing uses database row locks and atomic approval; only SHA-256 hashes of codes and device credentials persist. Companion credentials authorize only heartbeat, never family reads or monitoring.
+Migration 003 adds pairing offers and multiple devices per child. See [pairing contract](PAIRING.md) for code lifecycle, confirmation, scoped credential expiry/revocation and check-in semantics. Pairing uses database row locks and atomic approval; only SHA-256 hashes of codes and device credentials persist. Companion credentials authorize their own heartbeat, permission status and opted-in usage summary; never family reads.
 
 ## Device permission status
 
 The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.
+
+## Opt-in Digital wellbeing
+
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.
