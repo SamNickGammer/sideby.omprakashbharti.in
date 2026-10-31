@@ -334,3 +334,13 @@ Future requests belong in the appropriate card above, or a new stable F-number. 
 
 - [x] Update feature availability and add setup, privacy and support pages. Root build/typecheck passed; all four pages checked at 390px with no horizontal overflow.
 - [x] Vercel deployed website commit `6fc299e` successfully. Verified homepage, setup, privacy, support and sitemap on `https://sideby.omprakashbharti.in` return HTTP 200 with updated content; inspected live setup page at 1440px. No parent-app deployment or backend changes.
+
+### F20 · Admin, policies and support — in progress
+
+- [x] Website: consistent footer, detailed dated policy pages and published version archive.
+- [x] Backend: immutable policy revisions, private bug reports, audited admin actions, session security and throttling.
+- [x] Admin: single-account login (no signup), aggregate growth dashboard, policy editor/publication, bug inbox/status.
+- [ ] QA: auth isolation, draft privacy, archive consistency, abuse limits, responsive UI.
+- [ ] Deployment: separate admin Vercel project/domain, production configuration and live verification.
+- [x] Owner name/address and production counts confirmed; no public email requested. Contact uses the private form and postal address.
+- [ ] Jurisdiction-specific legal review and public child-service launch safeguards remain pending.

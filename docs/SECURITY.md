@@ -31,3 +31,7 @@ The companion adds separate sharing controls for launcher-visible apps, selected
 ## Live sharing local milestone (0.5.0)
 
 Screen, camera and microphone routes now have a local LiveKit integration under [LIVE_SHARING.md](LIVE_SHARING.md). Android explicitly approves each request; screen capture retains OS consent and a visible foreground notification. Camera/audio remain foreground-only. Short-lived source-scoped tokens, two-sided leases and a required room-cleanup supervisor bound access; no recordings or remote control. A permission grant is not session approval. Production hosting, physical-device quality and operational failure drills remain pending. Screen permission reports use `session_required`, never a permanent granted state.
+
+## Operator workspace
+
+The admin app has one configured identity, salted scrypt password verification, random hashed server sessions, an eight-hour lifetime, HttpOnly host-only cookies, production Secure cookies, exact-Origin mutation checks, durable throttling and per-route authorization. No signup, parent-session reuse or child-content browser is provided. Public bug reports are input-bounded and stored privately; email is unverified and must never serve as identity proof. Public policy reads exclude drafts; published text is immutable at the database layer. Production and dev credentials are separate; Vercel previews receive no production secrets. Daily authenticated cron removes reports older than 180 days and expired sessions/counters. See ADMIN_PLATFORM.md.

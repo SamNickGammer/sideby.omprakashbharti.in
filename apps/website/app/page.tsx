@@ -375,7 +375,8 @@ export default function Home() {
         </span>
         <nav aria-label="Help and privacy">
           <a href="/setup/">Setup guide</a>
-          <a href="/privacy/">Privacy & permissions</a>
+          <a href="/privacy/">Privacy policy</a>
+          <a href="/terms/">Terms of use</a>
           <a href="/support/">Support</a>
         </nav>
       </footer>

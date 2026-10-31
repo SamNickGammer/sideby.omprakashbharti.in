@@ -1,0 +1,11 @@
+$kind: http-request
+method: GET
+url: '{{admin_url}}/api/overview'
+order: 1000
+scripts:
+  - type: afterResponse
+    language: text/javascript
+    code: |-
+      pm.test("Admin session required", () => pm.response.to.have.status(401));
+      pm.test("No shared cache", () => pm.expect(pm.response.headers.get("Cache-Control")).to.eql("no-store"));
+      pm.test("No aggregate leak", () => pm.expect(pm.response.json().counts).to.eql(undefined));

@@ -1,3 +1,5 @@
+import { BugForm } from "../components/bug-form";
+import { PolicyReader } from "../components/policy-reader";
 import type { Metadata } from "next";
 import { Guide } from "../components/guide";
 export const metadata: Metadata = {
@@ -43,30 +45,11 @@ export default function Page() {
           must also be running. Protected Android content may appear blank.
         </p>
       </section>
-      <section>
-        <h2>Report a non-sensitive bug</h2>
-        <p>
-          Use the project’s GitHub issue tracker for reproducible bugs. Include
-          the app version, Android version, steps and expected result. Remove
-          names, phone numbers, messages, photos, pairing codes, tokens and
-          account information from screenshots and logs.
-        </p>
-      </section>
-      <section>
-        <h2>Private or security-related concerns</h2>
-        <p>
-          A dedicated private support and security channel is not configured
-          yet. Use an existing private contact with the project owner if you
-          have one. Do not post child information or vulnerability details in
-          public issues. There is no promised response time during development.
-        </p>
-      </section>
-      <a
-        className="button"
-        href="https://github.com/SamNickGammer/sideby.omprakashbharti.in/issues"
-      >
-        Report a non-sensitive bug
-      </a>
+      <BugForm />
+      <details className="support-policy">
+        <summary>Support policy and previous versions</summary>
+        <PolicyReader slug="support" />
+      </details>
     </Guide>
   );
 }
