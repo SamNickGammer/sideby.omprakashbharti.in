@@ -15,23 +15,23 @@ import {
 const questions = [
   [
     "Can I use Sideby today?",
-    "The parent web foundation is built and being tested. Public account access and the Android companion are not available from this website yet. This page introduces the project; it does not enroll your family or collect device information.",
+    "The parent dashboard and Android companion work together in local testing. Public accounts and APK downloads are not available yet. This website introduces the project; it does not enroll your family or collect device information.",
   ],
   [
     "Can one parent connect more than one child?",
-    "Yes. The parent dashboard supports multiple child profiles, and each child can have multiple paired devices. Android pairing still needs to be tested with the upcoming companion.",
+    "Yes. The parent dashboard supports multiple child profiles, and each child can have multiple paired devices. Pairing and check-ins have been tested with the Android emulator; physical-phone testing remains ahead.",
   ],
   [
     "Will my child know the app is installed?",
-    "Yes. Sideby Connect will be a visible companion with clear permission explanations. Sideby does not hide itself or pretend to be a system service. Planned live sessions require device authorization and visible controls.",
+    "Yes. Sideby Connect is visible and explains permissions. Each live session needs approval on the device, and screen sharing also needs Android’s consent. Sharing is view-only, lasts at most five minutes and can be stopped on the device.",
   ],
   [
     "Does Sideby already limit screen time or show messages?",
-    "Not yet. Routines can be saved in the dashboard, but they are not enforced on a phone. Usage, location, notifications and live media await Android integration and permission testing. Social notifications will show only available notification previews, not complete private conversations.",
+    "Device limits are not enforced yet. Local tests cover opted-in usage, launcher-visible apps, notification previews, selected photos and contacts. SMS and call records depend on Android and the installer. Social views contain available notification previews, not full conversations. Location is not available.",
   ],
   [
     "Will it work on iPhone?",
-    "Android is the first companion platform we plan to test. We do not currently promise an iPhone companion or equivalent features across platforms.",
+    "Android is the first companion platform, currently tested on an emulator. We do not currently promise an iPhone companion or equivalent features across platforms.",
   ],
 ];
 export default function Home() {
@@ -128,7 +128,7 @@ export default function Home() {
               </span>
               <div>
                 <strong>Sideby Connect</strong>
-                <small>Android companion · coming next</small>
+                <small>Android companion · local testing</small>
               </div>
             </div>
           </div>
@@ -205,8 +205,8 @@ export default function Home() {
               <h3>Connection, in the open.</h3>
               <p>
                 A visible child app, clear permissions and revocable pairing.
-                Planned live sessions are view-only and require device
-                authorization.
+                Live sessions are view-only, separately approved on the device
+                and stoppable at any time. No recordings or remote control.
               </p>
               <a href="#questions" className="text-link">
                 Your questions, answered <ArrowUpRight size={16} />
@@ -225,11 +225,12 @@ export default function Home() {
               </h2>
               <p>
                 Sideby Parent lives in your browser. Sideby Connect is the
-                upcoming Android companion for your child’s device.
+                Android companion for your child’s device. Both are in local
+                testing; public access is not open yet.
               </p>
               <span className="outline-note">
-                <Smartphone size={16} /> Android connection testing is the next
-                milestone.
+                <Smartphone size={16} /> Pairing verified on emulator ·
+                physical-phone testing next.
               </span>
             </div>
             <ol className="steps">
@@ -248,8 +249,8 @@ export default function Home() {
                 <div>
                   <h3>Pair, then confirm</h3>
                   <p>
-                    The planned companion uses an expiring code. You compare the
-                    details and confirm the device in Sideby Parent.
+                    Enter the expiring pairing code in Sideby Connect. Compare
+                    the details and confirm the device in Sideby Parent.
                   </p>
                 </div>
               </li>
@@ -258,8 +259,9 @@ export default function Home() {
                 <div>
                   <h3>Stay connected, with clarity</h3>
                   <p>
-                    Device check-ins will show when the companion was last heard
-                    from. Permissions and future features stay explicit.
+                    Choose what to share in the companion and grant the relevant
+                    Android permissions. Check permission status and the latest
+                    sync in the dashboard. Live sessions need fresh approval.
                   </p>
                 </div>
               </li>
@@ -288,8 +290,9 @@ export default function Home() {
                 <span className="eyebrow">BUILT · IN TESTING</span>
                 <h3>The parent web foundation</h3>
                 <p>
-                  Accounts, multiple child profiles, private profile photos,
-                  saved routines and the web side of device pairing.
+                  Accounts, multiple children and devices, private profile
+                  photos, pairing, permission status and saved routines.
+                  Routines do not enforce device limits.
                 </p>
               </div>
             </article>
@@ -298,11 +301,16 @@ export default function Home() {
                 <Wifi size={18} />
               </span>
               <div>
-                <span className="eyebrow">UP NEXT</span>
-                <h3>The first Android connection</h3>
+                <span className="eyebrow">
+                  EMULATOR-VERIFIED · NOT PUBLIC YET
+                </span>
+                <h3>A working Android connection</h3>
                 <p>
-                  A visible Sideby Connect app: enter a pairing code, confirm
-                  the device and test real check-ins.
+                  Pairing, check-ins, today’s opted-in app usage,
+                  launcher-visible apps, selected photos, contacts and
+                  notification previews. SMS and call records are
+                  platform-dependent. Screen, camera and audio sessions are
+                  tested locally with visible approval.
                 </p>
               </div>
             </article>
@@ -314,11 +322,11 @@ export default function Home() {
                 <span className="eyebrow">
                   LATER · SUBJECT TO PLATFORM SUPPORT
                 </span>
-                <h3>More ways to understand</h3>
+                <h3>Before a public release</h3>
                 <p>
-                  Device activity, permissions and authorised sharing. Live
-                  media and device controls need real-device testing before
-                  release.
+                  Physical-phone testing, reliable background syncing and
+                  production hosting are still ahead. Location, device
+                  pause/enforcement and an iPhone companion are not available.
                 </p>
               </div>
             </article>
@@ -365,9 +373,11 @@ export default function Home() {
         <span>
           © {new Date().getFullYear()} Sideby. Thoughtfully in development.
         </span>
-        <a href="#questions">
-          Privacy & permissions <ArrowUpRight size={14} />
-        </a>
+        <nav aria-label="Help and privacy">
+          <a href="/setup/">Setup guide</a>
+          <a href="/privacy/">Privacy & permissions</a>
+          <a href="/support/">Support</a>
+        </nav>
       </footer>
     </>
   );

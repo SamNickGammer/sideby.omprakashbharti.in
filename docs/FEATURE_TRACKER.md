@@ -329,3 +329,8 @@ Future requests belong in the appropriate card above, or a new stable F-number. 
 - [x] Reconciled PR #17 rewritten history and stacked PRs #19/#20; GitHub reports all three merged with no open PRs. PR #16 had already carried the complete feature stack into main.
 - [x] Verified the reconciled application tree exactly matches tested commit `462d79d`: no UI or feature changes. Web build/typecheck, Android debug/release builds, 13 unit tests and lint passed again.
 - [x] Updated local main and remote main. This reconciliation does not apply production database migrations or deploy the parent app.
+
+### Public website refresh · in progress
+
+- [x] Update feature availability and add setup, privacy and support pages. Root build/typecheck passed; all four pages checked at 390px with no horizontal overflow.
+- [ ] Verify production Vercel deployment on the custom domain.

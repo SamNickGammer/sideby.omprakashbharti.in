@@ -1,6 +1,6 @@
 # Sideby public website
 
-A separate, responsive Next.js static landing page for `sideby.omprakashbharti.in`. It introduces Sideby, explains the planned pairing journey, answers common questions and labels implemented versus planned functionality. Illustrative profiles are not real child data.
+A separate, responsive Next.js static landing page for `sideby.omprakashbharti.in`. It introduces Sideby, explains the current local-test pairing journey, answers common questions and labels implemented versus planned functionality. Illustrative profiles are not real child data.
 
 ## Local development
 
@@ -32,3 +32,7 @@ Import the existing GitHub repository into a **separate Vercel project** with ro
 ## Content maintenance
 
 Update public claims only after the related capability is implemented and verified. Keep the Android status and dashboard launch status truthful. Add a parent-app link only after its public HTTPS deployment and trusted authentication origin are verified. The FAQ is product information, not a substitute for a launch-ready privacy policy or terms.
+
+## Public help pages
+
+`/setup/` explains pairing, optional permissions and per-session approval. `/privacy/` describes current development data handling and unresolved launch requirements. `/support/` provides troubleshooting and links to public issues for non-sensitive bugs only. All pages are static, responsive and included in the sitemap, with individual canonical metadata. Public dashboard/APK links remain intentionally absent until those releases are verified.

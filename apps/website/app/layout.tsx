@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://sideby.omprakashbharti.in"),
   title: "Sideby — A little closer, even online.",
   description:
-    "A calmer space for family life online. Meet Sideby Parent and the upcoming Sideby Connect Android companion.",
+    "A calmer space for family life online. Meet Sideby Parent and Sideby Connect, our Android companion in local testing.",
   alternates: { canonical: "/" },
   icons: { icon: "/brand/favicon.svg" },
   openGraph: {
