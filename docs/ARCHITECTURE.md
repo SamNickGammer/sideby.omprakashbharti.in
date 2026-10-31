@@ -1,6 +1,6 @@
 # Sideby architecture
 
-Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; the Kotlin Android companion now implements pairing and foreground check-ins with Keystore-encrypted session storage. Android content/enforcement/media and multi-guardian architecture below remain planned. See [Android connection](ANDROID_CONNECTION.md).
+Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; the Kotlin Android companion now implements pairing and foreground check-ins with Keystore-encrypted session storage. Optional device content snapshots are implemented locally; enforcement/media and multi-guardian architecture below remain planned. See [Android connection](ANDROID_CONNECTION.md).
 
 ## Components
 
@@ -60,3 +60,7 @@ The approved device credential can replace only its own latest permission snapsh
 ## Opt-in Digital wellbeing
 
 Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.
+
+## Optional device content sharing (0.4.0, local development)
+
+The companion adds separate sharing controls for launcher-visible apps, selected-source notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. The parent pages use authenticated device snapshots with source, timestamps, search/filter, empty/error states and clear controls. No hidden collection or permission bypass. Foreground sync only; notification collection is limited to the visible sharing screen. SMS/call availability is device/installer-dependent, and Google Play eligibility is unverified. See [device content contract](DEVICE_CONTENT.md) and the feature tracker for actual QA status.

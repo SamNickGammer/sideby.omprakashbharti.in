@@ -39,7 +39,7 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Multiple child profiles, private profile photos, profile editing and archive/restore.
 - Family settings, saved routines, JSON export and live account updates across signed-in browsers.
 - Responsive Child’s Space pages for desktop and mobile browsers.
-- Separate Photo gallery, Messages, Contacts and Call history views, ready for later companion integration.
+- Separate Photo gallery, Messages, Contacts and Call history views with optional companion sharing (local development).
 - SMS and Social notifications views, with filters for WhatsApp, Telegram, Instagram, Facebook, other apps and all apps.
 
 ### Device connection foundation
@@ -51,7 +51,7 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Optional Android Usage Access setup and separate opt-in for today’s app-usage summaries in Digital wellbeing.
 - Device permission summaries and a detailed popup showing recent, unavailable and stale states. See [permission reporting](docs/DEVICE_PERMISSIONS.md).
 
-Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Digital wellbeing receives opted-in per-app foreground-time summaries. Other content pages still show empty states. Saved routines are preferences, not enforced restrictions. Pause, location and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Digital wellbeing receives opted-in per-app foreground-time summaries. Optional content-sharing integration is in local development: launcher-visible apps, notification previews, selected photos, contacts and installer-permitted SMS/call records. See [contract and verification scope](docs/DEVICE_CONTENT.md). Saved routines are preferences, not enforced restrictions. Pause, location and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 

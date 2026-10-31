@@ -35,7 +35,7 @@ object PermissionSnapshot {
             "camera" to permission(Manifest.permission.CAMERA),
             "microphone" to permission(Manifest.permission.RECORD_AUDIO),
             "location" to permission(Manifest.permission.ACCESS_COARSE_LOCATION),
-            "notifications" to "not_available", "usage" to if (usageGranted(context)) "granted" else "not_granted", "photos" to "not_available",
+            "notifications" to if(ContentSharing.granted(context,"notifications")) "granted" else "not_granted", "usage" to if (usageGranted(context)) "granted" else "not_granted", "photos" to "not_available",
             "contacts" to permission(Manifest.permission.READ_CONTACTS),
             "sms" to permission(Manifest.permission.READ_SMS),
             "call_history" to permission(Manifest.permission.READ_CALL_LOG), "screen_share" to "not_available"

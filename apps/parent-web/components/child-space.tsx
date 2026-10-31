@@ -1,5 +1,7 @@
 "use client";
 import Link from "next/link";
+import DeviceContent, { SharedMessages } from "./device-content";
+import type { ContentKind } from "../lib/content-contract";
 import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import {
@@ -35,10 +37,7 @@ import type { Child } from "../lib/types";
 import LiveUpdates from "./live-updates";
 import DevicePairing from "./device-pairing";
 import DeviceUsage from "./device-usage";
-import ChildContent, {
-  contentPages,
-  type ContentSection,
-} from "./child-content";
+
 const sections = [
   { id: "overview", label: "Their space", icon: LayoutDashboard },
   { id: "usage", label: "Digital wellbeing", icon: Activity },
@@ -455,7 +454,7 @@ export default function ChildSpace({
             </section>
           )}
           {section === "usage" && <DeviceUsage key={child.id} childId={child.id} userId={userId} />}
-          {["apps", "notifications", "accounts", "services"].includes(
+          {["accounts", "services"].includes(
             section,
           ) && (
             <section className="panel child-data-empty">
@@ -491,13 +490,8 @@ export default function ChildSpace({
               </div>
             </section>
           )}
-          {Object.hasOwn(contentPages, section) && (
-            <ChildContent
-              section={section as ContentSection}
-              deviceHref={href("devices")}
-              archived={child.archived}
-            />
-          )}
+          {["apps","notifications","photos","contacts","call-history"].includes(section) && <DeviceContent key={`${child.id}-${section}`} childId={child.id} userId={userId} kind={(section === "call-history" ? "calls" : section) as ContentKind} />}
+          {section === "messages" && <SharedMessages childId={child.id} userId={userId} />}
           {section === "devices" && (
             <DevicePairing key={child.id} child={child} userId={userId} />
           )}

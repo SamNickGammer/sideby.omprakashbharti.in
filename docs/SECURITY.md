@@ -8,7 +8,7 @@ Live sessions are visible, authorized, short-lived, and stoppable on the child d
 
 ## Data handling
 
-Collect only data required for enabled features. Avoid message content, recordings, full browsing logs, and precise location histories in the first release. Location is optional, clearly disclosed, and timestamped. Keep secrets out of Git and logs. Use synthetic data in development. Encrypt transport and verify provider storage protection before production.
+Collect only data required for enabled features. Optional contact/SMS/call/notification sharing is separately disclosed and minimized under DEVICE_CONTENT.md. Exclude recordings, full browsing logs and precise location histories. Location is optional, clearly disclosed, and timestamped. Keep secrets out of Git and logs. Use synthetic data in development. Encrypt transport and verify provider storage protection before production.
 
 Retention periods, regional hosting, age/guardian verification, export/deletion behavior, and applicable launch-market requirements must be resolved before a public beta. Define backup deletion expectations separately from active-data deletion. Never sell child data or use it for advertising.
 
@@ -23,3 +23,7 @@ The approved device credential can replace only its own latest permission snapsh
 ## Opt-in Digital wellbeing
 
 Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.
+
+## Optional device content sharing (0.4.0, local development)
+
+The companion adds separate sharing controls for launcher-visible apps, selected-source notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. The parent pages use authenticated device snapshots with source, timestamps, search/filter, empty/error states and clear controls. No hidden collection or permission bypass. Foreground sync only; notification collection is limited to the visible sharing screen. SMS/call availability is device/installer-dependent, and Google Play eligibility is unverified. See [device content contract](DEVICE_CONTENT.md) and the feature tracker for actual QA status.

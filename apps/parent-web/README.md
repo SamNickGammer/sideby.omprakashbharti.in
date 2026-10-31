@@ -71,3 +71,7 @@ Usage Access may now show granted/not allowed after optional Android setup. The 
 ## Digital wellbeing
 
 The usage route now shows per-device, explicitly shared daily app foreground durations, app names/package IDs, sample/receive timestamps and stale/off/denied/empty states. It polls every 15 seconds and never remotely wakes the companion. Requires migrations 004 and 005, companion 0.3.0, Android Usage Access and separate child-device sharing opt-in. Full installed-app inventory remains separate. See [usage contract](../../docs/USAGE.md).
+
+## Device content pages
+
+Companion 0.4.0 and migration 006 connect installed apps, notification/social previews, selected photos, contacts and supported SMS/call records to their existing routes. Choose the source device; search/filter records and inspect sample/receipt times. **Clear shared data** removes the current snapshot; stop on the device prevents later uploads. Photos are owner-authenticated private images. All categories require separate device opt-in; SMS/calls may remain unavailable because of Android/installer restrictions. See [contract and test scope](../../docs/DEVICE_CONTENT.md).

@@ -11,7 +11,9 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is still pending. F07 installed-app inventory remains separate.
+Current milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; awaiting review. SMS/call access remains installer-dependent.
+
+Previous milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is still pending. F07 installed-app inventory remains separate.
 
 ## Done — implemented foundation
 
@@ -120,6 +122,61 @@ Review: [PR #17](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull
 
 Evidence: 59 usage HTTP checks plus assertions, 87 pairing checks, 10 Android unit tests, debug/release builds, lint, root web build/typecheck. Migration 005 applied to Neon dev only. This is not deployed or merged; depends on F05a/F05b (PR #15). Full inventory remains F07. See [usage contract](USAGE.md).
 
+### F07 · Installed apps — local milestone complete
+
+- [x] End-to-end launcher-visible app inventory on API 37 emulator.
+  - [x] Android: separate opt-in; name, package, version and system-app flag; at most 500 apps.
+  - [x] Backend: bounded latest snapshots, authenticated device ingestion, family isolation and clear controls.
+  - [x] Dashboard: real records, search, source device and freshness.
+  - [x] QA: synthetic app install (1.0), update (2.0), uninstall reflected in actual reports (21 → 22 → 21 apps).
+- [ ] Full system/work-profile inventory is not promised; physical devices/older Android remain release gates.
+
+### F08 · Notifications and social previews — local milestone complete
+
+- [x] End-to-end optional, source-selected previews on API 37 emulator.
+  - [x] Android: platform Notification Access plus separate opt-in and source allowlist.
+  - [x] Android: collect only while sharing screen is visible; 100 previews / 24h in memory; clear on stop/revoke.
+  - [x] Privacy: private/code-like previews withheld; no history scraping or hidden-content bypass.
+  - [x] Backend: schema/ownership, bounded snapshots, duplicate replacement, revocation and deletion.
+  - [x] Dashboard: Notifications and Messages → Social notifications, actual source filters and timestamps.
+  - [x] QA: normal synthetic preview and withheld sensitive preview displayed; real Stop cleared both; API revocation/isolation tests pass.
+- [ ] Background collection, physical-phone/older-Android verification and production retention remain release gates.
+
+### F09 · Selected photo sharing — local milestone complete
+
+- [x] End-to-end explicitly selected image sharing on API 37 emulator.
+  - [x] Android: system photo picker, preview, explicit Share and Clear; no broad gallery access.
+  - [x] Backend: image validation/re-encoding without EXIF; private storage and owner-authenticated proxy.
+  - [x] Dashboard: bounded gallery, authenticated full-image view, clear action and freshness.
+  - [x] QA: selected synthetic image reached actual gallery; API tests cover private reads, retry, replacement, deletion and stale replay rejection.
+  - [x] Failed object deletion jobs retained for retry via cleanup script.
+- [ ] Production cleanup schedule, backup deletion guarantees and physical-phone image/orientation testing.
+
+Current device UI shares one selected image at a time, replacing its previous selection. API supports at most three. Existing profile avatars remain independent.
+
+### F10 · Optional contacts — local milestone complete
+
+- [x] End-to-end opted-in contacts on API 37 emulator.
+  - [x] Scope: up to 200 name/phone rows, no emails, addresses, notes or contact photos.
+  - [x] Android: normal Contacts permission and separate sharing switch; denied/unavailable states.
+  - [x] Backend: owned latest snapshot, permission-revocation clear and explicit deletion.
+  - [x] Dashboard: real records, search, source device and freshness.
+  - [x] QA: synthetic device contact reached dashboard; API denied/revoke/delete/isolation boundaries tested.
+- [ ] Physical-device permission variations and production retention review.
+
+### F11 · SMS and call history — direct-APK local milestone complete
+
+- [x] Direct APK selected by owner; Android restricted-permission limits documented.
+- [x] End-to-end supported SMS and call-log sharing on API 37 emulator.
+  - [x] Android: normal SMS/Call Log permission dialogs, separate switches, denial handling; no role takeover or installer allowlist bypass.
+  - [x] Scope: at most 100 records per kind from seven days; sensitive code-like SMS withheld; no call audio or private chat scraping.
+  - [x] Backend: device/parent authorization, bounded records, revocation and deletion.
+  - [x] Dashboard: SMS and call records with number, direction/type, time, call duration and source device.
+  - [x] QA: console-generated synthetic SMS and call record reached actual parent data; API permission/revoke/expiry/isolation checks pass.
+- [ ] Physical phones and installer compatibility; Google Play eligibility is not established.
+
+Evidence for F07–F11: [device content contract](DEVICE_CONTENT.md), `scripts/verify-content.mjs` (140 HTTP checks plus private-image/snapshot assertions), usage regression (59), pairing regression (87), 13 Android unit tests, debug/release builds, lint and root web build/typecheck. Local Neon dev only; features await PR review, not production deployment. All sharing starts off for new pairings. Screen/camera/microphone/location remain outside this milestone.
+
 ## Next — implement one feature at a time
 
 ### F05 · Connection and permission onboarding reliability
@@ -135,60 +192,6 @@ Evidence: 59 usage HTTP checks plus assertions, 87 pairing checks, 10 Android un
 Accessibility/device-admin activation is not a universal permission. Do not introduce it to bypass Android permission or consent flows.
 
 ## Backlog — device capabilities
-
-### F07 · Installed apps
-
-- [ ] End-to-end installed-app view.
-  - [x] Dashboard route and unavailable state.
-  - [ ] Android: establish supported package visibility and disclose inventory sharing.
-  - [ ] Backend: minimal inventory schema, ownership, retention and bounded syncing.
-  - [ ] Dashboard: real inventory, supported fields, device filter and freshness.
-  - [ ] QA: install/update/remove test apps; restricted visibility, revocation and isolation.
-
-### F08 · Notifications and social previews
-
-- [ ] End-to-end optional notification-preview sharing.
-  - [x] Dashboard notification route; Messages social tab and source-app filters.
-  - [ ] Feasibility/privacy decision: define allowed sources, excluded sensitive content and retention.
-  - [ ] Android: visible opt-in, platform notification access, source selection and stop/revoke controls.
-  - [ ] Backend: minimized preview ingestion, deduplication, ownership and deletion.
-  - [ ] Dashboard: source-labelled previews, timestamps, unavailable/hidden-content states.
-  - [ ] QA: synthetic notifications, revoked access, filtering and cross-family isolation.
-
-Notification previews are not complete WhatsApp/Telegram/Instagram/Facebook conversation histories. Hidden or unavailable notification content must not be bypassed.
-
-### F09 · Selected photo sharing
-
-- [ ] End-to-end gallery of explicitly shared images.
-  - [x] Dashboard gallery route and empty state.
-  - [ ] Android: system photo picker and clear selection/upload/revocation UI.
-  - [ ] Backend/storage: private uploads, file validation, metadata minimization and deletion.
-  - [ ] Dashboard: authenticated thumbnails/viewer, loading/errors and removal.
-  - [ ] QA: selected files only, unauthorized reads, retry and deletion.
-
-Existing private **profile avatars** are complete; phone-gallery sharing is a separate feature.
-
-### F10 · Optional contacts
-
-- [ ] End-to-end explicitly authorized contact sharing, subject to scope review.
-  - [x] Dashboard contacts route and empty state.
-  - [ ] Define selected/minimal fields, purpose, retention and stop/delete controls.
-  - [ ] Android: visible selection or supported permission flow; handle denial/revocation.
-  - [ ] Backend: scoped storage/sync and deletion.
-  - [ ] Dashboard: authorized records, source device and freshness.
-  - [ ] QA: synthetic contacts, denial, revocation, deletion and family isolation.
-
-### F11 · SMS and call history — feasibility gated
-
-- [ ] Decide whether these capabilities can ship on supported Android/distribution channels.
-  - [x] Dashboard SMS and Call history routes/empty states.
-  - [ ] Review platform eligibility, distribution requirements and privacy scope before implementation.
-  - [ ] If approved: Android visible opt-in and supported access, with denial/revocation handling.
-  - [ ] If approved: minimal backend contracts, retention and deletion.
-  - [ ] If approved: dashboard records, timestamp/source and unavailable states.
-  - [ ] If approved: synthetic-data end-to-end and authorization tests on real supported phones.
-
-Not a commitment to ship. No call recording or access to other apps' private chats.
 
 ### F12 · Optional location
 
