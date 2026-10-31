@@ -59,3 +59,7 @@ Official references: [LiveKit local server](https://docs.livekit.io/transport/se
 - Dependency audit reports pre-existing Auth-tree advisories, including a critical better-auth finding; resolve/review before public parent-app deployment. This change does not upgrade the Auth stack.
 
 Backend-outage drill: stopping the local web backend during an active camera session made the Android app stop sharing; the independent supervisor expired the leases and removed the room. Restoring the backend did not restart capture. Removing adb reverse alone did not interrupt existing keep-alive connections, so it was not treated as evidence of network-loss handling.
+
+### Viewer presentation
+
+The video occupies the full inner bezel without an inset panel. Screen mode follows the incoming video dimensions, including rotation, to preserve the complete screen without stretching or cropping. Camera mode fills the phone display with a centered crop. Decorative notch/home/status overlays are hidden during video so they do not cover the device’s own UI; live status remains in the caption. Idle/ended icons and copy are centered together. Layout was checked with synthetic display dimensions at desktop and mobile widths; this polish did not change session authorization or capture.

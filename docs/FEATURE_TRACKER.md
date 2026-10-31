@@ -184,6 +184,8 @@ Final handoff check (2026-10-31): the final APK installed successfully, but the 
 
 ### F13 · View-only screen sharing — local milestone in review
 
+- [x] UI polish: edge-to-edge display inside the bezel, native screen proportions and centered idle/ended content. Browser layout checks at 390px and 1440px verified zero centering offset, bezel-only video inset and no mobile horizontal overflow; root build/typecheck passed.
+
 Active work: visible Start Screen/Camera/Audio sessions under [the live contract](LIVE_SHARING.md). Dedicated `feat/live-sharing` branch depends on unmerged PR #19. Local LiveKit integration, device approvals, media supervisor and isolation tests are implemented. Not merged or deployed.
 
 - [ ] End-to-end visible, stoppable screen session.

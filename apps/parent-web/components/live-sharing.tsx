@@ -32,7 +32,8 @@ export function LiveSharing({
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [connected, setConnected] = useState(false),
-    [mediaReady, setMediaReady] = useState(false);
+    [mediaReady, setMediaReady] = useState(false),
+    [videoRatio, setVideoRatio] = useState<string | undefined>();
   const media = useRef<HTMLDivElement>(null),
     room = useRef<Room | null>(null),
     current = useRef<Session | null>(null);
@@ -128,7 +129,15 @@ export function LiveSharing({
             if (gone) return;
             const element = track.attach();
             if (track.kind === Track.Kind.Video) {
-              element.style.objectFit = "contain";
+              element.style.objectFit = kind === "screen" ? "contain" : "cover";
+              const video = element as HTMLVideoElement;
+              const fitScreen = () => {
+                if (!gone && kind === "screen" && video.videoWidth && video.videoHeight)
+                  setVideoRatio(`${video.videoWidth} / ${video.videoHeight}`);
+              };
+              video.addEventListener("loadedmetadata", fitScreen);
+              video.addEventListener("resize", fitScreen);
+              fitScreen();
               element.style.width = "100%";
               element.style.height = "100%";
               element.setAttribute("playsinline", "");
@@ -228,7 +237,8 @@ export function LiveSharing({
           ))}
         </nav>
         <div
-          className={`phone-viewer live-phone ${mediaReady ? "has-media" : ""}`}
+          className={`phone-viewer live-phone ${mediaReady ? "has-media" : ""} ${mediaReady && kind !== "audio" ? "has-video" : ""}`}
+          style={{ aspectRatio: mediaReady && kind === "screen" ? videoRatio : undefined }}
           aria-label={`${kind} viewer`}
         >
           <div className="phone-island" />
@@ -250,7 +260,7 @@ export function LiveSharing({
           <div className="phone-home" />
         </div>
         <p className="viewer-caption">
-          <ShieldCheck size={15} /> View only · No recording · Stoppable on the
+          <ShieldCheck size={15} /> {mediaReady ? "Live · " : ""}View only · No recording · Stoppable on the
           device
         </p>
       </div>

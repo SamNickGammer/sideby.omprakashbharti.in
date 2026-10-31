@@ -3135,12 +3135,32 @@ label {
 .shared-photo-grid img { width:100%; aspect-ratio:4/3; object-fit:contain; border-radius:14px; background:#edf2ed; }
 @media(max-width:600px) { .shared-records li { gap:10px; flex-wrap:wrap; } .shared-time { margin-left:52px; max-width:none; } .shared-panel .section-heading { flex-wrap:wrap; } .shared-tools>* { width:100%; } }
 
-/* Live streams stay contained in the shared phone-shaped viewer. */
-.live-phone { position: relative; overflow: hidden; }
-.live-media { position: absolute; inset: 24px 8px 44px; display:flex; align-items:center; justify-content:center; }
-.live-media video { width:100%; height:100%; object-fit:contain; background:#102923; border-radius:16px; }
-.live-media audio { max-width:100%; width:100%; }
-.live-placeholder { position:relative; padding:24px; text-align:center; pointer-events:none; }
-.live-phone .phone-status { position:absolute; bottom:20px; z-index:2; }
+/* The shell is the bezel; video occupies its complete inner display. */
+.live-phone {
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  box-sizing: content-box;
+  max-width: calc(100% - 14px);
+}
+.live-media { position: absolute; inset: 0; display:flex; align-items:center; justify-content:center; }
+.live-media video { display:block; width:100%; height:100%; object-fit:cover; background:#102923; border-radius:0; }
+.live-media audio { max-width:calc(100% - 32px); width:100%; }
+.live-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px;
+  text-align: center;
+  pointer-events: none;
+}
+.live-placeholder svg { flex-shrink:0; }
+.live-placeholder h2, .live-placeholder p { width:100%; text-align:center; }
+.live-phone .phone-status { position:absolute; bottom:20px; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 32px); margin:0; z-index:2; }
+.live-phone.has-video .phone-island,
+.live-phone.has-video .phone-home,
+.live-phone.has-video .phone-status { display:none; }
 .live-error { color:#a23d36; font-size:14px; }
-.live-phone.has-media .phone-island { z-index:2; }
