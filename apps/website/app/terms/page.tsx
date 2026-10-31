@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <Guide
       title="Terms of use"
-      intro="The conditions for using Sideby’s website and development services, with a history of published versions."
+      intro="The conditions for using Sideby’s website and development services, with the current terms below. Older versions are available on request through Support."
     >
       <PolicyReader slug="terms" />
     </Guide>

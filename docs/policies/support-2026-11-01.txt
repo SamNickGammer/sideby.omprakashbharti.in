@@ -28,4 +28,4 @@ This is not an emergency service or a channel for guaranteed immediate protectio
 
 7. VERSION HISTORY
 
-The current version and prior published versions are available through the policy archive. New versions create new records rather than overwriting published text. Contact the operator with the version identifier if you need help locating historical wording.
+Only the current policy is displayed publicly. Prior published versions are retained privately. Use Support’s older-policy request option to specify a policy and a date or date range; we will review the request and share available copies privately using your reply email. New versions create new records rather than overwriting published text. Contact the operator with the version identifier if you need help locating historical wording.

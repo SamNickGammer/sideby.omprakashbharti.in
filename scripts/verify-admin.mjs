@@ -81,7 +81,7 @@ status(r, 201);
 const p1 = (await r.json()).version;
 assert.equal(p1.effective_date, draft.effectiveDate);
 checks++;
-status(await req("/api/public/policies?slug=support&version=" + p1.id), 404);
+status(await req("/api/public/policies?slug=support&version=" + p1.id), 400);
 status(
   await req("/api/policies/" + p1.id + "/publish", "POST", {}, { cookie: "" }),
   401,
@@ -100,9 +100,12 @@ status(r, 201);
 const p2 = (await r.json()).version;
 status(await req("/api/policies/" + p2.id + "/publish", "POST", {}), 200);
 r = await req("/api/public/policies?slug=support&version=" + p1.id);
-status(r, 200);
-assert.equal((await r.json()).policy.body, draft.body.trim());
-checks++;
+status(r, 400);
+r = await req("/api/public/policies?slug=support");
+const current = await r.json();
+assert.equal(current.policy.id, p2.id);
+assert.equal("versions" in current, false);
+checks += 2;
 await assert.rejects(
   db`UPDATE sideby_policy_versions SET body='mutated' WHERE id=${p1.id}`,
 );
@@ -141,7 +144,14 @@ status(
   ),
   400,
 );
-r = await req("/api/public/bugs", "POST", bug, { origin: web });
+const historicalRequest = {
+  ...bug,
+  category: "privacy",
+  subject: "Historical policy request",
+  description:
+    "Historical policy request: privacy. Date: 2026-01-01 through 2026-02-01. Please share privately.",
+};
+r = await req("/api/public/bugs", "POST", historicalRequest, { origin: web });
 status(r, 201);
 const id = (await r.json()).reference;
 assert.equal(r.headers.get("access-control-allow-origin"), web);
@@ -154,10 +164,11 @@ status(
 status(await req("/api/bugs/" + id, "PATCH", { status: "resolved" }), 200);
 r = await req("/api/bugs");
 status(r, 200);
-assert.equal(
-  (await r.json()).reports.find((x) => x.id === id).status,
-  "resolved",
-);
+const storedReport = (await r.json()).reports.find((x) => x.id === id);
+assert.equal(storedReport.status, "resolved");
+assert.equal(storedReport.description, historicalRequest.description);
+assert.equal(storedReport.category, "privacy");
+checks += 2;
 checks++;
 status(await req("/api/bugs?page=-1"), 400);
 status(
@@ -186,6 +197,7 @@ status(await req("/api/login", "POST", credentials, { capture: true }), 200);
 const token = cookie.split("=")[1];
 await db`UPDATE sideby_admin_sessions SET expires_at=now()-interval '1 second' WHERE token_hash=${createHash("sha256").update(token).digest("hex")}`;
 status(await req("/api/overview"), 401);
+await db`DELETE FROM sideby_bug_reports WHERE id=${id}`;
 await db`DELETE FROM sideby_bug_reports WHERE email='qa@example.invalid' AND subject='Synthetic API QA'`;
 await db`DELETE FROM sideby_admin_limits`;
 const expiredReport =

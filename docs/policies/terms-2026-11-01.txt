@@ -8,7 +8,7 @@ Sideby is operated by Om Prakash Bharati, Kanap Road, Haspura, 824120, Aurangaba
 
 2. DEVELOPMENT SERVICE
 
-These terms describe use of the public website, policy archive and support service, and the intended boundaries of authorized development testing. Public family signup and Android download are not currently offered. Parent and companion features are in local testing and may change, be interrupted or fail on particular devices. A product description is not a guarantee of availability, continuous monitoring or legal suitability. No paid subscription is offered by this website.
+These terms describe use of the public website, current policies and support service, and the intended boundaries of authorized development testing. Public family signup and Android download are not currently offered. Parent and companion features are in local testing and may change, be interrupted or fail on particular devices. A product description is not a guarantee of availability, continuous monitoring or legal suitability. No paid subscription is offered by this website.
 
 3. AUTHORIZED USE
 
@@ -44,4 +44,4 @@ Development software has limitations. Use reasonable care and keep independent a
 
 10. CHANGES, RECORDS AND QUESTIONS
 
-Published versions carry an effective date, publication date and version identifier. Prior versions remain available through the archive. New terms will not be treated as silently creating new permission to collect child data. Additional agreement or notice will be obtained where required before a material service change. An archive record is not proof that you personally accepted a version. Contact the operator through the support form or postal address for questions or a specific historical version.
+Published versions carry an effective date, publication date and version identifier. Only current terms are displayed publicly. Prior versions are retained privately and can be requested through Support for a specific date or date range. New terms will not be treated as silently creating new permission to collect child data. Additional agreement or notice will be obtained where required before a material service change. An archive record is not proof that you personally accepted a version. Contact the operator through the support form or postal address for questions or a specific historical version.

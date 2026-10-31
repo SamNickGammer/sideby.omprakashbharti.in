@@ -19,19 +19,19 @@ try {
       "privacy",
       "privacy-2026-11-01.txt",
       "Sideby Privacy Policy",
-      "Detailed permissions, data handling, contact and retention disclosures",
+      "Current policy publication and private historical-copy requests",
     ],
     [
       "terms",
       "terms-2026-11-01.txt",
       "Sideby Terms of Use",
-      "Initial development service terms",
+      "Current terms and historical-copy requests through Support",
     ],
     [
       "support",
       "support-2026-11-01.txt",
       "Sideby Support Policy",
-      "Private reports, support scope and retention",
+      "Private support reports and dated historical-policy requests",
     ],
   ]) {
     const [slug, file, title, summary] = item,
