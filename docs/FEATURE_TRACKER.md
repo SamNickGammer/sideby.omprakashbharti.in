@@ -177,6 +177,9 @@ Current device UI shares one selected image at a time, replacing its previous se
 
 Evidence for F07–F11: [device content contract](DEVICE_CONTENT.md), `scripts/verify-content.mjs` (140 HTTP checks plus private-image/snapshot assertions), usage regression (59), pairing regression (87), 13 Android unit tests, debug/release builds, lint and root web build/typecheck. Local Neon dev only; features await PR review, not production deployment. All sharing starts off for new pairings. Screen/camera/microphone/location remain outside this milestone.
 
+Final handoff check (2026-10-31): the final APK installed successfully, but the post-install launch/UI smoke check remains unverified because the emulator and ADB timed out after restart. Pairing data was preserved. Notification sharing was stopped during its clearing test and has not yet been re-enabled. Re-enable it visibly on DEMO EMULATOR, post the debug synthetic previews, and sync before repeating the final dashboard check. Earlier six-category emulator-to-dashboard checks passed.
+
+
 ## Next — implement one feature at a time
 
 ### F05 · Connection and permission onboarding reliability
