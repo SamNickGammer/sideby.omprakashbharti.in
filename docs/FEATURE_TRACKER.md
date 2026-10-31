@@ -101,6 +101,8 @@ Scope is permission setup/status only. Usage data collection remains F06. No sen
 
 ### F06 · App usage / digital wellbeing — local milestone complete
 
+Review: [PR #17](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/17), stacked on #15; awaiting owner merge.
+
 - [x] End-to-end today’s app usage, with foreground sync, verified locally on API 37 emulator.
   - [x] Android: optional Usage Access setup (F05b).
   - [x] Android: separate sharing opt-in and stop/clear behavior.
