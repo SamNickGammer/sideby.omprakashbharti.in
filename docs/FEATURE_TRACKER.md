@@ -11,7 +11,7 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; awaiting review. SMS/call access remains installer-dependent.
+Current milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; [PR #19](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/19) awaits owner review and depends on #17. SMS/call access remains installer-dependent.
 
 Previous milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is still pending. F07 installed-app inventory remains separate.
 
