@@ -335,12 +335,16 @@ Future requests belong in the appropriate card above, or a new stable F-number. 
 - [x] Update feature availability and add setup, privacy and support pages. Root build/typecheck passed; all four pages checked at 390px with no horizontal overflow.
 - [x] Vercel deployed website commit `6fc299e` successfully. Verified homepage, setup, privacy, support and sitemap on `https://sideby.omprakashbharti.in` return HTTP 200 with updated content; inspected live setup page at 1440px. No parent-app deployment or backend changes.
 
-### F20 · Admin, policies and support — in progress
+### F20 · Admin, policies and support — merged and deployed
 
 - [x] Website: consistent footer, detailed dated policy pages and published version archive.
 - [x] Backend: immutable policy revisions, private bug reports, audited admin actions, session security and throttling.
 - [x] Admin: single-account login (no signup), aggregate growth dashboard, policy editor/publication, bug inbox/status.
-- [ ] QA: auth isolation, draft privacy, archive consistency, abuse limits, responsive UI.
-- [ ] Deployment: separate admin Vercel project/domain, production configuration and live verification.
+- [x] QA: 62 dev API assertions cover auth isolation, draft privacy, archive consistency, exact effective dates, abuse limits and retention. Root build/typecheck passed; 390px/1440px UI checked; footer links all 13px.
+- [x] Deployment: PR #21 merged by owner. Both Vercel production projects deployed merged commit `ba96f5a`; admin HTTPS domain/DNS, production login/logout/counts, published policies and public bug-form-to-private-inbox delivery verified. Synthetic reports removed.
 - [x] Owner name/address and production counts confirmed; no public email requested. Contact uses the private form and postal address.
 - [ ] Jurisdiction-specific legal review and public child-service launch safeguards remain pending.
+
+F20 evidence: admin `https://admin.sideby.omprakashbharti.in`; website privacy/terms/support all HTTP 200. Production counts are separate from local dev emulator data. Policy date: 1 November 2026; earlier public overview retained in archive. Password stored only as a server-side salted hash, no signup. Production maintenance cron enabled daily at 03:23 UTC.
+
+- [ ] Future support chat and automatic replies (not part of F20 delivery).

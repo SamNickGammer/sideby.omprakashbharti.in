@@ -45,3 +45,7 @@ Verified 24 October 2026:
 - No environment secrets were configured for the website. Local CLI linking adds an ignored Vercel token to the root environment; existing backend configuration was confirmed present. Never commit that file.
 
 Parent web has not been publicly deployed by this milestone. The live public site does not provide the pairing backend.
+
+## Admin and public policy/support service — 1 November 2026
+
+The owner merged PR #21. `sideby-admin` is a separate Vercel Next.js project rooted at `apps/admin`, live at https://admin.sideby.omprakashbharti.in with production Neon data and a single configured admin identity. Production secrets are isolated from preview targets. The website remains static and receives only `NEXT_PUBLIC_ADMIN_API_ORIGIN`; public policies and support form call the admin service. Migration 008 and the initial policy versions were explicitly provisioned. Daily authenticated report retention cleanup is configured. See ADMIN_PLATFORM.md for exact deployment evidence and remaining legal/launch gates.

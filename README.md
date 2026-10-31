@@ -25,7 +25,7 @@ The project is developed as a monorepo with independent public website, parent w
 | Application | Purpose | Status | Guide |
 | --- | --- | --- | --- |
 | **Sideby website** | Public product overview, roadmap and FAQ | Live on Vercel at [sideby.omprakashbharti.in](https://sideby.omprakashbharti.in) | [Website](apps/website/README.md) |
-| **Sideby Admin** | Operator overview, policy archive and private support inbox | Implemented; deployment verification in progress | [Admin](apps/admin/README.md) |
+| **Sideby Admin** | Operator overview, policy archive and private support inbox | Live at [admin.sideby.omprakashbharti.in](https://admin.sideby.omprakashbharti.in) | [Admin](apps/admin/README.md) |
 | **Sideby Parent — web** | Family dashboard, child profiles, routines and device pairing | Implemented and tested locally; separate public hosting pending | [Parent web](apps/parent-web/README.md) |
 | **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Opt-in usage/content sharing implemented locally | [Child Android](apps/child-android/README.md) |
 | **Sideby Parent — mobile** | Future mobile access to the same family account | Planned; framework not selected | [Parent mobile](apps/parent-mobile/README.md) |

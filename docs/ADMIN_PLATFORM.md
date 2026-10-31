@@ -1,6 +1,6 @@
 # Admin, policy archive and support contract
 
-Status: implementation in progress. New app `apps/admin`, isolated from parent authentication. Development uses Neon dev. Production domain/data source require owner confirmation. No public signup, child media access or parent impersonation is included.
+Status: implemented, owner-merged in PR #21 and deployed. New app `apps/admin`, isolated from parent authentication. Development uses Neon dev. Owner confirmed admin.sideby.omprakashbharti.in and production counts. No public signup, child media access or parent impersonation is included.
 
 ## Authentication and authorization
 
@@ -36,3 +36,15 @@ Test login success/failure, absent/forged/expired/revoked sessions, cross-origin
 Support reports expire after 180 days from submission, regardless of status. Vercel daily cron calls `/api/maintenance` at 03:23 UTC with server-only CRON_SECRET; it removes eligible reports, expired sessions and expired source-hash counters. Unauthenticated calls fail closed. Outages can delay cleanup. Audit references contain no report text/email. Policy archive retention is indefinite. No legal-hold exception is claimed by this implementation.
 
 Legal drafting references reviewed 1 November 2026: [MeitY DPDP Rules 2025](https://www.meity.gov.in/documents/act-and-policies/digital-personal-data-protection-rules-2025-gDOxUjMtQWa?pageTitle=Digital-Personal-Data-Protection-Rules-2025), [FTC COPPA FAQ](https://www.ftc.gov/business-guidance/resources/complying-coppa-frequently-asked-questions), [FTC verifiable parental consent](https://www.ftc.gov/business-guidance/privacy-security/verifiable-parental-consent-childrens-online-privacy-rule). These sources inform disclosure/launch gates, not a certification of compliance or a substitute for jurisdiction-specific legal review. The owner requested no public email; contact is the private support form and supplied postal address. No target markets were confirmed, so policies do not claim global release eligibility.
+
+## Verified deployment — 1 November 2026
+
+- PR #21 merged by owner. Vercel website deployment `dpl_5McAhi8WMTDrTfWimQYrA4Zd7Ffm` and admin deployment `dpl_BT2AewDq7XA6r511QrY2j2YfNJn9` both READY/success on merged app commit `ba96f5a`.
+- Admin project `sideby-admin`, root `apps/admin`; production secrets only, no preview credentials. Cloudflare added only DNS-only CNAME `admin.sideby` → `93de1cd1e3f129dd.vercel-dns-017.com`. Vercel confirms valid DNS and HTTPS. Existing records unchanged.
+- Migration 008 applied to dev and production. Production family data was not seeded or modified. Current metrics verified against production; “seen in 24h” is not a live-presence signal.
+- Production login, Secure/HttpOnly cookie, protected overview, logout revocation and published privacy/terms/support checked. All policy effective dates return calendar text `2026-11-01`, avoiding timezone date shifts.
+- Live website form delivered a synthetic report to the authenticated production admin inbox; that report was removed after verification. Dev synthetic report also removed. No email was sent. Public support/terms/privacy load via the admin API; prior policy overview remains accessible.
+- Vercel cron is enabled at `23 3 * * *`; authenticated cleanup tested in dev with expired/fresh reports. The scheduled production invocation has not yet occurred during this verification.
+- 62 dev API assertions, root build/typecheck and mobile/desktop layout passed. One test run was repeated after browser QA shared the local rate-limit bucket; final run was isolated and passed. No test accounts or passwords were committed.
+
+Legal review before public child-data enrollment, jurisdiction-specific guardian verification and consent receipts remain release gates. No public contact email was requested; the published contact is the private form and owner-supplied postal address. Chat and automatic support replies remain future work.
