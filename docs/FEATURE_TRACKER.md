@@ -11,11 +11,11 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current milestone: **F13–F15 — visible live sharing implemented locally**, on `feat/live-sharing`; [PR #20](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/20) awaits owner review and depends on PR #19. Physical-device and production release gates remain unchecked.
+Current milestone: **F13–F15 — visible live sharing implemented locally**, on `feat/live-sharing`; [PR #20](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/20) is merged into `main`. Physical-device and production release gates remain unchecked.
 
-Previous content milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; [PR #19](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/19) awaits owner review and depends on #17. SMS/call access remains installer-dependent.
+Previous content milestone: **F07–F11 — optional device content sharing implemented and emulator-verified locally**, on `feat/device-content-sharing`; [PR #19](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/19) is merged into `main`. SMS/call access remains installer-dependent.
 
-Previous milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is still pending. F07 installed-app inventory remains separate.
+Previous milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is merged. F07 installed-app inventory remains separate.
 
 ## Done — implemented foundation
 
@@ -75,7 +75,7 @@ Evidence: [pairing contract](PAIRING.md), [Android verification](ANDROID_CONNECT
 
 ### F05a · Permission-status visibility
 
-Implementation: `feat/device-permission-status`, commit `b215bdd`; [PR #15](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/15) is open as of this review.
+Implementation: `feat/device-permission-status`, commit `b215bdd`; [PR #15](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/15) is merged into `main`.
 
 - [x] Android: read this app's declared permission states and show a local status dialog.
 - [x] Android: send status metadata after foreground check-ins; retain pairing on report failure.
@@ -84,11 +84,11 @@ Implementation: `feat/device-permission-status`, commit `b215bdd`; [PR #15](http
 - [x] Dashboard: distinguish missing, unavailable and stale/historical reports.
 - [x] QA: 87 API checks, web builds/type checks, Android builds/unit tests/lint.
 - [x] QA: existing paired emulator report received; desktop modal and keyboard-close checked.
-- [ ] Owner review and merge PR #15.
+- [x] Owner merged PR #15.
 - [ ] Mobile-browser, physical-phone and older-Android verification.
 - [ ] Apply migration 004 to production only as part of a separately approved parent deployment.
 
-At the F05a milestone only Internet was granted. F05b adds optional Usage Access setup; other capabilities remain **unavailable**, not implemented or enabled. This card does not include asking for new sensitive permissions or collecting phone content. Contract is in `docs/DEVICE_PERMISSIONS.md` on PR #15 until merged.
+At the F05a milestone only Internet was granted. F05b adds optional Usage Access setup; other capabilities remain **unavailable**, not implemented or enabled. This card does not include asking for new sensitive permissions or collecting phone content. Contract is in `docs/DEVICE_PERMISSIONS.md` included in merged PR #15.
 
 ### F05b · Optional Usage Access setup — implemented and tested locally
 
@@ -105,7 +105,7 @@ Scope is permission setup/status only. Usage data collection remains F06. No sen
 
 ### F06 · App usage / digital wellbeing — local milestone complete
 
-Review: [PR #17](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/17), stacked on #15; awaiting owner merge.
+Review: [PR #17](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull/17), merged into `main`; its rewritten history was reconciled without changing app files.
 
 - [x] End-to-end today’s app usage, with foreground sync, verified locally on API 37 emulator.
   - [x] Android: optional Usage Access setup (F05b).
@@ -122,7 +122,7 @@ Review: [PR #17](https://github.com/SamNickGammer/sideby.omprakashbharti.in/pull
 - [ ] Release gate: physical-device accuracy and supported-Android review.
 - [ ] Release gate: background sync, history/date-range UI and production retention policy.
 
-Evidence: 59 usage HTTP checks plus assertions, 87 pairing checks, 10 Android unit tests, debug/release builds, lint, root web build/typecheck. Migration 005 applied to Neon dev only. This is not deployed or merged; depends on F05a/F05b (PR #15). Full inventory remains F07. See [usage contract](USAGE.md).
+Evidence: 59 usage HTTP checks plus assertions, 87 pairing checks, 10 Android unit tests, debug/release builds, lint, root web build/typecheck. Migration 005 applied to Neon dev only. This is merged into `main`, including F05a/F05b (PR #15); production rollout remains pending. Full inventory remains F07. See [usage contract](USAGE.md).
 
 ### F07 · Installed apps — local milestone complete
 
@@ -182,14 +182,14 @@ Evidence for F07–F11: [device content contract](DEVICE_CONTENT.md), `scripts/v
 Final handoff check (2026-10-31): the final APK installed successfully, but the post-install launch/UI smoke check remains unverified because the emulator and ADB timed out after restart. Pairing data was preserved. Notification sharing was stopped during its clearing test and has not yet been re-enabled. Re-enable it visibly on DEMO EMULATOR, post the debug synthetic previews, and sync before repeating the final dashboard check. Earlier six-category emulator-to-dashboard checks passed.
 
 
-### F13 · View-only screen sharing — local milestone in review
+### F13 · View-only screen sharing — local milestone merged
 
 - [x] Follow-up UI fix: reset the placeholder heading to block layout (global h2 was flex). Verified actual dashboard screenshot plus text-range centering for ready, ended and multiline approval messages at 1440px and 390px; offsets within 0.01px. Root build/typecheck passed.
 - [x] UI polish: edge-to-edge display inside the bezel, native screen proportions and centered idle/ended content. Browser layout checks at 390px and 1440px verified zero centering offset, bezel-only video inset and no mobile horizontal overflow; root build/typecheck passed.
 
 - [x] Screen capture aspect-ratio fix: native display capture removes encoded side bars. Updated APK installed with pairing preserved; API 37 emulator emitted 1080 × 2400 frames and the actual parent viewer displayed the screen edge-to-edge within its rounded bezel. Debug/release builds, 13 unit tests, lint and root web build/typecheck passed. Physical-device bandwidth and single-app window modes remain unverified.
 
-Active work: visible Start Screen/Camera/Audio sessions under [the live contract](LIVE_SHARING.md). Dedicated `feat/live-sharing` branch depends on unmerged PR #19. Local LiveKit integration, device approvals, media supervisor and isolation tests are implemented. Not merged or deployed.
+Active work: visible Start Screen/Camera/Audio sessions under [the live contract](LIVE_SHARING.md). PR #20 and its dependency PR #19 are merged into `main`. Local LiveKit integration, device approvals, media supervisor and isolation tests are implemented. Merged; parent-app production rollout remains pending.
 
 - [ ] End-to-end visible, stoppable screen session.
   - [x] Dashboard screen route and phone-shaped viewer UI.
@@ -201,7 +201,7 @@ Active work: visible Start Screen/Camera/Audio sessions under [the live contract
 
 No remote touch/typing, hidden capture, recordings or screenshots in this milestone.
 
-### F14 · Camera sharing — local milestone in review
+### F14 · Camera sharing — local milestone merged
 
 - [ ] End-to-end visible, authorized camera session.
   - [x] Dashboard viewer and front/back selection controls (UI only).
@@ -214,7 +214,7 @@ No remote touch/typing, hidden capture, recordings or screenshots in this milest
 
 Depends on media infrastructure from F13. No hidden or unattended camera access.
 
-### F15 · Microphone sharing — local milestone in review
+### F15 · Microphone sharing — local milestone merged
 
 - [ ] End-to-end visible, authorized audio session.
   - [x] Dashboard microphone route and unavailable state.
@@ -323,3 +323,9 @@ Never collect passwords, tokens or private account content. No guarantee of a fu
 | 2026-10-31 | This board introduced | Documentation only; F06 queued, no content-collection implementation started |
 
 Future requests belong in the appropriate card above, or a new stable F-number. Add missing submodules **before** beginning implementation and update this board in the same commit as the work. Record blocked/deferred decisions instead of silently removing unchecked items.
+
+### Merge reconciliation · 2026-11-01
+
+- [x] Reconciled PR #17 rewritten history and stacked PRs #19/#20; GitHub reports all three merged with no open PRs. PR #16 had already carried the complete feature stack into main.
+- [x] Verified the reconciled application tree exactly matches tested commit `462d79d`: no UI or feature changes. Web build/typecheck, Android debug/release builds, 13 unit tests and lint passed again.
+- [x] Updated local main and remote main. This reconciliation does not apply production database migrations or deploy the parent app.
