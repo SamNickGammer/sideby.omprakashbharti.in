@@ -11,7 +11,7 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current active implementation: none. **F05b — optional Usage Access setup is implemented and emulator-tested; awaiting PR #15 review**. Next queued implementation: **F06 — App usage**. Permission status is implemented locally but awaiting merge. This documentation update does not implement the remaining capabilities.
+Current milestone: **F06 — today’s Digital wellbeing implemented and emulator-verified locally**. F05a/F05b are implemented locally; PR #15 is still pending. F07 installed-app inventory remains separate.
 
 ## Done — implemented foundation
 
@@ -99,23 +99,26 @@ Implementation is on PR #15. Android 0.2.1 was installed without wiping storage.
 
 Scope is permission setup/status only. Usage data collection remains F06. No sensitive runtime permission is requested for an unimplemented camera, microphone, location or content feature.
 
+### F06 · App usage / digital wellbeing — local milestone complete
+
+- [x] End-to-end today’s app usage, with foreground sync, verified locally on API 37 emulator.
+  - [x] Android: optional Usage Access setup (F05b).
+  - [x] Android: separate sharing opt-in and stop/clear behavior.
+  - [x] Android: today’s local-day aggregation with midnight and overlapping-activity tests.
+  - [x] Android: granted/revoked/unavailable states, no data without access.
+  - [x] Backend: bounded contract, latest-snapshot retention and device-authenticated ingestion.
+  - [x] Backend: device/family isolation, idempotent retries, stale-report rejection.
+  - [x] Dashboard: actual per-app durations, totals, device selector and sample/receipt times.
+  - [x] Dashboard: off/denied/empty/inactive/stale states.
+  - [x] QA: Settings activity recorded 18,671 ms; dashboard displayed 18s.
+  - [x] QA: real emulator stop sharing and permission revocation remove app rows; restoring access resumes sharing.
+  - [x] QA: pairing survives restart/update; API tests cover retries, two devices, cross-family denial, expiry/archive/disconnect.
+- [ ] Release gate: physical-device accuracy and supported-Android review.
+- [ ] Release gate: background sync, history/date-range UI and production retention policy.
+
+Evidence: 59 usage HTTP checks plus assertions, 87 pairing checks, 10 Android unit tests, debug/release builds, lint, root web build/typecheck. Migration 005 applied to Neon dev only. This is not deployed or merged; depends on F05a/F05b (PR #15). Full inventory remains F07. See [usage contract](USAGE.md).
+
 ## Next — implement one feature at a time
-
-### F06 · App usage / digital wellbeing — next queued
-
-- [ ] End-to-end app usage feature complete.
-  - [ ] Android: explain exactly what usage metadata is shared; optional Usage Access setup.
-  - [ ] Android: read usage for supported time ranges with timezone/day-boundary handling.
-  - [ ] Android: report actual access state, including revocation and unavailable data.
-  - [ ] Backend: define contract, minimum fields, retention and authenticated device ingestion.
-  - [ ] Backend: isolate device/child/family queries and deduplicate retries.
-  - [ ] Dashboard: replace empty usage views with actual totals and per-app usage.
-  - [ ] Dashboard: show period, device, sync time, stale/offline/no-access states.
-  - [ ] QA: use known emulator activity; compare Android values to dashboard results.
-  - [ ] QA: deny/revoke access, restart, retry, multiple devices and cross-family denial.
-  - [ ] QA: physical-device accuracy and supported-Android review before release.
-
-Depends on F04; coordinate permission-status updates with F05a. Do not enable restrictions or read message content as part of usage reporting.
 
 ### F05 · Connection and permission onboarding reliability
 

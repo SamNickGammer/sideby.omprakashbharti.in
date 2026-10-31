@@ -19,3 +19,7 @@ No dedicated security contact is configured yet. Until one is established, use a
 ## Device permission status
 
 The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.
+
+## Opt-in Digital wellbeing
+
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.

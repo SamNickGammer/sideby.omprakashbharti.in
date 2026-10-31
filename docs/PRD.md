@@ -2,7 +2,7 @@
 
 Status: product baseline with connected web milestone, 24 October 2026. Requirements below include planned functionality.
 
-Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, unrestricted child profiles, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Implemented pairing milestone: web codes, parent confirmation, multiple devices, credential revocation and heartbeat APIs. Android companion pairing, encrypted credential storage and foreground check-ins are implemented and emulator-tested. Not implemented: background Android syncing, co-parent invitations, account deletion, device enforcement, usage/location, requests or media.
+Implemented: web signup/sign-in/sign-out, family creation, multiple child profiles, unrestricted child profiles, private avatars, archive/restore, routines, family rename, export and live account updates. Recovery screens are wired; email delivery and complete reset flow still require verification with a real mailbox. Implemented pairing milestone: web codes, parent confirmation, multiple devices, credential revocation and heartbeat APIs. Android companion pairing, encrypted credential storage and foreground check-ins are implemented and emulator-tested. Not implemented: background Android syncing, co-parent invitations, account deletion, device enforcement, location, requests or media. Today’s opted-in usage summaries are implemented locally (see below).
 
 ## Purpose and audience
 
@@ -60,3 +60,7 @@ Messages has separate SMS and Social notifications tabs. The Social view filters
 ## Device permission status
 
 The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.
+
+## Opt-in Digital wellbeing
+
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.

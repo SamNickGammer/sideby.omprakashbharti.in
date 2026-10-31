@@ -67,3 +67,7 @@ Use Git `dev` with Neon `dev`; see [environment setup](../../docs/ENVIRONMENTS.m
 Each device card now opens a permission-status dialog. Recent grants are green, missing grants/session consent amber, and unavailable or stale reports gray. Reports expire visually after two minutes; historical grants are never presented as current. This is status visibility, not content collection. Apply `db/migrations/004_device_permissions.sql` before running this version. See [contract and validation](../../docs/DEVICE_PERMISSIONS.md).
 
 Usage Access may now show granted/not allowed after optional Android setup. The popup explains how to refresh status on the device; this does not indicate that usage history is syncing.
+
+## Digital wellbeing
+
+The usage route now shows per-device, explicitly shared daily app foreground durations, app names/package IDs, sample/receive timestamps and stale/off/denied/empty states. It polls every 15 seconds and never remotely wakes the companion. Requires migrations 004 and 005, companion 0.3.0, Android Usage Access and separate child-device sharing opt-in. Full installed-app inventory remains separate. See [usage contract](../../docs/USAGE.md).

@@ -1,6 +1,6 @@
 # Sideby Connect — Android
 
-Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. This version reports its grant state only. No phone content is collected and no restrictions are enforced.
+Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.3.0 adds separately opted-in usage summaries. No messages, contacts, photos, location or live media are collected; no restrictions are enforced.
 
 ## Open and build
 
@@ -52,4 +52,10 @@ After each successful foreground check-in, the app sends its own permission stat
 
 ## Permission setup (0.2.1)
 
-Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location, photos, contacts, notifications, SMS, calls and screen sharing remain unavailable. The app does not read usage history yet.
+Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location, photos, contacts, notifications, SMS, calls and screen sharing remain unavailable. Permission alone does not enable collection; use the separate sharing control below.
+
+## Digital wellbeing (0.3.0)
+
+Open **Permissions on this device**, allow Usage Access, then separately choose **Enable usage sharing** and confirm the disclosure. This sends today's app names/package IDs and estimated foreground durations to **Child’s Space → Digital wellbeing** at check-in or manual refresh while Sideby is open. Use another app, return to Sideby and check in to update the dashboard. Sharing is off by default, including upgrades from 0.2.x. The permission alone does not enable it.
+
+**Stop usage sharing** stops collection immediately; the latest server snapshot is cleared on the next successful sync. Permission revocation also clears app data when reported; parent disconnect clears it immediately. Offline changes cannot erase the server until delivered. Queries stay local; only a bounded summary is uploaded, not raw events. Limited launcher-app visibility is used to label observed apps; this is not a full installed-app inventory. See [usage contract and accuracy limits](../../docs/USAGE.md). Migration 005 must be applied before backend use.
