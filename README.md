@@ -6,7 +6,7 @@
 
 A shared family space for parents, with a visible Android companion for children’s devices.
 
-**[Visit the website](https://sideby.omprakashbharti.in)** · [Documentation](#documentation) · [Getting started](#getting-started) · [Roadmap](docs/ROADMAP.md)
+**[Visit the website](https://sideby.omprakashbharti.in)** · [Documentation](#documentation) · [Getting started](#getting-started) · [Feature checklist](docs/FEATURE_TRACKER.md) · [Roadmap](docs/ROADMAP.md)
 
 </div>
 
@@ -48,8 +48,10 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Multiple device records for each child.
 - Scoped device credentials, heartbeat status and revocation.
 - Server-side family ownership checks and tested pairing boundaries.
+- Optional Android Usage Access setup with grant/revoke status reporting; activity collection remains planned.
+- Device permission summaries and a detailed popup showing recent, unavailable and stale states. See [permission reporting](docs/DEVICE_PERMISSIONS.md).
 
-Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Recovery email delivery and a full password reset still require verification.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 
@@ -156,6 +158,7 @@ The future parent mobile app will use the same family model. Its framework and n
 
 | Topic | Reference |
 | --- | --- |
+| Live feature checklist and next work | [Feature board](docs/FEATURE_TRACKER.md) |
 | Product scope and requirements | [PRD](docs/PRD.md) |
 | System design and data boundaries | [Architecture](docs/ARCHITECTURE.md) |
 | Parent web completion and next steps | [Readiness checklist](docs/PARENT_WEB_READINESS.md) |

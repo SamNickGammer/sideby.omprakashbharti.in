@@ -2,12 +2,7 @@
 
 Git branches and Neon branches are separate concepts. Checking out Git does not automatically select a database.
 
-| Code branch | Neon target | Purpose |
-| --- | --- | --- |
-| `dev` | `dev` | Local development and testing |
-| `prod` | existing `production` | Reviewed production code and production data |
-
-`prod` starts at the last merged `main` commit. `dev` includes the Android pairing work and the recovery fix. Creating these branches does not change Vercel's deployment branch or deploy the parent app. Existing feature PRs remain separate.
+Use normal feature/maintenance Git branches based on `main`. The owner clarified that dev/prod separation applies to Neon, not Git. Earlier Git `dev`/`prod` branches are historical and are not required for local work. Use Neon `dev` locally and Neon `production` only for production configuration.
 
 Keep production and development Postgres, Auth, Storage and Realtime credentials together. Never combine a dev database with production Auth or storage. Local env files are ignored by Git. Production credentials are preserved in `.env.production.local`; local development uses `.env.dev.local`, copied to both `.env.local` and `apps/parent-web/.env.local` via `npm run env:dev`. Keep mode 600 on these files. Use a different cookie secret for dev so production browser sessions are not accepted accidentally.
 

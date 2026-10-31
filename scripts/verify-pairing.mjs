@@ -2,7 +2,8 @@ import assert from "node:assert/strict";
 import { randomBytes, randomUUID } from "node:crypto";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { neon } from "@neondatabase/serverless";
-const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3000",
+if (process.env.NEON_BRANCH !== "dev") throw new Error("Pairing verification requires Neon dev");
+const base = process.env.TEST_BASE_URL || "http://127.0.0.1:3005",
   sql = neon(process.env.DATABASE_URL);
 const run = randomUUID().slice(0, 8),
   users = existsSync(".test-users.json")
@@ -100,6 +101,13 @@ const beat = (token) =>
   publicClient.req("/api/device/heartbeat", "POST", undefined, {
     Authorization: `Bearer ${token}`,
   });
+const permissionReport = {
+  version: 1, app_version: "test-0.2.0", android_api: 37,
+  permissions: Object.fromEntries(["internet", "camera", "microphone", "location", "notifications", "usage", "photos", "contacts", "sms", "call_history", "screen_share"].map(key => [key, key === "internet" ? "granted" : "not_available"])),
+};
+const report = (credential = token, body = permissionReport) =>
+  publicClient.req("/api/device/permissions", "POST", body, { Authorization: `Bearer ${credential}` });
+await expect(await report(), 401);
 await expect(await beat(token), 401);
 const claimed = await expect(
   await publicClient.req("/api/device/claim", "POST", claim),
@@ -141,8 +149,28 @@ snapshot = await expect(await a.req(path + "/devices"), 200);
 assert.equal(snapshot.devices.length, 1);
 assert.ok(snapshot.devices[0].last_seen_at);
 assert.ok(!JSON.stringify(snapshot).includes("credential_hash"));
+assert.equal(snapshot.devices[0].permission_report, null);
+await expect(await publicClient.req("/api/device/permissions", "POST", permissionReport), 401);
+await expect(await report(randomBytes(32).toString("hex")), 401);
+const received = await expect(await report(), 200);
+assert.ok(Number.isFinite(Date.parse(received.received_at)));
+snapshot = await expect(await a.req(path + "/devices"), 200);
+assert.deepEqual(snapshot.devices[0].permission_report, permissionReport);
+assert.ok(snapshot.devices[0].permissions_updated_at);
+await expect(await b.req(path + "/devices"), 404);
+await expect(await report(token, {...permissionReport, device_id: randomUUID()}), 400);
+await expect(await report(token, {...permissionReport, content: "private content must be rejected"}), 400);
+await expect(await report(token, {...permissionReport, permissions: {...permissionReport.permissions, camera: "unknown"}}), 400);
+await expect(await report(token, {...permissionReport, permissions: {...permissionReport.permissions, screen_share: "granted"}}), 400);
+await expect(await report(token, {...permissionReport, app_version: "x".repeat(3000)}), 413);
+const changedReport = {...permissionReport, permissions: {...permissionReport.permissions, camera: "not_granted", screen_share: "session_required"}};
+await expect(await report(token, changedReport), 200);
+snapshot = await expect(await a.req(path + "/devices"), 200);
+assert.deepEqual(snapshot.devices[0].permission_report, changedReport);
+console.log("PASS permission reporting, latest snapshot replacement, ownership, strict schema and body limits");
 await expect(await a.req(path, "PATCH", { ...profile, archived: true }), 200);
 await expect(await beat(token), 401);
+await expect(await report(), 401);
 await expect(await a.req(path + "/pairing", "POST"), 409);
 await expect(await a.req(path, "PATCH", { ...profile, archived: false }), 200);
 await expect(await beat(token), 200);
@@ -176,6 +204,8 @@ await expect(await b.req(path + `/devices/${device.id}`, "DELETE"), 404);
 await expect(await a.req(path + `/devices/${device.id}`, "DELETE"), 200);
 await expect(await a.req(path + `/devices/${device.id}`, "DELETE"), 200);
 await expect(await beat(token), 401);
+await expect(await report(), 401);
+await expect(await report(winner), 200);
 await expect(await beat(winner), 200);
 console.log(
   "PASS single claimant, multiple devices, isolated permanent credential revocation",
@@ -248,6 +278,7 @@ const family = await expect(await a.req("/api/family"), 200);
 assert.equal(family.children.find((c) => c.id === id).device_count, 1);
 await sql`UPDATE sideby_devices SET credential_expires_at=now()-interval '1 second' WHERE child_id=${id}`;
 await expect(await beat(winner), 401);
+await expect(await report(winner), 401);
 // Replacement and revoked/expired retries must not report successful pairing.
 const extra = await expect(
   await a.req("/api/children", "POST", {

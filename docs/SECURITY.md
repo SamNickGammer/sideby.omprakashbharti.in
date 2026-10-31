@@ -15,3 +15,7 @@ Retention periods, regional hosting, age/guardian verification, export/deletion 
 ## Reporting
 
 No dedicated security contact is configured yet. Until one is established, use an existing private contact with the repository owner; do not open public issues containing child information or exploit details. Configure private vulnerability reporting before public launch.
+
+## Device permission status
+
+The approved device credential can replace only its own latest permission snapshot through `POST /api/device/permissions`. The owner-authorized device list returns that snapshot. Reports contain fixed status keys plus app/API version, never phone content. This does not grant access to messages, calls, camera or screen. Android sends reports after foreground check-ins and exposes a visible local status dialog. See [Device permissions](DEVICE_PERMISSIONS.md) for the strict schema, freshness and consent distinctions.

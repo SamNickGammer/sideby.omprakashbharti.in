@@ -27,3 +27,5 @@ Child pages use `/dashboard/children/:id` (overview) and `/dashboard/children/:i
 ## Email-code recovery
 
 The existing `/api/auth/[...path]` Neon adapter proxies the SDK. `emailOtp.sendVerificationOtp({email,type:"forget-password"})` requests a recovery code. A generic success acknowledgement does not reveal account existence or prove email delivery. `emailOtp.resetPassword({email,otp,password})` submits the code and new password. The provider validates the code, expiry and attempts; the UI confirms passwords match, enforces 12–128 characters and disables resending for 60 seconds. Code/password values are not saved in browser storage. Provider errors remain visible and retryable. This replaces the default forgot-password reset-link request while preserving the legacy reset-link route.
+
+Device permission status reporting is implemented separately from heartbeat: see [permission contract](DEVICE_PERMISSIONS.md). It accepts status metadata only, with the same active-device credential boundary.

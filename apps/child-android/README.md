@@ -1,6 +1,6 @@
 # Sideby Connect — Android
 
-Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. It requests **only INTERNET**. No phone content is collected and no restrictions are enforced.
+Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. This version reports its grant state only. No phone content is collected and no restrictions are enforced.
 
 ## Open and build
 
@@ -45,3 +45,11 @@ A paired device is not proof of background connectivity. Check-ins pause while t
 Policy unit tests cover HTTPS/local-host restrictions, malformed origins/codes and credential/fingerprint format. `scripts/android-fixture.mjs` creates only synthetic fixtures against localhost and supports `create`, `offer`, `status`, `approve`, `revoke`. Credentials remain in ignored `.test-android.json`; never print or commit it. Recorded account IDs use the existing cleanup workflow. Browser approval is preferred for user-flow evidence; the fixture approval action is for API integration testing.
 
 The local Postman simulation models pending approval only; see `postman/mocks/sideby-pairing/README.md`. It does not establish real backend integration. Clean up recorded synthetic accounts with `node --env-file=.env.local scripts/cleanup-test-data.mjs` after testing, then remove the ignored fixture file and forget the test connection on the device.
+
+## Permission reports (0.2.0)
+
+After each successful foreground check-in, the app sends its own permission statuses, app version and Android API version. Open **Permissions on this device** to inspect the same information locally. Internet is automatically granted; version 0.2.1 adds optional Usage Access setup described below. Remaining listed capabilities are unavailable. No phone content is read. Report failures retry on the next check-in without removing the pairing. Upgrade with `adb install -r` to preserve the existing connection. The backend requires migration 004. See [permission contract](../../docs/DEVICE_PERMISSIONS.md).
+
+## Permission setup (0.2.1)
+
+Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location, photos, contacts, notifications, SMS, calls and screen sharing remain unavailable. The app does not read usage history yet.

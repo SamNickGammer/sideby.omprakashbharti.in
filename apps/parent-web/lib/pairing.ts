@@ -3,6 +3,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { z } from "zod";
 import { sql } from "./db";
 import { HttpError } from "./http";
+import { permissionReportSchema } from "./device-permissions";
 
 export const digest = (value: string) =>
   createHash("sha256").update(value).digest("hex");
@@ -37,7 +38,7 @@ export async function ownedChild(
 }
 export async function deviceSnapshot(childId: string) {
   const [devices, offers] = await Promise.all([
-    sql`SELECT id,name,platform,created_at,last_seen_at,revoked_at,credential_expires_at FROM sideby_devices WHERE child_id=${childId} ORDER BY created_at DESC`,
+    sql`SELECT id,name,platform,created_at,last_seen_at,revoked_at,credential_expires_at,permission_report,permissions_updated_at FROM sideby_devices WHERE child_id=${childId} ORDER BY created_at DESC`,
     sql`SELECT id,CASE WHEN status IN ('offered','pending') AND expires_at<=now() THEN 'expired' WHEN status='offered' AND attempts>=5 THEN 'locked' ELSE status END AS status,expires_at,device_name,verification FROM sideby_pairings WHERE child_id=${childId}`,
   ]);
   return { devices, pairing: offers[0] || null };
@@ -140,4 +141,17 @@ export async function heartbeat(req: Request) {
     await sql`UPDATE sideby_devices d SET last_seen_at=now() WHERE credential_hash=${digest(token)} AND revoked_at IS NULL AND credential_expires_at>now() AND EXISTS(SELECT 1 FROM sideby_children c WHERE c.id=d.child_id AND NOT c.archived) RETURNING id,last_seen_at AS server_time`;
   if (!row) throw new HttpError(401, "Device is not authorized.");
   return { ...row, status: "connected" };
+}
+
+export async function reportPermissions(req: Request) {
+  const token = req.headers.get("authorization")?.match(/^Bearer ([a-f0-9]{64})$/)?.[1];
+  if (!token) throw new HttpError(401, "Device is not authorized.");
+  const report = permissionReportSchema.parse(await smallBody(req));
+  const [row] = await sql`UPDATE sideby_devices d
+    SET permission_report=${JSON.stringify(report)}::jsonb,permissions_updated_at=now()
+    WHERE credential_hash=${digest(token)} AND revoked_at IS NULL AND credential_expires_at>now()
+    AND EXISTS(SELECT 1 FROM sideby_children c WHERE c.id=d.child_id AND NOT c.archived)
+    RETURNING permissions_updated_at AS received_at`;
+  if (!row) throw new HttpError(401, "Device is not authorized.");
+  return {status: "received", ...row};
 }
