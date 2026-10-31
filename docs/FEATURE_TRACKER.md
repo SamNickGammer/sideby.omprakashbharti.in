@@ -330,7 +330,7 @@ Future requests belong in the appropriate card above, or a new stable F-number. 
 - [x] Verified the reconciled application tree exactly matches tested commit `462d79d`: no UI or feature changes. Web build/typecheck, Android debug/release builds, 13 unit tests and lint passed again.
 - [x] Updated local main and remote main. This reconciliation does not apply production database migrations or deploy the parent app.
 
-### Public website refresh · in progress
+### Public website refresh · deployed
 
 - [x] Update feature availability and add setup, privacy and support pages. Root build/typecheck passed; all four pages checked at 390px with no horizontal overflow.
-- [ ] Verify production Vercel deployment on the custom domain.
+- [x] Vercel deployed website commit `6fc299e` successfully. Verified homepage, setup, privacy, support and sitemap on `https://sideby.omprakashbharti.in` return HTTP 200 with updated content; inspected live setup page at 1440px. No parent-app deployment or backend changes.
