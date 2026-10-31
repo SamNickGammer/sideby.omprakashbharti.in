@@ -349,9 +349,11 @@ F20 evidence: admin `https://admin.sideby.omprakashbharti.in`; website privacy/t
 
 - [ ] Future support chat and automatic replies (not part of F20 delivery).
 
-### Current-only public policies — implemented; publication in progress
+### Current-only public policies — deployed 2026-11-01 (fix/maintenance; not merged)
 - [x] Remove public archive access while preserving private immutable records.
 - [x] Add Support requests for a policy on a date or date range.
-- [ ] Verify, publish and check production.
+- [x] Verify, publish and check production.
 
 Verification: root build and typecheck pass; 65 dev API assertions pass, including historical lookup rejection and private date-range request storage. Mobile support form has no horizontal overflow and rejects reversed ranges. Historical copies are shared manually; no automatic email delivery.
+
+Production: website and admin Vercel deployments READY at commit `316774b`. All three public policy endpoints return current content only; historical UUID requests return 400. New immutable privacy/terms/support versions published; older records preserved. Browser date-range request verified in private dev storage and synthetic report removed. Publish was explicitly requested; main remains unchanged under the repository merge rule.
