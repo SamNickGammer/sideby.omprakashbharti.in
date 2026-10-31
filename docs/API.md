@@ -37,3 +37,7 @@ Companion 0.3.0 can share today’s estimated app foreground durations after sep
 ## Optional device content sharing (0.4.0, local development)
 
 The companion adds separate sharing controls for launcher-visible apps, selected-source notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. The parent pages use authenticated device snapshots with source, timestamps, search/filter, empty/error states and clear controls. No hidden collection or permission bypass. Foreground sync only; notification collection is limited to the visible sharing screen. SMS/call availability is device/installer-dependent, and Google Play eligibility is unverified. See [device content contract](DEVICE_CONTENT.md) and the feature tracker for actual QA status.
+
+## Live sharing local milestone (0.5.0)
+
+Screen, camera and microphone routes now have a local LiveKit integration under [LIVE_SHARING.md](LIVE_SHARING.md). Android explicitly approves each request; screen capture retains OS consent and a visible foreground notification. Camera/audio remain foreground-only. Short-lived source-scoped tokens, two-sided leases and a required room-cleanup supervisor bound access; no recordings or remote control. A permission grant is not session approval. Production hosting, physical-device quality and operational failure drills remain pending. Screen permission reports use `session_required`, never a permanent granted state.

@@ -75,3 +75,7 @@ The usage route now shows per-device, explicitly shared daily app foreground dur
 ## Device content pages
 
 Companion 0.4.0 and migration 006 connect installed apps, notification/social previews, selected photos, contacts and supported SMS/call records to their existing routes. Choose the source device; search/filter records and inspect sample/receipt times. **Clear shared data** removes the current snapshot; stop on the device prevents later uploads. Photos are owner-authenticated private images. All categories require separate device opt-in; SMS/calls may remain unavailable because of Android/installer restrictions. See [contract and test scope](../../docs/DEVICE_CONTENT.md).
+
+## Live screen, camera and audio
+
+The three live routes now use real LiveKit subscriptions after device approval. Choose a paired device, press Start, and accept on Sideby Connect. The parent cannot publish tracks or control touch input. Stop is available on both sides; lens changes show requested versus acknowledged state. Requires migration 007, companion 0.5.0 and the separate media supervisor. Camera/screen have no implicit microphone track. See [live contract and local startup](../../docs/LIVE_SHARING.md). Production media hosting remains pending.

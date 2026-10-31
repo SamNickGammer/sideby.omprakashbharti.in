@@ -20,3 +20,7 @@ Read README.md, docs/PRD.md, docs/ARCHITECTURE.md, and docs/SECURITY.md before c
 ## Feature tracking
 
 Maintain `docs/FEATURE_TRACKER.md` as the working feature board. Before implementing a user request, add or update its card and Android/backend/dashboard/QA subtasks; mark the active work in progress. In the same commit as implementation, tick only verified completed scope, record evidence and limitations, and distinguish implemented, merged and deployed. Keep an end-to-end feature unchecked while required submodules remain incomplete. Add new requirements before starting them; never mark placeholder UI as a working device capability.
+
+## Local live media
+
+Companion 0.5.0 and migration 007 implement visible screen/camera/audio sessions locally under docs/LIVE_SHARING.md. Run a separate LiveKit server and mandatory supervisor (`npm run dev:media` for loopback development); the website and Neon Realtime do not carry media. Keep per-session device approval, OS consent, source-scoped grants, lease expiry and stop behavior intact. No background camera/microphone or automatic consent approval.

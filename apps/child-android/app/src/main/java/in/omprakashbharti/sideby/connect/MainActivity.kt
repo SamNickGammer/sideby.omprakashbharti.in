@@ -124,12 +124,13 @@ class MainActivity : Activity() {
                 startActivity(android.content.Intent(this, PermissionActivity::class.java))
             })
             content.space(12); content.addView(button("Manage data sharing",true) { startActivity(android.content.Intent(this,SharingActivity::class.java)) })
+            content.space(12); content.addView(button("Live sharing",true) { startActivity(android.content.Intent(this,LiveActivity::class.java)) })
             if(BuildConfig.DEBUG) { content.space(20); content.label("Local test server\n${s.origin}",11f,muted) }
         }
         content.space(30)
         val info=LinearLayout(this).apply { orientation=LinearLayout.VERTICAL; setPadding(dp(18),dp(18),dp(18),dp(18)); background=background(Color.rgb(242,244,238),12) }
         info.label("A connection you can see.",14f,ink,true); info.space(8)
-        info.label("This version shares the device name, Android version, app version, check-in time and permission status. If you enable usage sharing, it also shares today’s per-app foreground time. Other sharing (apps, notification previews, contacts, supported SMS/call records and selected photos) is separately enabled in Manage data sharing. Location, camera and microphone remain unavailable.",12f,muted)
+        info.label("This version shares the device name, Android version, app version, check-in time and permission status. If you enable usage sharing, it also shares today’s per-app foreground time. Other sharing (apps, notification previews, contacts, supported SMS/call records and selected photos) is separately enabled in Manage data sharing. Live screen, camera and microphone sessions are separately approved in Live sharing. Location remains unavailable.",12f,muted)
         info.space(10); info.label("Check-ins run while this app is open. Background syncing is not included yet.",12f,muted)
         if(BuildConfig.DEBUG) { info.space(10); info.label("Development build · local connection testing",10f,green,true) }
         content.addView(info)

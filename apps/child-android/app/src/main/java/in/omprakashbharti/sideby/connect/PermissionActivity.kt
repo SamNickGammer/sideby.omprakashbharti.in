@@ -84,6 +84,7 @@ class PermissionActivity : Activity() {
             val description = when(state) {
                 "granted" -> "Granted"
                 "not_granted" -> "Not allowed · optional"
+                "session_required" -> "Consent needed for each live session"
                 else -> if(key == "photos") "System photo picker · selected images only" else "Not available in this version"
             }
             label("${PermissionSnapshot.labels[key]}\n$description", 16f,
@@ -108,7 +109,7 @@ class PermissionActivity : Activity() {
                 }
             }
         }
-        label("Unavailable features cannot be enabled here. Screen sharing will require consent for each session. Accessibility and device admin are not required for this setup.", 12f)
+        label("Unavailable features cannot be enabled here. Screen sharing requires consent for each session. Accessibility and device admin are not required for this setup.", 12f)
         setContentView(scroll)
     }
 

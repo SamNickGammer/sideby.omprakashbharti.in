@@ -1,4 +1,6 @@
 "use client";
+
+import { LiveSharing } from "./live-sharing";
 import Link from "next/link";
 import DeviceContent, { SharedMessages } from "./device-content";
 import type { ContentKind } from "../lib/content-contract";
@@ -25,7 +27,6 @@ import {
   Link2,
   ShieldCheck,
   ChevronRight,
-  SwitchCamera,
   Check,
   Archive,
   Images,
@@ -86,7 +87,6 @@ export default function ChildSpace({
   section: string;
 }) {
   const router = useRouter();
-  const [lens, setLens] = useState("back");
   const [status, setStatus] = useState("Connecting…");
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -341,122 +341,17 @@ export default function ChildSpace({
             </>
           )}
           {liveView && (
-            <section className="viewer-layout">
-              <div className="viewer-stage">
-                <nav className="viewer-tabs" aria-label="Live viewing mode">
-                  {[
-                    { id: "screen", label: "Screen", icon: Monitor },
-                    { id: "camera", label: "Camera", icon: Camera },
-                    { id: "audio", label: "Audio", icon: Mic },
-                  ].map(({ id, label, icon: Icon }) => (
-                    <Link
-                      href={href(id)}
-                      key={id}
-                      className={section === id ? "active" : ""}
-                      aria-current={section === id ? "page" : undefined}
-                    >
-                      <Icon size={16} />
-                      {label}
-                    </Link>
-                  ))}
-                </nav>
-                <div
-                  className="phone-viewer"
-                  aria-label={`${active.label} display — live sharing not available`}
-                >
-                  <div className="phone-island" />
-                  <span className="viewer-idle">
-                    <span />
-                    <span />
-                    <span />
-                  </span>
-                  <active.icon size={38} />
-                  <h2>
-                    {section === "screen"
-                      ? "Their screen, right here."
-                      : section === "camera"
-                        ? `${lens === "back" ? "Back" : "Front"} camera view`
-                        : "A moment to listen."}
-                  </h2>
-                  <p>
-                    Live sharing will be available after the Android companion
-                    and its permission flow are ready.
-                  </p>
-                  <span className="phone-status">No live session</span>
-                  <div className="phone-home" />
-                </div>
-                <div className="viewer-caption">
-                  <ShieldCheck size={15} />
-                  {section === "screen"
-                    ? "View only · No remote touch or control"
-                    : section === "camera"
-                      ? "One camera at a time · No recording"
-                      : "Visible session · No recording"}
-                </div>
-              </div>
-              <aside className="viewer-controls">
-                <section className="panel">
-                  <p className="eyebrow">SESSION CONTROLS</p>
-                  <h2>{active.label}</h2>
-                  <label className="device-selector">
-                    Device
-                    <select disabled aria-describedby="device-hint">
-                      <option>Live sharing coming next</option>
-                    </select>
-                  </label>
-                  <p id="device-hint" className="muted">
-                    Pairing alone does not enable screen, camera or microphone
-                    access.
-                  </p>
-                  {section === "camera" && (
-                    <fieldset className="lens-picker">
-                      <legend>Camera to request</legend>
-                      {["back", "front"].map((value) => (
-                        <button
-                          type="button"
-                          key={value}
-                          className={lens === value ? "active" : ""}
-                          aria-pressed={lens === value}
-                          onClick={() => setLens(value)}
-                        >
-                          <SwitchCamera size={16} />
-                          {value === "back" ? "Back camera" : "Front camera"}
-                        </button>
-                      ))}
-                      <small>
-                        This chooses the lens for a future session. No camera is
-                        currently accessed.
-                      </small>
-                    </fieldset>
-                  )}
-                  <button className="primary" disabled>
-                    Request{" "}
-                    {section === "screen"
-                      ? "screen sharing"
-                      : section === "camera"
-                        ? "camera access"
-                        : "microphone access"}
-                  </button>
-                  <Link href={href("devices")} className="text-button spaced">
-                    Device setup <ArrowUpRight size={15} />
-                  </Link>
-                </section>
-                <section className="panel viewer-note">
-                  <ShieldCheck size={22} />
-                  <h3>Shared with awareness.</h3>
-                  <p>
-                    Sessions require device authorization and platform
-                    permissions. The child sees sharing status and can stop the
-                    session.
-                  </p>
-                </section>
-              </aside>
-            </section>
+            <LiveSharing
+              key={`${child.id}-${section}`}
+              childId={child.id}
+              userId={userId}
+              kind={section as "screen" | "camera" | "audio"}
+            />
           )}
-          {section === "usage" && <DeviceUsage key={child.id} childId={child.id} userId={userId} />}
-          {["accounts", "services"].includes(
-            section,
-          ) && (
+          {section === "usage" && (
+            <DeviceUsage key={child.id} childId={child.id} userId={userId} />
+          )}
+          {["accounts", "services"].includes(section) && (
             <section className="panel child-data-empty">
               <div className="section-heading">
                 <h2>{active.label}</h2>
@@ -490,8 +385,25 @@ export default function ChildSpace({
               </div>
             </section>
           )}
-          {["apps","notifications","photos","contacts","call-history"].includes(section) && <DeviceContent key={`${child.id}-${section}`} childId={child.id} userId={userId} kind={(section === "call-history" ? "calls" : section) as ContentKind} />}
-          {section === "messages" && <SharedMessages childId={child.id} userId={userId} />}
+          {[
+            "apps",
+            "notifications",
+            "photos",
+            "contacts",
+            "call-history",
+          ].includes(section) && (
+            <DeviceContent
+              key={`${child.id}-${section}`}
+              childId={child.id}
+              userId={userId}
+              kind={
+                (section === "call-history" ? "calls" : section) as ContentKind
+              }
+            />
+          )}
+          {section === "messages" && (
+            <SharedMessages childId={child.id} userId={userId} />
+          )}
           {section === "devices" && (
             <DevicePairing key={child.id} child={child} userId={userId} />
           )}

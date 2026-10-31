@@ -1,6 +1,6 @@
 # Sideby architecture
 
-Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; the Kotlin Android companion now implements pairing and foreground check-ins with Keystore-encrypted session storage. Optional device content snapshots are implemented locally; enforcement/media and multi-guardian architecture below remain planned. See [Android connection](ANDROID_CONNECTION.md).
+Status: connected parent-web foundation implemented on 24 October 2026. Neon Postgres, Auth, private Object Storage and Realtime are provisioned on the production branch. Web device pairing and heartbeat APIs are implemented; the Kotlin Android companion now implements pairing and foreground check-ins with Keystore-encrypted session storage. Optional device content snapshots are implemented locally; enforcement and multi-guardian architecture below remain planned; local live media is described at the end. See [Android connection](ANDROID_CONNECTION.md).
 
 ## Components
 
@@ -10,8 +10,8 @@ Status: connected parent-web foundation implemented on 24 October 2026. Neon Pos
 - Authentication: Neon Auth with its Next.js server adapter and secure session cookies. Server routes verify sessions. Native mobile compatibility remains to be validated.
 - Next.js server routes: initial application backend, with contract-first APIs before client integration.
 - Vercel: candidate web host; not a host for the media server.
-- Kotlin Android app: implemented visible pairing, secure session storage and foreground heartbeat. Permission status and separately opted-in daily usage summaries are implemented locally. Validated enforcement, local rules and live-media publishing remain planned.
-- LiveKit: candidate WebRTC media service. Managed cloud first for a prototype; choose paid hosting only after estimating session minutes and traffic.
+- Kotlin Android app: implemented visible pairing, secure session storage and foreground heartbeat. Permission status and separately opted-in daily usage summaries are implemented locally. Visible live-media publishing is implemented locally; enforcement and local rules remain planned.
+- LiveKit: local WebRTC media service with a required room-cleanup supervisor. Production hosting and budget remain undecided.
 
 ## Data and authorization
 
@@ -47,7 +47,7 @@ Mutation requests validate the canonical `APP_ORIGIN`, authenticated user and ty
 
 `/dashboard/children/[id]/[[...section]]` validates the UUID and section allowlist, then checks the current session and family owner before loading a profile. Missing/inaccessible children and unsupported sections return 404. Client links retain bookmarkable sections and browser history. The family dashboard accepts an allowlisted `view` query to return to the right family section.
 
-Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. Pause and media backends remain unimplemented; usage ingestion is described below.
+Migration 002 removes the default and NOT NULL constraint from the legacy `daily_limit` column. Existing values are retained for compatibility with stored data, but are no longer exposed or accepted by the child API, and are not enforced. New records use NULL. The migration runner executes numbered idempotent SQL files in order. Future non-idempotent migrations require migration tracking before use. Pause remains unimplemented; usage ingestion and local media sessions are described below.
 
 ## Pairing milestone
 
@@ -59,8 +59,12 @@ The approved device credential can replace only its own latest permission snapsh
 
 ## Opt-in Digital wellbeing
 
-Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement and other content/media capabilities remain unimplemented.
+Companion 0.3.0 can share today’s estimated app foreground durations after separate visible opt-in and Usage Access. The device can write only its own bounded latest snapshot; parent reads enforce family ownership. Stop/revoke/disconnect clear or withhold data as described in [the usage contract](USAGE.md). Foreground-only syncing, no raw events, no historical series, and no full installed-app inventory. Enforcement remains unimplemented; later local content/media milestones are described below.
 
 ## Optional device content sharing (0.4.0, local development)
 
 The companion adds separate sharing controls for launcher-visible apps, selected-source notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. The parent pages use authenticated device snapshots with source, timestamps, search/filter, empty/error states and clear controls. No hidden collection or permission bypass. Foreground sync only; notification collection is limited to the visible sharing screen. SMS/call availability is device/installer-dependent, and Google Play eligibility is unverified. See [device content contract](DEVICE_CONTENT.md) and the feature tracker for actual QA status.
+
+## Live sharing local milestone (0.5.0)
+
+Screen, camera and microphone routes now have a local LiveKit integration under [LIVE_SHARING.md](LIVE_SHARING.md). Android explicitly approves each request; screen capture retains OS consent and a visible foreground notification. Camera/audio remain foreground-only. Short-lived source-scoped tokens, two-sided leases and a required room-cleanup supervisor bound access; no recordings or remote control. A permission grant is not session approval. Production hosting, physical-device quality and operational failure drills remain pending. Screen permission reports use `session_required`, never a permanent granted state.

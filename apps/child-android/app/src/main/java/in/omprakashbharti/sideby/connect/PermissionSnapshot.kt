@@ -38,13 +38,13 @@ object PermissionSnapshot {
             "notifications" to if(ContentSharing.granted(context,"notifications")) "granted" else "not_granted", "usage" to if (usageGranted(context)) "granted" else "not_granted", "photos" to "not_available",
             "contacts" to permission(Manifest.permission.READ_CONTACTS),
             "sms" to permission(Manifest.permission.READ_SMS),
-            "call_history" to permission(Manifest.permission.READ_CALL_LOG), "screen_share" to "not_available"
+            "call_history" to permission(Manifest.permission.READ_CALL_LOG), "screen_share" to "session_required"
         )
     }
     fun report(context: Context): JSONObject = JSONObject()
         .put("version", 1).put("app_version", BuildConfig.VERSION_NAME).put("android_api", Build.VERSION.SDK_INT)
         .put("permissions", JSONObject(states(context)))
     fun description(context: Context): String = states(context).entries.joinToString("\n\n") { (key, state) ->
-        "${labels[key]}: ${when(state) { "granted" -> "Granted"; "not_granted" -> "Not allowed"; else -> "Not available in this app" }}"
+        "${labels[key]}: ${when(state) { "granted" -> "Granted"; "not_granted" -> "Not allowed"; "session_required" -> "Consent needed for each session"; else -> "Not available in this app" }}"
     }
 }

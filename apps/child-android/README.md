@@ -1,6 +1,6 @@
 # Sideby Connect — Android
 
-Visible Kotlin companion for testing device connection to Sideby Parent. It supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.4.0 supports separately opted-in usage and content snapshots described below. Location/live media and device restrictions remain unimplemented.
+Visible Kotlin companion for testing device connection to Sideby Parent. It supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.5.0 supports separately opted-in usage/content snapshots and visible live sessions described below. Location and device restrictions remain unimplemented.
 
 ## Open and build
 
@@ -52,7 +52,7 @@ After each successful foreground check-in, the app sends its own permission stat
 
 ## Permission setup (0.2.1)
 
-Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location and screen sharing remain unavailable. Contacts, notifications, supported SMS/calls and selected photos have separate controls in Manage data sharing. Permission alone does not enable collection; use the separate sharing control below.
+Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Location remains unavailable. Camera, microphone and screen sessions are approved separately in Live sharing. Contacts, notifications, supported SMS/calls and selected photos have separate controls in Manage data sharing. Permission alone does not enable collection; use the separate sharing control below.
 
 ## Digital wellbeing (0.3.0)
 
@@ -67,3 +67,7 @@ Open **Manage data sharing**. Each category starts off; grant Android access whe
 Use **Choose a photo**, inspect the preview, then **Share this selected photo**. Only that selection is uploaded; a new selection replaces the old one. Clear shared photos removes the parent's copy, not the original. Stop controls clear other categories on successful connection. Use **Sync shared data now** and inspect the per-category result. Failed/offline requests are not reported as successful.
 
 Migration 006 is required. Direct APK distribution is the current development choice; Play permission eligibility is not approved. Debug-only ContentTestActivity contains explicit synthetic QA tools, absent from release APKs. See [contract](../../docs/DEVICE_CONTENT.md).
+
+## Live sharing in 0.5.0
+
+Open **Live sharing** while the parent presses Start Screen/Camera/Audio. Review the request, tap Continue, and complete the Android permission dialog. Screen capture gets fresh OS approval each session and a notification with Stop sharing. Camera/audio stop on leaving this activity. Front/back switches acknowledge the actual camera callback. Sessions last at most five minutes and stop on control-plane loss. No recording, accessibility approval, boot capture or background request delivery. See [local media setup and contract](../../docs/LIVE_SHARING.md).

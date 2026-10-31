@@ -12,7 +12,8 @@
     "dev:website": "npm run dev --workspace=@sideby/website",
     "build:website": "npm run build --workspace=@sideby/website",
     "env:dev": "node scripts/use-environment.mjs dev",
-    "env:production": "node scripts/use-environment.mjs production"
+    "env:production": "node scripts/use-environment.mjs production",
+    "dev:media": "node --env-file=.env.local scripts/start-live-local.mjs"
   },
   "dependencies": {
     "@neon/config": "^1.9.3",
