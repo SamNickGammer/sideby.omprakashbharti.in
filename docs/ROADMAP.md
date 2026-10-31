@@ -1,5 +1,7 @@
 # Sideby roadmap
 
+For checked completion status, Android/backend/dashboard submodules and the next queued feature, use the [feature board](FEATURE_TRACKER.md). This page is the high-level sequence; the board is the working status record.
+
 1. Foundation — documentation, vector brand kit, repository layout, Git conventions. Delivered by this initial commit.
 2. Web prototype — parent dashboard implemented with synthetic data and interactive local state. The separate static landing site now introduces the product and roadmap; no live device state is implied.
 3. Connected web foundation — implemented Neon Auth, Postgres families/children/routines, private profile photos, live family revisions, responsive screens and cross-family authorization tests. Web pairing, multiple device records, parent confirmation and heartbeat APIs are implemented and tested with a simulated companion. Co-parent access, account deletion and public-app launch hardening remain pending.

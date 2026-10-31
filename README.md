@@ -6,7 +6,7 @@
 
 A shared family space for parents, with a visible Android companion for children’s devices.
 
-**[Visit the website](https://sideby.omprakashbharti.in)** · [Documentation](#documentation) · [Getting started](#getting-started) · [Roadmap](docs/ROADMAP.md)
+**[Visit the website](https://sideby.omprakashbharti.in)** · [Documentation](#documentation) · [Getting started](#getting-started) · [Feature checklist](docs/FEATURE_TRACKER.md) · [Roadmap](docs/ROADMAP.md)
 
 </div>
 
@@ -156,6 +156,7 @@ The future parent mobile app will use the same family model. Its framework and n
 
 | Topic | Reference |
 | --- | --- |
+| Live feature checklist and next work | [Feature board](docs/FEATURE_TRACKER.md) |
 | Product scope and requirements | [PRD](docs/PRD.md) |
 | System design and data boundaries | [Architecture](docs/ARCHITECTURE.md) |
 | Parent web completion and next steps | [Readiness checklist](docs/PARENT_WEB_READINESS.md) |
