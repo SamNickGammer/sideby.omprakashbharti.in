@@ -26,7 +26,7 @@ The project is developed as a monorepo with independent public website, parent w
 | --- | --- | --- | --- |
 | **Sideby website** | Public product overview, roadmap and FAQ | Live on Vercel at [sideby.omprakashbharti.in](https://sideby.omprakashbharti.in) | [Website](apps/website/README.md) |
 | **Sideby Parent — web** | Family dashboard, child profiles, routines and device pairing | Implemented and tested locally; separate public hosting pending | [Parent web](apps/parent-web/README.md) |
-| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Local pairing/check-in milestone implemented | [Child Android](apps/child-android/README.md) |
+| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Opt-in usage/content sharing implemented locally | [Child Android](apps/child-android/README.md) |
 | **Sideby Parent — mobile** | Future mobile access to the same family account | Planned; framework not selected | [Parent mobile](apps/parent-mobile/README.md) |
 
 A debug Android APK can be built locally; no public mobile release is available yet. Android is the first companion platform; equivalent iPhone capabilities are not promised.

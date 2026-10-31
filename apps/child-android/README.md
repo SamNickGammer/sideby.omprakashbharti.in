@@ -1,6 +1,6 @@
 # Sideby Connect — Android
 
-Visible Kotlin companion for testing device connection to Sideby Parent. This first implementation supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.3.0 adds separately opted-in usage summaries. No messages, contacts, photos, location or live media are collected; no restrictions are enforced.
+Visible Kotlin companion for testing device connection to Sideby Parent. It supports pairing, parent confirmation, encrypted credential storage, check-ins, reconnect and revoked-connection handling. Internet access is automatic; optional **Usage Access** can be configured from the permission page. Version 0.4.0 supports separately opted-in usage and content snapshots described below. Location/live media and device restrictions remain unimplemented.
 
 ## Open and build
 
@@ -48,11 +48,11 @@ The local Postman simulation models pending approval only; see `postman/mocks/si
 
 ## Permission reports (0.2.0)
 
-After each successful foreground check-in, the app sends its own permission statuses, app version and Android API version. Open **Permissions on this device** to inspect the same information locally. Internet is automatically granted; version 0.2.1 adds optional Usage Access setup described below. Remaining listed capabilities are unavailable. No phone content is read. Report failures retry on the next check-in without removing the pairing. Upgrade with `adb install -r` to preserve the existing connection. The backend requires migration 004. See [permission contract](../../docs/DEVICE_PERMISSIONS.md).
+After each successful foreground check-in, the app sends its own permission statuses, app version and Android API version. Open **Permissions on this device** to inspect the same information locally. Internet is automatically granted; version 0.2.1 adds optional Usage Access setup described below. Permission reports themselves contain no phone content. Version 0.4.0 adds separately enabled data sharing; see below. Report failures retry on the next check-in without removing the pairing. Upgrade with `adb install -r` to preserve the existing connection. The backend requires migration 004. See [permission contract](../../docs/DEVICE_PERMISSIONS.md).
 
 ## Permission setup (0.2.1)
 
-Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location, photos, contacts, notifications, SMS, calls and screen sharing remain unavailable. Permission alone does not enable collection; use the separate sharing control below.
+Open **Permissions on this device**, read the Usage Access explanation and choose **Set up Usage Access**. **Not now** skips setup. Android settings owns the grant/revoke switch; return to Sideby to refresh and upload the status automatically. **Refresh and send status** retries on demand. Camera, microphone, location and screen sharing remain unavailable. Contacts, notifications, supported SMS/calls and selected photos have separate controls in Manage data sharing. Permission alone does not enable collection; use the separate sharing control below.
 
 ## Digital wellbeing (0.3.0)
 
