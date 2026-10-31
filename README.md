@@ -18,7 +18,7 @@ Sideby brings family profiles, device connections and digital habits into one pl
 
 The project is developed as a monorepo with independent public website, parent web, child Android and future parent mobile applications.
 
-> **Development status:** the public website is live, and the connected parent web foundation is implemented. The first Android connection milestone is implemented and tested against the local parent dashboard on an emulator. Opt-in app-usage sharing is implemented locally; enforcement and live media are not available yet.
+> **Development status:** the public website is live, and the connected parent web foundation is implemented. The first Android connection milestone is implemented and tested against the local parent dashboard on an emulator. Opt-in app-usage sharing is implemented locally; visible live media is implemented locally; enforcement remains planned.
 
 ## Applications
 
@@ -26,7 +26,7 @@ The project is developed as a monorepo with independent public website, parent w
 | --- | --- | --- | --- |
 | **Sideby website** | Public product overview, roadmap and FAQ | Live on Vercel at [sideby.omprakashbharti.in](https://sideby.omprakashbharti.in) | [Website](apps/website/README.md) |
 | **Sideby Parent — web** | Family dashboard, child profiles, routines and device pairing | Implemented and tested locally; separate public hosting pending | [Parent web](apps/parent-web/README.md) |
-| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Local pairing/check-in milestone implemented | [Child Android](apps/child-android/README.md) |
+| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Opt-in usage/content sharing implemented locally | [Child Android](apps/child-android/README.md) |
 | **Sideby Parent — mobile** | Future mobile access to the same family account | Planned; framework not selected | [Parent mobile](apps/parent-mobile/README.md) |
 
 A debug Android APK can be built locally; no public mobile release is available yet. Android is the first companion platform; equivalent iPhone capabilities are not promised.
@@ -39,7 +39,7 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Multiple child profiles, private profile photos, profile editing and archive/restore.
 - Family settings, saved routines, JSON export and live account updates across signed-in browsers.
 - Responsive Child’s Space pages for desktop and mobile browsers.
-- Separate Photo gallery, Messages, Contacts and Call history views, ready for later companion integration.
+- Separate Photo gallery, Messages, Contacts and Call history views with optional companion sharing (local development).
 - SMS and Social notifications views, with filters for WhatsApp, Telegram, Instagram, Facebook, other apps and all apps.
 
 ### Device connection foundation
@@ -51,7 +51,7 @@ A debug Android APK can be built locally; no public mobile release is available 
 - Optional Android Usage Access setup and separate opt-in for today’s app-usage summaries in Digital wellbeing.
 - Device permission summaries and a detailed popup showing recent, unavailable and stale states. See [permission reporting](docs/DEVICE_PERMISSIONS.md).
 
-Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Digital wellbeing receives opted-in per-app foreground-time summaries. Other content pages still show empty states. Saved routines are preferences, not enforced restrictions. Pause, location and screen/camera/microphone features remain pending even after a device record is paired. Email-code password recovery has been confirmed working by the owner in dev.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Digital wellbeing receives opted-in per-app foreground-time summaries. Optional content-sharing integration is in local development: launcher-visible apps, notification previews, selected photos, contacts and installer-permitted SMS/call records. See [contract and verification scope](docs/DEVICE_CONTENT.md). Saved routines are preferences, not enforced restrictions. Pause and location remain pending. Live media uses separate, explicitly approved sessions; see [live sharing](docs/LIVE_SHARING.md). Email-code password recovery has been confirmed working by the owner in dev.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 
@@ -87,7 +87,7 @@ Reserved directories contain planning documentation; they are not runnable appli
 | Public website hosting | Vercel, with DNS managed in Cloudflare |
 | Android companion | Kotlin, Android platform Views, Gradle |
 | Parent mobile | To be selected |
-| Live media | LiveKit under evaluation; no integration implemented |
+| Live media | LiveKit WebRTC, local prototype with a required session supervisor |
 
 The public website has no database access or backend secrets. Future audio/video sessions require separate media infrastructure; database Realtime is used for account updates.
 
@@ -117,7 +117,7 @@ The output is generated in `apps/website/out/` and is not committed.
 
 ### Parent dashboard
 
-Use the `dev` code branch and isolated Neon `dev` environment for local work; `prod` retains reviewed production code. See [environment switching and email-code recovery](docs/ENVIRONMENTS.md).
+Use feature/maintenance Git branches and the isolated Neon `dev` environment for local work. Dev/prod separation applies to Neon. See [environment switching and email-code recovery](docs/ENVIRONMENTS.md).
 
 Follow [Neon setup](docs/NEON_SETUP.md) to configure the selected backend, environment and migrations. The variable names are listed in [.env.example](.env.example). Next.js reads `apps/parent-web/.env.local`; repository scripts read the root `.env.local`.
 
@@ -189,3 +189,7 @@ Editable logos, app icons, monochrome variants and design tokens live in [assets
 Use a dedicated `feat/` branch and pull request for new features. Routine fixes and documentation updates use `fix/maintenance`. Follow Conventional Commits and include relevant verification; the owner reviews and merges feature PRs.
 
 This repository does not grant an open-source license. See [LICENSE.md](LICENSE.md).
+
+## Live sharing — local milestone
+
+Start Screen, Start Camera and Start Audio now request visible, per-session device approval. The Android companion 0.5.0 publishes one authorized media source; the parent subscribes without remote control. Screen sharing uses Android’s system dialog and foreground notification. Camera/audio stop when the child leaves the sharing screen. Sessions expire after five minutes. Run the separate local media server and supervisor with `npm run dev:media`; see [setup, contract and limitations](docs/LIVE_SHARING.md). Physical-phone quality, production hosting and operational review remain release gates.

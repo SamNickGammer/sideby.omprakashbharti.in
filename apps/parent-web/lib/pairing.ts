@@ -149,7 +149,10 @@ export async function reportPermissions(req: Request) {
   const report = permissionReportSchema.parse(await smallBody(req));
   const [row] = await sql`UPDATE sideby_devices d
     SET permission_report=${JSON.stringify(report)}::jsonb,permissions_updated_at=now(),
-    usage_report=CASE WHEN ${report.permissions.usage}='granted' THEN usage_report ELSE NULL END
+    usage_report=CASE WHEN ${report.permissions.usage}='granted' THEN usage_report ELSE NULL END,
+    content_reports=(SELECT COALESCE(jsonb_object_agg(key,CASE
+      WHEN key IN ('contacts','notifications','sms','calls') AND COALESCE(${JSON.stringify(report.permissions)}::jsonb->>(CASE WHEN key='calls' THEN 'call_history' ELSE key END),'')<>'granted'
+      THEN value || jsonb_build_object('status','no_permission','items','[]'::jsonb,'omitted',0) ELSE value END),'{}'::jsonb) FROM jsonb_each(d.content_reports))
     WHERE credential_hash=${digest(token)} AND revoked_at IS NULL AND credential_expires_at>now()
     AND EXISTS(SELECT 1 FROM sideby_children c WHERE c.id=d.child_id AND NOT c.archived)
     RETURNING permissions_updated_at AS received_at`;

@@ -71,6 +71,7 @@ class PermissionActivity : Activity() {
             return button
         }
         button("Back to connection") { finish() }
+        button("Manage data sharing") { startActivity(Intent(this,SharingActivity::class.java)) }
         label("Your permissions", 28f).typeface = Typeface.DEFAULT_BOLD
         label("You choose access on this device. Pairing works without Usage Access. Your parent sees permission status, not proof that phone data is being shared.")
         status = label(note, 13f)
@@ -83,7 +84,8 @@ class PermissionActivity : Activity() {
             val description = when(state) {
                 "granted" -> "Granted"
                 "not_granted" -> "Not allowed · optional"
-                else -> "Not available in this version"
+                "session_required" -> "Consent needed for each live session"
+                else -> if(key == "photos") "System photo picker · selected images only" else "Not available in this version"
             }
             label("${PermissionSnapshot.labels[key]}\n$description", 16f,
                 if(granted) Color.rgb(40,101,79) else if(state == "not_granted") Color.rgb(137,83,20) else Color.rgb(97,115,106))
@@ -107,7 +109,7 @@ class PermissionActivity : Activity() {
                 }
             }
         }
-        label("Unavailable features cannot be enabled here. Screen sharing will require consent for each session. Accessibility and device admin are not required for this setup.", 12f)
+        label("Unavailable features cannot be enabled here. Screen sharing requires consent for each session. Accessibility and device admin are not required for this setup.", 12f)
         setContentView(scroll)
     }
 
