@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "apps/parent-web",
-    "apps/website"
+    "apps/website",
+    "apps/admin"
   ],
   "scripts": {
     "dev": "npm run dev --workspace=@sideby/parent-web",
@@ -13,10 +14,14 @@
     "build:website": "npm run build --workspace=@sideby/website",
     "env:dev": "node scripts/use-environment.mjs dev",
     "env:production": "node scripts/use-environment.mjs production",
-    "dev:media": "node --env-file=.env.local scripts/start-live-local.mjs"
+    "dev:media": "node --env-file=.env.local scripts/start-live-local.mjs",
+    "dev:admin": "npm run dev --workspace=@sideby/admin"
   },
   "dependencies": {
     "@neon/config": "^1.9.3",
     "@neon/env": "^1.6.4"
+  },
+  "devDependencies": {
+    "pg": "^8.23.1"
   }
 }

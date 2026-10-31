@@ -1,0 +1,47 @@
+SIDEBY TERMS OF USE
+Last updated: 1 November 2026
+Effective date: 1 November 2026
+
+1. OPERATOR AND CONTACT
+
+Sideby is operated by Om Prakash Bharati, Kanap Road, Haspura, 824120, Aurangabad, Bihar, India. Use https://sideby.omprakashbharti.in/support/ or write to that address for questions. No public email is published.
+
+2. DEVELOPMENT SERVICE
+
+These terms describe use of the public website, policy archive and support service, and the intended boundaries of authorized development testing. Public family signup and Android download are not currently offered. Parent and companion features are in local testing and may change, be interrupted or fail on particular devices. A product description is not a guarantee of availability, continuous monitoring or legal suitability. No paid subscription is offered by this website.
+
+3. AUTHORIZED USE
+
+Use the services only lawfully and within your authority. Parent/guardian access must not be used to monitor another adult, impersonate someone, conceal an installation or evade platform permissions. A child’s device should have a visible companion and clear explanations. You are responsible for the accuracy of information you submit and for protecting your access credentials. This does not remove the operator’s own duties under applicable law.
+
+Do not submit malicious code, attempt unauthorized access, scrape private family data, overwhelm the service or provide information you have no right to share. Do not place passwords, authentication codes or unnecessary child content in support reports. Do not rely on Sideby to make emergency, medical, legal or other safety-critical decisions. It is not an emergency response or guaranteed child-safety service.
+
+4. PERMISSIONS AND LIVE SESSIONS
+
+Each sharing feature has its own scope and may require Android permission, a separate sharing switch and/or fresh session approval. Consent to one capability is not approval for all capabilities. Screen sharing uses Android consent; camera/audio require their runtime permissions and visible activity. Live sessions are view-only, have a five-minute maximum and can be stopped. Sideby does not provide remote touch control or session recording. Do not bypass these controls.
+
+App inventory is launcher-visible inventory, social previews are not complete chats, and SMS/call access depends on Android and the installer. Photos are selected explicitly. Saved routines do not currently enforce device pauses or limits. Platform restrictions and outages may make content unavailable or stale. Respect the rights of other people whose information may appear on a device.
+
+5. SUBMISSIONS AND SUPPORT
+
+You retain rights you have in the information you submit. You authorize its processing only as necessary to handle the request and operate the applicable service, as described in the privacy policy. Reports are not publicly posted by the support form. Sending a report does not guarantee a reply, a fix, a completion date or recovery of data. Support replies and live chat are not automated features of this release.
+
+6. PRIVACY AND CHILDREN
+
+Read the privacy policy for actual data categories, purposes, providers, retention, choices and contact methods. Public child-data service launch requires the necessary age/guardian verification, lawful notices and consent processes for its markets. These terms do not certify those safeguards complete, replace a legally required consent process or authorize processing prohibited by law. Do not enroll real families through an unapproved test installation.
+
+7. AVAILABILITY, SUSPENSION AND ENDING USE
+
+You may stop using the website or companion, stop sharing and disconnect a device through the available controls. Deletion of stored data is a separate process described in the privacy policy; uninstalling alone is not a server-deletion request. The operator may limit or suspend access to address misuse, a security incident, maintenance or legal obligations. Where required and feasible, information about a material interruption or change will be provided. No universal uptime or uninterrupted synchronization is promised for this development service.
+
+8. INTELLECTUAL PROPERTY AND THIRD PARTIES
+
+The Sideby name, interface and project materials remain subject to their applicable ownership and licenses. Third-party software and service providers retain their own rights and terms. A link to another service is not control over that service’s content or practices. Nothing here grants rights to another person’s communications or media.
+
+9. RESPONSIBILITY AND STATUTORY RIGHTS
+
+Development software has limitations. Use reasonable care and keep independent access to important information. These terms do not exclude liability, warranties, remedies or consumer/privacy rights that cannot lawfully be excluded. They do not impose a compulsory arbitration clause, a waiver of statutory rights or a blanket transfer of responsibility for the operator’s conduct. Applicable law and any competent authority determine mandatory rights and remedies.
+
+10. CHANGES, RECORDS AND QUESTIONS
+
+Published versions carry an effective date, publication date and version identifier. Prior versions remain available through the archive. New terms will not be treated as silently creating new permission to collect child data. Additional agreement or notice will be obtained where required before a material service change. An archive record is not proof that you personally accepted a version. Contact the operator through the support form or postal address for questions or a specific historical version.

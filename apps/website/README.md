@@ -36,3 +36,7 @@ Update public claims only after the related capability is implemented and verifi
 ## Public help pages
 
 `/setup/` explains pairing, optional permissions and per-session approval. `/privacy/` describes current development data handling and unresolved launch requirements. `/support/` provides troubleshooting and links to public issues for non-sensitive bugs only. All pages are static, responsive and included in the sitemap, with individual canonical metadata. Public dashboard/APK links remain intentionally absent until those releases are verified.
+
+## Policy and support integration
+
+The website stays statically exported. `NEXT_PUBLIC_ADMIN_API_ORIGIN` is a public HTTPS origin (not a secret) pointing to the separate admin service. Published policy text/version history is loaded from its read-only public endpoint. The support form POSTs bounded text to the private report inbox; it never posts to GitHub. If the service fails, the UI shows an error instead of inventing a current policy or claiming a report was saved. Footer links use one consistent size, including Support. `/terms/` is included in the sitemap.

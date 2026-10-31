@@ -1,0 +1,89 @@
+SIDEBY PRIVACY POLICY
+Last updated: 1 November 2026
+Effective date: 1 November 2026
+
+1. WHO IS RESPONSIBLE
+
+Sideby is operated by Om Prakash Bharati, Kanap Road, Haspura, 824120, Aurangabad, Bihar, India (the “operator”, “we”, “us”). This policy explains the public website, support form, parent service and visible Sideby Connect Android companion. You can contact the operator through https://sideby.omprakashbharti.in/support/ by selecting “Privacy request”, or write to the postal address above. We do not publish a public email address. Your reply email is collected privately if you use the form.
+
+2. CURRENT DEVELOPMENT STATUS AND SCOPE
+
+The public website, policy archive and support service are available. The parent application and Android companion remain in development and local testing; public family enrollment and an APK download are not offered on this website. Descriptions of these applications explain their implemented test behavior, not a promise that every feature is publicly available, reliable on every device or authorized in every jurisdiction. Do not provide real child content for development testing unless there is a separately agreed, lawful test arrangement.
+
+This policy does not replace the notices presented when pairing a device, choosing a sharing feature or approving a live session. A later policy version cannot itself authorize additional collection. Material new collection requires the applicable notice, choices and legal authorization before it begins.
+
+3. PEOPLE AND DEVICES COVERED
+
+A parent account can have multiple child profiles; each child can have multiple paired devices. A child profile is distinct from the device installation. The app is intended for a parent or lawful guardian acting within their authority. It must not be used to monitor partners, employees, other adults or another person’s device without appropriate authority and awareness. Installing the app, granting an Android permission or entering a pairing code does not by itself prove guardianship or satisfy every legal consent requirement.
+
+Before a public service involving children is launched, age/guardian verification, notices, consent records and applicable child-data restrictions must be established for the actual launch markets. Sideby does not currently claim that these launch requirements have been completed. The visible companion does not hide itself or impersonate an operating-system service.
+
+4. INFORMATION WE PROCESS AND WHY
+
+Website visits: Vercel serves pages and may process network addresses, request times, requested URLs, browser information and security/error logs to deliver and protect the site. The website does not request access to your phone contacts, messages, camera, microphone or location. The current website does not use advertising trackers or a marketing analytics integration.
+
+Support reports: the form collects an optional name, a required reply email, selected topic, subject, description and submission time. A random reference identifies the report. We use this information to investigate the issue, respond if appropriate and maintain support status. We do not automatically send an email when the form is submitted. Please omit passwords, authentication codes, pairing codes, children’s names, message contents, photos and other unnecessary personal information. File attachments are not accepted. A keyed digest derived from the request source is used to rate-limit abuse; we do not put that digest into the support message itself. The reply email is not proof that the sender owns a particular account.
+
+Parent service during testing: account identifiers and authentication information are handled through Neon Auth. Application records include family identifiers, child names and ages supplied by the parent, optional profile photos, device links, saved preferences/routines and relevant timestamps. These records support account access, correct family/device association and the requested dashboard functions. Saved routines currently do not enforce phone restrictions.
+
+Device connection: Sideby Connect sends device name, Android/app version, check-in time, pairing/authorization state and permission-status information. This lets the parent identify the paired device, see freshness and understand whether a feature can operate. A recent check-in does not mean the device is continuously online.
+
+Usage sharing: after separate opt-in and Android Usage Access, the companion can send today’s estimated foreground duration for each used app. It sends bounded summaries, not a complete raw sequence of interactions. Current syncing requires foreground app use; the dashboard may be stale while the companion is closed or offline.
+
+App inventory: optional sharing includes launcher-visible app identifiers, names and versions. It is not guaranteed to list every hidden, system or work-profile app.
+
+Notification previews: after Android notification access and separate source/sharing choices, available previews can include app identity, title, preview text and time. Collection currently occurs only while the sharing screen is visible. The bounded buffer holds up to 100 previews from the previous 24 hours, with no historical backfill. Protected or hidden text is not recovered. Sensitive/numeric-code previews are filtered defensively, but automated filtering is not a guarantee; do not rely on it to remove every secret. “Social messages” means these previews, not full WhatsApp, Telegram, Instagram or other private conversations.
+
+Contacts: optional, permission-based sharing is limited to names and phone numbers in a bounded latest snapshot of up to 200 phone-number rows. Contacts can identify people other than the child. Enable it only when necessary and lawful.
+
+SMS and call records: where Android and the installer permit access, separate sharing can include up to 100 SMS records (address, body, time and direction) and call-log records (number, type, time and duration). This is not call-audio recording. Permission may be refused even after APK installation. The app does not bypass restrictions or take over a required system role to force access. Google Play eligibility is not established.
+
+Selected photos: the user explicitly selects and confirms up to three images per snapshot. The app does not upload the entire gallery. Server processing creates bounded images and removes EXIF metadata; private storage references are used rather than public gallery links.
+
+Live sharing: each screen, camera or microphone session needs fresh device approval. Screen sharing also uses Android’s consent dialog and a visible notification. Screen and camera sessions do not include microphone audio. Camera and microphone stop when the sharing screen is left; screen sharing can continue visibly while other apps are used. Sessions last at most five minutes and can be stopped from the device or parent dashboard. Sideby does not offer recording or remote touch control. Device screens may contain third-party information: review what you share and stop when necessary. Android may hide protected content.
+
+Location: location collection and location history are not implemented. A future location feature requires its own notices, choices and policy update before collection.
+
+5. PERMISSIONS, CHOICES AND WITHDRAWAL
+
+Android permissions are requested for selected capabilities, rather than treated as permission for every future feature. Usage Access and notification access have separate Android settings. Selected-photo sharing uses explicit selection. Camera and microphone use their respective runtime permissions. Screen sharing is session-based, not a permanent grant. Neither device administrator nor accessibility privileges are used to silently approve screen capture or bypass platform permissions.
+
+You can decline a sharing option, revoke applicable Android permissions, stop a live session, clear shared content in the parent service or disconnect a device. Some functions will then be unavailable. Permission revocation and disconnect affect future access as described by the feature; they do not recall information a recipient already saw. If the device is offline, a clearing request may remain pending until connectivity returns. Avoid assuming that uninstalling an app deletes all previously stored server records.
+
+6. PURPOSES AND LEGAL AUTHORIZATION
+
+We use information for the specific service choices described above, account and device security, operation of the website, responding to support/privacy requests and applicable legal obligations. We do not sell child data or use it for targeted advertising. We do not use phone content to train advertising profiles or provide an admin with a general browsing interface to children’s media.
+
+The legal requirements depend on the people and markets served. Where required, valid parent/guardian consent and verification must occur before processing children’s data, and an adult’s permission cannot override a legal prohibition on a type of monitoring. We do not claim that this written policy, a checkbox or an Android permission alone satisfies those obligations. Public child-data service launch remains subject to the unresolved safeguards noted above.
+
+7. WHO CAN ACCESS INFORMATION
+
+The parent service restricts shared device data to the authorized family through server checks. Pairing and device credentials are scoped and revocable. The separate administrator workspace shows aggregate account, child and device counts, policy versions and support reports. It does not provide an interface to read children’s messages, photos or streams. The operator may need controlled technical access to stored information to maintain the service, investigate security problems or respond to a verified request; technical access is not a reason to use the information for unrelated purposes.
+
+Service providers: Vercel hosts the public website and admin web service. Neon provides database/authentication and private object storage for the relevant services. LiveKit software is used for live media during local testing; production media hosting is not yet selected. GitHub hosts the project’s source and development workflow; the support form stores reports privately in the database rather than posting them as GitHub issues. We may disclose information when legally required or necessary to address a substantiated security threat, subject to applicable law. No end-to-end encryption certification is claimed.
+
+8. HOSTING AND INTERNATIONAL PROCESSING
+
+The currently configured Neon project uses AWS US East (Ohio). Vercel delivery and operational processing may involve other locations. India-only storage is not promised. Provider logs, backups and infrastructure follow their respective service arrangements. Before opening child-data services in a new jurisdiction, we must assess the applicable transfer and safeguarding requirements; this policy does not declare those assessments completed.
+
+9. RETENTION AND DELETION
+
+Support reports are eligible for deletion 180 days after submission, regardless of status. A daily maintenance job removes eligible reports; outages can delay that run, so deletion is not guaranteed at an exact minute. The same job removes expired admin sessions and expired rate-limit counters. The operator’s status-change audit stores an action, resource reference and timestamp, not the report text or email. Public policy versions are retained as an immutable publication archive so earlier wording can be retrieved.
+
+For current development device sharing, the latest snapshots replace older snapshots rather than building a full historical timeline. Records persist until replacement, stop/revoke/disconnect or explicit clearing, subject to the feature’s online delivery. Notification/SMS/call events outside the implemented display window are withheld; this is not a claim that every backup copy is immediately erased. Removed photo objects are queued for deletion and retried; access through the parent photo endpoint is denied after removal. Live media is not recorded by Sideby.
+
+Parent account/profile retention, automated account deletion, backup removal schedules and production device-content retention must be finalized before public family enrollment. Where data must be retained for an applicable legal obligation, we will explain the basis when allowed and limit its use accordingly. We cannot promise deletion from provider backups at the same instant as active-data deletion.
+
+10. YOUR REQUESTS AND COMPLAINTS
+
+Use the support form’s “Privacy request” topic or the operator’s postal address to request information about processing, correct information, seek access or deletion, withdraw a relevant choice, or raise a complaint. Rights and exceptions depend on applicable law. Include enough non-sensitive information to identify the request; do not include passwords or entire child datasets. We may ask for proportionate verification through an appropriate private process before releasing or changing account information. A report’s email alone is not sufficient verification.
+
+We will handle requests according to applicable legal requirements; no universal response deadline or guaranteed resolution is advertised here. You may have the right to approach the relevant regulator or other competent authority. This policy does not restrict statutory rights or require you to waive them to contact us.
+
+11. SECURITY AND LIMITATIONS
+
+Measures include server-side access checks, scoped device credentials, short-lived live-session credentials, protected admin sessions, password hashing, input limits, rate limiting and private image access. Admin login is separate from parent login and has no public signup. No internet service is risk-free. Do not send sensitive account or child information in public issue trackers, URLs or screenshots. Use the private support form for an initial security contact without exploit payloads, secrets or unnecessary personal details.
+
+12. POLICY CHANGES AND ARCHIVE
+
+The page displays the effective date, publication/last-update date and a version identifier. Published text cannot be overwritten through the policy editor. Changes create a new version, and earlier published versions remain accessible through the archive and their version links. A publication timestamp is not a record of a particular person’s acceptance. Where law requires direct notice or new consent, posting a revision alone is insufficient. Changes will not be treated as permission to repurpose previously collected child information without the required process.

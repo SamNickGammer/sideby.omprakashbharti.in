@@ -1,0 +1,31 @@
+SIDEBY SUPPORT POLICY
+Last updated: 1 November 2026
+Effective date: 1 November 2026
+
+1. CONTACT AND SCOPE
+
+The operator is Om Prakash Bharati, Kanap Road, Haspura, 824120, Aurangabad, Bihar, India. Submit a bug, privacy request, account-help request or feedback at https://sideby.omprakashbharti.in/support/. A public email address is not provided; the form asks privately for your reply email. Postal requests may be sent to the address above.
+
+2. WHAT TO INCLUDE
+
+Provide a concise subject, what you tried, what you expected, what happened, and relevant app/Android version. A name is optional. Do not include passwords, session tokens, pairing codes, children’s names, message contents, private photographs or unnecessary account data. Attachments are not accepted. If a problem needs further investigation, a proportionate private verification process must precede any disclosure or account change.
+
+3. HOW REPORTS ARE HANDLED
+
+The form stores the report privately with a random reference, submission time and status. Only the authorized admin can read the report through the admin workspace. Available statuses are Open, Investigating and Resolved. A status change does not automatically send an email and “Resolved” is not a warranty that a problem cannot recur. The service has no public report lookup, live chat or automated reply delivery. Keep your reference for follow-up.
+
+4. RESPONSE AND PRIVACY REQUESTS
+
+Sideby is in development and does not promise a support service-level agreement, specific response time or fix date. This does not remove applicable statutory deadlines or rights for privacy and other legally protected requests. Select “Privacy request” for access, correction, deletion, consent withdrawal or a complaint; the privacy policy explains the scope and verification process. An email in a report is unverified and does not prove account ownership.
+
+5. RETENTION AND ABUSE PREVENTION
+
+Reports are eligible for deletion 180 days after submission. A daily job removes eligible reports; outages may delay a run. Expired rate-limit counters and admin sessions are also removed. Administrative action records contain an action and reference rather than report text or reply email. Hosting/security logs and provider backups have separate arrangements described in the privacy policy. Do not use repeated reports to bypass submission limits; abuse controls can temporarily prevent submissions.
+
+6. URGENT MATTERS AND SECURITY
+
+This is not an emergency service or a channel for guaranteed immediate protection. For an initial security report, describe the issue without posting credentials, child data, weaponized payloads or exploit details to a public tracker. Use this private form or the operator’s postal address. Do not attempt unauthorized access to demonstrate a problem.
+
+7. VERSION HISTORY
+
+The current version and prior published versions are available through the policy archive. New versions create new records rather than overwriting published text. Contact the operator with the version identifier if you need help locating historical wording.

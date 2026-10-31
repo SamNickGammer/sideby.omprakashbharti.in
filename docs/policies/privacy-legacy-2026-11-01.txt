@@ -1,0 +1,28 @@
+Privacy & permissions — previous development overview
+Published 1 November 2026; archived when replaced by the detailed policy.
+
+How the current development version handles sharing. This overview describes local testing, not a launch-ready privacy policy. Public family enrollment is not open.
+
+This public website
+
+The landing website has no account forms, device pairing or child-data collection features. Hosting requests are handled by Vercel and may produce technical request logs. The website does not connect to the parent app database.
+
+A visible connection
+
+Sideby Connect is visible on the device. Pairing is confirmed in the parent dashboard, and optional sharing has separate controls. Granting an Android permission does not approve a live screen, camera or microphone session.
+
+What can be shared in local testing
+
+Device details and permission status, opted-in daily app usage, launcher-visible apps, permitted notification previews, contacts, installer-permitted SMS/call records and explicitly selected photos. Notification previews are not complete social conversations. Location is not implemented.
+
+Live sessions
+
+Each session requires device approval and visible controls, is limited to five minutes and can be stopped. Screen sharing uses Android’s consent dialog and notification. Camera and microphone require the sharing screen to remain open. Sideby does not record these sessions or provide remote touch control.
+
+Stored snapshots and stopping sharing
+
+Content snapshots are stored for the paired family and replaced by newer snapshots. The companion offers Stop, and the parent can clear shared content. Disconnecting clears shared content; offline clearing may wait for connectivity. Removing access does not promise immediate deletion from provider backups.
+
+Before public launch
+
+Retention periods, backup deletion, hosting regions, account export/deletion and a private support/security contact still need to be finalized and published. Do not submit real child information through public project channels. This website does not yet offer public accounts or APK downloads.

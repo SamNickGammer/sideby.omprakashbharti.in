@@ -68,3 +68,7 @@ The companion adds separate sharing controls for launcher-visible apps, selected
 ## Live sharing local milestone (0.5.0)
 
 Screen, camera and microphone routes now have a local LiveKit integration under [LIVE_SHARING.md](LIVE_SHARING.md). Android explicitly approves each request; screen capture retains OS consent and a visible foreground notification. Camera/audio remain foreground-only. Short-lived source-scoped tokens, two-sided leases and a required room-cleanup supervisor bound access; no recordings or remote control. A permission grant is not session approval. Production hosting, physical-device quality and operational failure drills remain pending. Screen permission reports use `session_required`, never a permanent granted state.
+
+## Separate operator workspace
+
+`apps/admin` owns single-admin sessions, aggregate platform counts, immutable policy publication/archive and private support reports (migration 008). Parent authentication is separate. The public website receives only the admin API origin and calls public policy/report endpoints; no database secret or parent API access is added to the website. The admin UI has no child-content/media access. See ADMIN_PLATFORM.md.
