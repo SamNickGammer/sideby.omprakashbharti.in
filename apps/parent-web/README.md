@@ -12,7 +12,7 @@ npm ci
 npm run dev
 ```
 
-Open http://127.0.0.1:3000. Next loads `apps/parent-web/.env.local`; provider scripts use the root `.env.local`. Both are ignored. Use the names in the root `.env.example`, preserve the auth cookie secret, and keep APP_ORIGIN identical to the browser origin. Never commit credentials or put them in NEXT_PUBLIC variables.
+Open http://127.0.0.1:3005. Next loads `apps/parent-web/.env.local`; provider scripts use the root `.env.local`. Both are ignored. Use the names in the root `.env.example`, preserve the auth cookie secret, and keep APP_ORIGIN identical to the browser origin. Never commit credentials or put them in NEXT_PUBLIC variables.
 
 ```sh
 npm run build --workspace=@sideby/parent-web
@@ -57,3 +57,7 @@ The implemented Android connection milestone covers only visible installation, p
 Recovery email delivery, account deletion, retention, production rate limits, backups, monitoring and a wider accessibility/security review remain launch gates. Co-parent invitations, device activity, enforcement and media are not implemented. Pairing does not enable disabled controls.
 
 For hosting and canonical origins, see [deployment](../../docs/DEPLOYMENT.md). Deploy this app as its own Vercel project; never give its secrets to the public website.
+
+## Development and recovery
+
+Use Git `dev` with Neon `dev`; see [environment setup](../../docs/ENVIRONMENTS.md). Local dev starts at port 3005. Forgot password now uses an emailed six-digit code, password confirmation, resend cooldown and generic acknowledgement. Email delivery and a completed real-mailbox reset must be verified by the account holder.

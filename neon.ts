@@ -12,7 +12,7 @@ export default defineConfig({
   },
   // Branch policy: per-branch tuning
   branch: (branch) => {
-    if (branch.isDefault) {
+    if (branch.isDefault || ["dev", "production", "prod"].includes(branch.name)) {
       // Default branch: no overrides, uses project defaults
       return {};
     }

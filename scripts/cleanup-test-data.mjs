@@ -2,6 +2,8 @@ import { readFileSync, rmSync } from "node:fs";
 import { execFileSync } from "node:child_process";
 import { neon } from "@neondatabase/serverless";
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+const branch = process.env.NEON_BRANCH;
+if (!branch) throw new Error("NEON_BRANCH is required for branch-scoped cleanup");
 const ids = JSON.parse(readFileSync(".test-users.json", "utf8"));
 const sql = neon(process.env.DATABASE_URL);
 const s3 = new S3Client({ forcePathStyle: true });
@@ -25,7 +27,7 @@ for (const id of ids) {
       }),
     );
   // Use the provider's user deletion endpoint rather than editing managed auth tables.
-  execFileSync("neon", ["neon-auth", "user", "delete", id], { stdio: "pipe" });
+  execFileSync("neon", ["neon-auth", "user", "delete", id, "--project-id", "mute-rice-90196546", "--branch", branch], { stdio: "pipe" });
   await sql`DELETE FROM sideby_families WHERE owner_id=${id}`;
   count++;
 }

@@ -115,13 +115,15 @@ The output is generated in `apps/website/out/` and is not committed.
 
 ### Parent dashboard
 
+Use the `dev` code branch and isolated Neon `dev` environment for local work; `prod` retains reviewed production code. See [environment switching and email-code recovery](docs/ENVIRONMENTS.md).
+
 Follow [Neon setup](docs/NEON_SETUP.md) to configure the selected backend, environment and migrations. The variable names are listed in [.env.example](.env.example). Next.js reads `apps/parent-web/.env.local`; repository scripts read the root `.env.local`.
 
 ```sh
 npm run dev
 ```
 
-Open [localhost:3000](http://127.0.0.1:3000), create a parent account and set up a family. For optional synthetic profiles, follow [demo data setup and cleanup](docs/DEMO_DATA.md).
+Open [localhost:3005](http://127.0.0.1:3005), create a parent account and set up a family. For optional synthetic profiles, follow [demo data setup and cleanup](docs/DEMO_DATA.md).
 
 Never commit environment files or put server credentials in browser-visible variables.
 
