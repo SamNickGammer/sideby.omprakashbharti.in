@@ -18,6 +18,6 @@ Use a separate Vercel project rooted at `apps/admin`, with server-only database 
 
 Aggregate account counts include accounts in the configured Auth database; child counts exclude archived profiles; paired devices exclude revoked, expired credentials and archived children. “Seen in 24 hours” is check-in freshness, not an online guarantee. Growth reports new records per UTC day, not a historical retention/cohort metric. If required parent tables are absent, show unavailable.
 
-Policies are plain text, not HTML. Drafts are private; publishing is explicit and preserves all previous published content. The public reader links to individual UUID versions. This is a publication archive, not a consent receipt system. Report emails are unverified reply addresses; do not treat a submission as proof of account ownership. No chat, attachments or automatic email delivery is implemented.
+Policies are plain text, not HTML. Drafts are private; publishing is explicit and preserves all previous published content. The public reader shows only the current policy. Historical copies can be requested through Support by date or date range; immutable history remains private in admin. This is a publication archive, not a consent receipt system. Report emails are unverified reply addresses; do not treat a submission as proof of account ownership. No chat, attachments or automatic email delivery is implemented.
 
 See [API/security contract](../../docs/ADMIN_PLATFORM.md). Production log retention, policy content and operator details must match published disclosures.

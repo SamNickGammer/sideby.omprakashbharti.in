@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <Guide
       title="Privacy policy"
-      intro="Understand what Sideby collects, why it is needed, how permissions work and how to contact us. Previous published versions remain available below."
+      intro="Understand what Sideby collects, why it is needed, how permissions work and how to contact us. Read the current policy below. Older versions are available on request through Support."
     >
       <PolicyReader slug="privacy" />
     </Guide>

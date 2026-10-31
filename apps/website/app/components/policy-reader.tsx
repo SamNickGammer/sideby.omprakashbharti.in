@@ -15,27 +15,21 @@ export function PolicyReader({
   slug: "privacy" | "terms" | "support";
 }) {
   const [policy, setPolicy] = useState<Policy>(),
-    [versions, setVersions] = useState<Version[]>([]),
     [error, setError] = useState(""),
     [loading, setLoading] = useState(true);
-  async function load(id?: string) {
+  async function load() {
     setLoading(true);
     setError("");
     setPolicy(undefined);
     try {
       if (!endpoint)
         throw Error("Published policy service is not configured yet.");
-      const r = await fetch(
-        endpoint +
-          "/api/public/policies?slug=" +
-          slug +
-          (id ? "&version=" + encodeURIComponent(id) : ""),
-        { cache: "no-store" },
-      );
+      const r = await fetch(endpoint + "/api/public/policies?slug=" + slug, {
+        cache: "no-store",
+      });
       const v = await r.json();
       if (!r.ok) throw Error(v.error || "Unable to load policy.");
       setPolicy(v.policy);
-      setVersions(v.versions);
     } catch (e) {
       setError((e as Error).message);
     } finally {
@@ -43,8 +37,7 @@ export function PolicyReader({
     }
   }
   useEffect(() => {
-    const id = new URLSearchParams(location.search).get("version");
-    void load(id || undefined);
+    void load();
   }, [slug]);
   return (
     <div className="policy-reader">
@@ -74,29 +67,16 @@ export function PolicyReader({
                 <br />
                 <strong>Version:</strong> {policy.id}
               </p>
-              <label>
-                Policy archive
-                <select
-                  value={policy.id}
-                  onChange={(e) => {
-                    history.replaceState(
-                      null,
-                      "",
-                      "?version=" + encodeURIComponent(e.target.value),
-                    );
-                    void load(e.target.value);
-                  }}
-                >
-                  {versions.map((v) => (
-                    <option key={v.id} value={v.id}>
-                      {v.effective_date.slice(0, 10)} — {v.summary}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <a className="text-link" href={"?version=" + policy.id}>
-                Link to this version
+              <a
+                className="button"
+                href={"/support/?request=policy&policy=" + slug + "#report"}
+              >
+                Request an older policy
               </a>
+              <p>
+                Only the current policy is published here. Request a copy for a
+                specific date or date range through Support.
+              </p>
             </div>
             <h2>{policy.title}</h2>
             <div className="policy-text">{policy.body}</div>

@@ -348,3 +348,10 @@ Future requests belong in the appropriate card above, or a new stable F-number. 
 F20 evidence: admin `https://admin.sideby.omprakashbharti.in`; website privacy/terms/support all HTTP 200. Production counts are separate from local dev emulator data. Policy date: 1 November 2026; earlier public overview retained in archive. Password stored only as a server-side salted hash, no signup. Production maintenance cron enabled daily at 03:23 UTC.
 
 - [ ] Future support chat and automatic replies (not part of F20 delivery).
+
+### Current-only public policies — implemented; publication in progress
+- [x] Remove public archive access while preserving private immutable records.
+- [x] Add Support requests for a policy on a date or date range.
+- [ ] Verify, publish and check production.
+
+Verification: root build and typecheck pass; 65 dev API assertions pass, including historical lookup rejection and private date-range request storage. Mobile support form has no horizontal overflow and rejects reversed ranges. Historical copies are shared manually; no automatic email delivery.

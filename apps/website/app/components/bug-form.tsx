@@ -1,17 +1,27 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const endpoint = process.env.NEXT_PUBLIC_ADMIN_API_ORIGIN;
 export function BugForm() {
   const [error, setError] = useState(""),
     [reference, setReference] = useState(""),
     [busy, setBusy] = useState(false);
+  const [historical, setHistorical] = useState(false);
+  const [policyType, setPolicyType] = useState("privacy");
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    setHistorical(params.get("request") === "policy");
+    const type = params.get("policy");
+    if (type && ["privacy", "terms", "support"].includes(type))
+      setPolicyType(type);
+  }, []);
   return (
     <section id="report">
-      <h2>Report a bug</h2>
+      <h2>Support &amp; requests</h2>
       <p>
-        Tell us what went wrong. Your reply email and report go to the private
-        Sideby support inbox. Please leave out passwords, pairing codes,
-        children’s names, messages and photos. Attachments are not accepted.
+        Ask for help, report a bug or request an older policy. Your reply email
+        and request go to the private Sideby support inbox. Please leave out
+        passwords, pairing codes, children’s names, messages and photos.
+        Attachments are not accepted.
       </p>
       {!endpoint ? (
         <p>The report form is not available yet.</p>
@@ -37,15 +47,25 @@ export function BugForm() {
             setError("");
             const f = new FormData(e.currentTarget);
             try {
+              const from = String(f.get("dateFrom") || "");
+              const to = String(f.get("dateTo") || "");
+              if (historical && (!from || (to && to < from)))
+                throw Error(
+                  "Choose a date, with an end date on or after the start date.",
+                );
               const r = await fetch(endpoint + "/api/public/bugs", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   name: f.get("name"),
                   email: f.get("email"),
-                  category: f.get("category"),
-                  subject: f.get("subject"),
-                  description: f.get("description"),
+                  category: historical ? "privacy" : f.get("category"),
+                  subject: historical
+                    ? "Historical policy request"
+                    : f.get("subject"),
+                  description: historical
+                    ? `Historical policy request: ${policyType}. Date: ${from}${to ? " through " + to : ""}.\n${f.get("description") || "Please share the applicable policy privately."}`
+                    : f.get("description"),
                   website: f.get("website"),
                 }),
               });
@@ -59,6 +79,46 @@ export function BugForm() {
             }
           }}
         >
+          <label>
+            Request type
+            <select
+              value={historical ? "policy" : "general"}
+              onChange={(e) => setHistorical(e.target.value === "policy")}
+            >
+              <option value="general">Bug or general support</option>
+              <option value="policy">Request an older policy</option>
+            </select>
+          </label>
+          {historical && (
+            <>
+              <p>
+                Select a policy and a specific date, or add an end date for a
+                range. We will review your request and share the available
+                policy privately using your reply email.
+              </p>
+              <label>
+                Policy
+                <select
+                  value={policyType}
+                  onChange={(e) => setPolicyType(e.target.value)}
+                >
+                  <option value="privacy">Privacy policy</option>
+                  <option value="terms">Terms of use</option>
+                  <option value="support">Support policy</option>
+                </select>
+              </label>
+              <div className="support-fields">
+                <label>
+                  Date / range start
+                  <input name="dateFrom" type="date" required />
+                </label>
+                <label>
+                  Range end (optional)
+                  <input name="dateTo" type="date" />
+                </label>
+              </div>
+            </>
+          )}
           <div className="support-fields">
             <label>
               Name (optional)
@@ -75,28 +135,37 @@ export function BugForm() {
               />
             </label>
           </div>
+          {!historical && (
+            <>
+              {" "}
+              <label>
+                Topic
+                <select name="category">
+                  <option value="bug">Bug</option>
+                  <option value="privacy">Privacy request</option>
+                  <option value="account">Account help</option>
+                  <option value="feedback">Feedback</option>
+                </select>
+              </label>
+              <label>
+                Subject
+                <input name="subject" required minLength={3} maxLength={160} />
+              </label>
+            </>
+          )}
           <label>
-            Topic
-            <select name="category">
-              <option value="bug">Bug</option>
-              <option value="privacy">Privacy request</option>
-              <option value="account">Account help</option>
-              <option value="feedback">Feedback</option>
-            </select>
-          </label>
-          <label>
-            Subject
-            <input name="subject" required minLength={3} maxLength={160} />
-          </label>
-          <label>
-            Details
+            {historical ? "Additional details (optional)" : "Details"}
             <textarea
               name="description"
-              required
-              minLength={20}
-              maxLength={5000}
+              required={!historical}
+              minLength={historical ? undefined : 20}
+              maxLength={historical ? 4500 : 5000}
               rows={7}
-              placeholder="Steps to reproduce, expected result, app and Android version. Please omit sensitive personal information."
+              placeholder={
+                historical
+                  ? "Anything else that will help us find the policy you need (optional)."
+                  : "Steps to reproduce, expected result, app and Android version. Please omit sensitive personal information."
+              }
             />
           </label>
           <div className="form-honeypot" aria-hidden="true">
@@ -116,7 +185,11 @@ export function BugForm() {
             </p>
           )}
           <button className="button" disabled={busy}>
-            {busy ? "Sending…" : "Submit report"}
+            {busy
+              ? "Sending…"
+              : historical
+                ? "Submit policy request"
+                : "Submit report"}
           </button>
         </form>
       )}

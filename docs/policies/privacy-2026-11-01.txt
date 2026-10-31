@@ -8,7 +8,7 @@ Sideby is operated by Om Prakash Bharati, Kanap Road, Haspura, 824120, Aurangaba
 
 2. CURRENT DEVELOPMENT STATUS AND SCOPE
 
-The public website, policy archive and support service are available. The parent application and Android companion remain in development and local testing; public family enrollment and an APK download are not offered on this website. Descriptions of these applications explain their implemented test behavior, not a promise that every feature is publicly available, reliable on every device or authorized in every jurisdiction. Do not provide real child content for development testing unless there is a separately agreed, lawful test arrangement.
+The public website, current policies and support service are available. The parent application and Android companion remain in development and local testing; public family enrollment and an APK download are not offered on this website. Descriptions of these applications explain their implemented test behavior, not a promise that every feature is publicly available, reliable on every device or authorized in every jurisdiction. Do not provide real child content for development testing unless there is a separately agreed, lawful test arrangement.
 
 This policy does not replace the notices presented when pairing a device, choosing a sharing feature or approving a live session. A later policy version cannot itself authorize additional collection. Material new collection requires the applicable notice, choices and legal authorization before it begins.
 
@@ -86,4 +86,4 @@ Measures include server-side access checks, scoped device credentials, short-liv
 
 12. POLICY CHANGES AND ARCHIVE
 
-The page displays the effective date, publication/last-update date and a version identifier. Published text cannot be overwritten through the policy editor. Changes create a new version, and earlier published versions remain accessible through the archive and their version links. A publication timestamp is not a record of a particular person’s acceptance. Where law requires direct notice or new consent, posting a revision alone is insufficient. Changes will not be treated as permission to repurpose previously collected child information without the required process.
+The page displays the effective date, publication/last-update date and a version identifier. Published text cannot be overwritten through the policy editor. Changes create a new version, and earlier published versions are retained privately and can be requested through Support for a specific date or date range. A publication timestamp is not a record of a particular person’s acceptance. Where law requires direct notice or new consent, posting a revision alone is insufficient. Changes will not be treated as permission to repurpose previously collected child information without the required process.

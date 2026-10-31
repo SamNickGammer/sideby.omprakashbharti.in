@@ -47,7 +47,7 @@ export default function Page() {
       </section>
       <BugForm />
       <details className="support-policy">
-        <summary>Support policy and previous versions</summary>
+        <summary>Current support policy</summary>
         <PolicyReader slug="support" />
       </details>
     </Guide>

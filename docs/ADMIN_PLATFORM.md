@@ -16,7 +16,7 @@ All responses no-store except immutable published policy versions (public data).
 - `GET /api/policies`: authenticated latest 100 policy versions, drafts and published records.
 - `POST /api/policies`: create immutable draft `{slug,title,body,effectiveDate,summary}`. Slug is privacy/terms/support. Plain text only, max 60,000 chars. UUID revision id, database creation timestamp, no overwrite/delete endpoint.
 - `POST /api/policies/:id/publish`: authenticated explicit publish; creates a publish timestamp without changing the text. Effective date cannot be future. Publish atomically changes the current pointer for that policy and logs the action. Prior published versions remain available. Drafts never appear publicly.
-- `GET /api/public/policies?slug=privacy[&version=UUID]`: current published version and published version index, or specific published version; 404 if absent. No drafts or admin metadata.
+- `GET /api/public/policies?slug=privacy`: current published policy only; 404 if absent. Any `version` parameter returns 400. No public version index. Historical requests use the existing private support report contract: category privacy, subject Historical policy request, and policy type plus date/range in description.
 - `POST /api/public/bugs`: exact website Origin; `{name,email,category,subject,description,website}` (last field honeypot). Name optional, reply email required, bounded text only, no attachments; returns opaque reference id. Durable source throttling, bounded request body, no public read endpoint. No email is sent automatically.
 - `GET /api/bugs?page=1`: authenticated paginated reports, newest first, 25 per page.
 - `PATCH /api/bugs/:id`: authenticated `{status:open|investigating|resolved}`; audit status change. No outbound messaging.
