@@ -11,7 +11,7 @@ Last reviewed: 31 October 2026. This is the working checklist for the project, i
 - A screen, permission grant, successful upload and displayed result are separate milestones. Do not tick end-to-end completion until a real supported device flow reaches the correct parent's dashboard.
 - Keep test evidence synthetic. Never put credentials, real child content or production records here.
 
-Current active implementation: **F05b — optional Usage Access setup implemented; emulator verification blocked**. Next queued implementation: **F06 — App usage**. Permission status is implemented locally but awaiting merge. This documentation update does not implement the remaining capabilities.
+Current active implementation: none. **F05b — optional Usage Access setup is implemented and emulator-tested; awaiting PR #15 review**. Next queued implementation: **F06 — App usage**. Permission status is implemented locally but awaiting merge. This documentation update does not implement the remaining capabilities.
 
 ## Done — implemented foundation
 
@@ -86,16 +86,16 @@ Implementation: `feat/device-permission-status`, commit `b215bdd`; [PR #15](http
 
 At the F05a milestone only Internet was granted. F05b adds optional Usage Access setup; other capabilities remain **unavailable**, not implemented or enabled. This card does not include asking for new sensitive permissions or collecting phone content. Contract is in `docs/DEVICE_PERMISSIONS.md` on PR #15 until merged.
 
-### F05b · Permission setup — implementation ready, emulator QA blocked
+### F05b · Optional Usage Access setup — implemented and tested locally
 
-- [ ] Android: dedicated permission setup page with explanations and availability labels.
-- [ ] Android: optional Usage Access settings flow, grant/revoke detection and refresh on return.
-- [ ] Android/backend: send changed permission status without clearing the pairing on failure.
-- [ ] Dashboard: explain how to change permissions on the device and distinguish grants from data syncing.
+- [x] Android: dedicated permission setup page with explanations and availability labels.
+- [x] Android: optional Usage Access settings flow, grant/revoke detection and refresh on return.
+- [x] Android/backend: send changed permission status without clearing the pairing on failure.
+- [x] Dashboard: explain how to change permissions on the device and distinguish grants from data syncing.
 - [x] QA: Android debug/release builds, unit tests and lint; web builds and type checks.
-- [ ] QA: emulator deny/grant/revoke flow and dashboard report changes. APK installation stalled; verify before calling this complete.
+- [x] QA: emulator skip/grant/revoke flow; dashboard changed Not allowed → Granted → Not allowed.
 
-Implementation is on PR #15. Code for the setup page, AppOps checks and reporting is present; the unchecked interaction subtasks remain unverified until the emulator runs the updated APK.
+Implementation is on PR #15. Android 0.2.1 was installed without wiping storage. The paired connection survived a cold boot; Android settings grant and revoke both reached the parent dashboard. Usage Access was restored to its original not-allowed state after testing. Physical phones and older Android remain unverified.
 
 Scope is permission setup/status only. Usage data collection remains F06. No sensitive runtime permission is requested for an unimplemented camera, microphone, location or content feature.
 
