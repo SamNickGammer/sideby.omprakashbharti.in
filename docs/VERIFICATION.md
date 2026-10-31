@@ -70,3 +70,12 @@ Public hosting verification: Vercel production deployment reached READY, the Clo
 ## Android companion connection — 24 October 2026
 
 The native Sideby Connect app now passes local emulator pairing, approval, heartbeat, process restart, interrupted-network recovery and parent revocation. Debug/release compilation, five policy unit tests and Android lint passed. Encrypted preference storage and removal after revocation were inspected without exposing credentials. See [Android evidence and limits](ANDROID_CONNECTION.md). Earlier simulated-companion results above remain historical backend checks; physical devices, older APIs and background operation remain unverified.
+
+## Dev environment and email-code recovery — 31 October 2026
+
+- Created independent Git `dev`/`prod` branches and Neon `dev` while preserving existing Neon `production`. Normal dev copy explicitly approved by owner after schema-only Auth provisioning failed; failed empty branch removed.
+- Local localhost:3005 uses dev endpoints for Postgres, Auth, private Storage and Realtime. A new dev cookie secret isolates existing browser sessions.
+- All live service checks passed on dev: two synthetic registrations/sessions, family isolation, Realtime revision delivery, private image upload/read, profiles/routines/export, archive/restore, child-route authorization, origin rejection and sign-out.
+- Reproduced original reset-link failure as 403 `INVALID_REDIRECT_URL`; port 3005 was missing from trusted domains. Registered loopback origins.
+- Email-code request for a nonexistent synthetic account returns generic 200; invalid code returns 400 `INVALID_OTP`. Browser checks exercised code-entry transition, resend countdown and password mismatch validation.
+- Root build and type checks passed. Inbox delivery and a successful account-holder reset remain pending manual verification; a generic response is not delivery proof. No real user passwords were changed by the agent.

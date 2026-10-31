@@ -5,5 +5,5 @@ export default async function Page({
   params: Promise<{ path: string }>;
 }) {
   const { path } = await params;
-  return <AuthForm mode={path} />;
+  return <AuthForm mode={path} development={process.env.NEON_BRANCH === "dev"} />;
 }

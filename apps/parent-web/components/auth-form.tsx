@@ -1,9 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Check, Eye, EyeOff } from "lucide-react";
 import { authClient } from "../lib/auth-client";
-export default function AuthForm({ mode }: { mode: string }) {
+export default function AuthForm({ mode, development = false }: { mode: string; development?: boolean }) {
   const signup = mode === "sign-up",
     forgot = mode === "forgot-password",
     reset = mode === "reset-password";
@@ -11,6 +11,32 @@ export default function AuthForm({ mode }: { mode: string }) {
     [error, setError] = useState(""),
     [notice, setNotice] = useState(""),
     [visible, setVisible] = useState(false);
+  const [recoveryEmail, setRecoveryEmail] = useState("");
+  const [codeSent, setCodeSent] = useState(false);
+  const [complete, setComplete] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+  useEffect(() => {
+    if (!cooldown) return;
+    const timer = setTimeout(() => setCooldown((n) => Math.max(0, n - 1)), 1000);
+    return () => clearTimeout(timer);
+  }, [cooldown]);
+  async function sendCode(email: string) {
+    const result = await authClient.emailOtp.sendVerificationOtp({
+      email, type: "forget-password",
+    });
+    if (result.error) throw new Error(result.error.message || "Could not send a code. Please try again.");
+    setRecoveryEmail(email);
+    setCodeSent(true);
+    setCooldown(60);
+    setNotice("If this email has an account, a verification code is on its way. Check your inbox and spam folder.");
+  }
+  async function resend() {
+    if (busy || cooldown) return;
+    setBusy(true); setError(""); setNotice("");
+    try { await sendCode(recoveryEmail); }
+    catch (e) { setError(e instanceof Error ? e.message : "Could not send a code."); }
+    finally { setBusy(false); }
+  }
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
@@ -22,14 +48,22 @@ export default function AuthForm({ mode }: { mode: string }) {
     try {
       let result;
       if (forgot) {
-        result = await authClient.requestPasswordReset({
-          email,
-          redirectTo: window.location.origin + "/auth/reset-password",
+        if (!codeSent) {
+          await sendCode(email.trim());
+          return;
+        }
+        if (password !== String(f.get("confirmPassword") || ""))
+          throw new Error("The passwords don’t match.");
+        result = await authClient.emailOtp.resetPassword({
+          email: recoveryEmail,
+          otp: String(f.get("otp") || "").trim(),
+          password,
         });
-        if (!result.error)
-          setNotice(
-            "If an account exists, a recovery email is on its way. Check your inbox.",
-          );
+        if (!result.error) {
+          setComplete(true);
+          setNotice("Password updated. Sign in with your new password.");
+
+        }
       } else if (reset) {
         const token = new URLSearchParams(window.location.search).get("token");
         if (!token)
@@ -52,7 +86,9 @@ export default function AuthForm({ mode }: { mode: string }) {
       }
       if (result.error)
         setError(
-          result.error.message ||
+          (forgot && result.error.code === "INVALID_OTP"
+            ? "That code is incorrect or has expired. Check the code or request a new one."
+            : result.error.message) ||
             "We couldn’t complete that. Please try again.",
         );
     } catch (e) {
@@ -94,12 +130,12 @@ export default function AuthForm({ mode }: { mode: string }) {
           <img src="/brand/wordmark.svg" alt="Sideby" />
         </Link>
         <div className="auth-card">
-          <div className="auth-kicker">SIDEBY PARENT</div>
+          <div className="auth-kicker">SIDEBY PARENT{development ? " · DEVELOPMENT" : ""}</div>
           <h2>
             {signup
               ? "A fresh start, together."
               : forgot
-                ? "Let’s get you back in."
+                ? (codeSent ? "Check your email." : "Let’s get you back in.")
                 : reset
                   ? "Choose a new password."
                   : "Good to see you."}
@@ -108,7 +144,7 @@ export default function AuthForm({ mode }: { mode: string }) {
             {signup
               ? "Create your parent account. Build your family space."
               : forgot
-                ? "We’ll send a recovery link to your email."
+                ? (codeSent ? "Enter the verification code and choose a new password of at least 12 characters." : "We’ll email you a verification code to reset your password.")
                 : reset
                   ? "Use a unique password of at least 12 characters."
                   : "Sign in to your family’s space."}
@@ -124,7 +160,7 @@ export default function AuthForm({ mode }: { mode: string }) {
               {notice}
             </div>
           )}
-          <form onSubmit={submit}>
+          {!complete && <form onSubmit={submit}>
             {signup && (
               <label>
                 Your name
@@ -137,7 +173,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                 />
               </label>
             )}
-            {!reset && (
+            {!reset && !(forgot && codeSent) && (
               <label>
                 Email address
                 <input
@@ -149,7 +185,16 @@ export default function AuthForm({ mode }: { mode: string }) {
                 />
               </label>
             )}
-            {!forgot && (
+            {forgot && codeSent && (
+              <>
+                <p>Code sent to {recoveryEmail}</p>
+                <label>Verification code
+                  <input name="otp" inputMode="numeric" autoComplete="one-time-code"
+                    pattern="[0-9]{6}" minLength={6} maxLength={6} required placeholder="6-digit code" />
+                </label>
+              </>
+            )}
+            {(!forgot || codeSent) && (
               <label>
                 Password
                 <div className="password-input">
@@ -157,10 +202,10 @@ export default function AuthForm({ mode }: { mode: string }) {
                     name="password"
                     type={visible ? "text" : "password"}
                     autoComplete={
-                      signup || reset ? "new-password" : "current-password"
+                      signup || reset || forgot ? "new-password" : "current-password"
                     }
                     required
-                    minLength={signup || reset ? 12 : 1}
+                    minLength={signup || reset || forgot ? 12 : 1}
                     maxLength={128}
                     placeholder={
                       signup ? "At least 12 characters" : "Your password"
@@ -176,6 +221,12 @@ export default function AuthForm({ mode }: { mode: string }) {
                 </div>
               </label>
             )}
+            {forgot && codeSent && (
+              <label>Confirm new password
+                <input name="confirmPassword" type={visible ? "text" : "password"}
+                  autoComplete="new-password" required minLength={12} maxLength={128} />
+              </label>
+            )}
             {!signup && !forgot && !reset && (
               <Link className="forgot-link" href="/auth/forgot-password">
                 Forgot password?
@@ -187,13 +238,23 @@ export default function AuthForm({ mode }: { mode: string }) {
                 : signup
                   ? "Create account"
                   : forgot
-                    ? "Send recovery email"
+                    ? (codeSent ? "Update password" : "Send verification code")
                     : reset
                       ? "Update password"
                       : "Sign in"}
               <ArrowRight size={17} />
             </button>
-          </form>
+          </form>}
+          {forgot && codeSent && !complete && (
+            <div className="pairing-actions">
+              <button type="button" className="text-button" disabled={busy || cooldown > 0} onClick={resend}>
+                {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
+              </button>
+              <button type="button" className="text-button" disabled={busy} onClick={() => {
+                setCodeSent(false); setRecoveryEmail(""); setError(""); setNotice("");
+              }}>Use a different email</button>
+            </div>
+          )}
           <p className="auth-switch">
             {signup
               ? "Already part of Sideby? "

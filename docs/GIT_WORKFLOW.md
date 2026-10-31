@@ -19,3 +19,7 @@ The initial repository bootstrap may be committed directly to main because no ba
 Require pull requests and successful checks on main, block force pushes and deletion, and require an independent review when another maintainer is available. These settings are recommendations, not configured by adding this file. Enable private vulnerability reporting where supported. Configure CODEOWNERS once maintainers are chosen.
 
 Use semantic version tags once releases exist. Do not tag this documentation foundation as a production release.
+
+## Environment branches
+
+As requested on 31 October 2026, `dev` is the integration/development branch; `prod` starts from the reviewed `main` release baseline. Promote reviewed changes explicitly—do not auto-merge or deploy. Existing `main` and feature PRs are retained. Git branches do not automatically switch Neon or Vercel; follow [environment setup](ENVIRONMENTS.md).

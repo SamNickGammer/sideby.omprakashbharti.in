@@ -10,7 +10,9 @@
     "build": "npm run build --workspaces",
     "typecheck": "npm run typecheck --workspaces",
     "dev:website": "npm run dev --workspace=@sideby/website",
-    "build:website": "npm run build --workspace=@sideby/website"
+    "build:website": "npm run build --workspace=@sideby/website",
+    "env:dev": "node scripts/use-environment.mjs dev",
+    "env:production": "node scripts/use-environment.mjs production"
   },
   "dependencies": {
     "@neon/config": "^1.9.3",
