@@ -96,7 +96,7 @@ export default function DevicePairing({
           method === "DELETE"
             ? "Device disconnected."
             : body && (body as { action: string }).action === "approve"
-              ? "Device paired. Waiting for its next check-in."
+              ? "Device paired. Check its latest status below."
               : "Pairing cancelled.",
         );
       }
@@ -128,8 +128,7 @@ export default function DevicePairing({
           confirm the match here.
         </p>
         <p className="pairing-note">
-          The Android companion is being built. This web flow is ready for
-          integration; there is no app download yet.
+          Sideby Connect is in early testing. Public downloads are not available yet.
         </p>
         {error && (
           <p className="error-box" role="alert">
@@ -266,6 +265,12 @@ export default function DevicePairing({
           <Smartphone size={22} />
         </div>
         <p>One child, room for more than one device.</p>
+        <p className="pairing-note">
+          This version receives the device name, Android platform and last
+          check-in time while Sideby Connect is open. Permission status, location,
+          phone content and live screen, camera or microphone access are not
+          available yet. A paired device does not mean those features are enabled.
+        </p>
         {data?.devices.length === 0 && (
           <div className="pairing-empty">
             <Smartphone size={34} />

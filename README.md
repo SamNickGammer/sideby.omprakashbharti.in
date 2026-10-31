@@ -18,7 +18,7 @@ Sideby brings family profiles, device connections and digital habits into one pl
 
 The project is developed as a monorepo with independent public website, parent web, child Android and future parent mobile applications.
 
-> **Development status:** the public website is live, and the connected parent web foundation is implemented. The Android companion is the next milestone. Device monitoring, enforcement and live media are not available yet.
+> **Development status:** the public website is live, and the connected parent web foundation is implemented. The first Android connection milestone is implemented and tested against the local parent dashboard on an emulator. Device monitoring, enforcement and live media are not available yet.
 
 ## Applications
 
@@ -26,10 +26,10 @@ The project is developed as a monorepo with independent public website, parent w
 | --- | --- | --- | --- |
 | **Sideby website** | Public product overview, roadmap and FAQ | Live on Vercel at [sideby.omprakashbharti.in](https://sideby.omprakashbharti.in) | [Website](apps/website/README.md) |
 | **Sideby Parent — web** | Family dashboard, child profiles, routines and device pairing | Implemented and tested locally; separate public hosting pending | [Parent web](apps/parent-web/README.md) |
-| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Planned; first implementation milestone | [Child Android](apps/child-android/README.md) |
+| **Sideby Connect — Android** | Visible child companion for pairing and device check-ins | Local pairing/check-in milestone implemented | [Child Android](apps/child-android/README.md) |
 | **Sideby Parent — mobile** | Future mobile access to the same family account | Planned; framework not selected | [Parent mobile](apps/parent-mobile/README.md) |
 
-No installable mobile release is available yet. Android is the first companion platform; equivalent iPhone capabilities are not promised.
+A debug Android APK can be built locally; no public mobile release is available yet. Android is the first companion platform; equivalent iPhone capabilities are not promised.
 
 ## Current capabilities
 
@@ -49,7 +49,7 @@ No installable mobile release is available yet. Android is the first companion p
 - Scoped device credentials, heartbeat status and revocation.
 - Server-side family ownership checks and tested pairing boundaries.
 
-Pairing has been verified with a simulated companion, not an Android app. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Recovery email delivery and a full password reset still require verification.
+Pairing, check-ins, restart, network recovery and revocation have been verified with the Android app on an API 37 emulator. Check-ins currently run only while the app is open; physical-phone and older-Android testing remain pending. Content pages currently show empty states; they do not collect phone data. Saved routines are preferences, not enforced restrictions. Pause, location, usage and screen/camera/microphone features remain pending even after a device record is paired. Recovery email delivery and a full password reset still require verification.
 
 See [verification evidence](docs/VERIFICATION.md) and [parent-web readiness](docs/PARENT_WEB_READINESS.md) for the exact scope and remaining launch requirements.
 
@@ -60,7 +60,7 @@ sideby.omprakashbharti.in/
 ├── apps/
 │   ├── website/          # Public landing website — Next.js static export
 │   ├── parent-web/       # Parent dashboard and initial backend
-│   ├── child-android/    # Reserved for Sideby Connect — Kotlin
+│   ├── child-android/    # Sideby Connect — native Kotlin companion
 │   └── parent-mobile/    # Reserved for the future parent mobile client
 ├── packages/
 │   └── ui/               # Reserved for shared web components
@@ -83,7 +83,7 @@ Reserved directories contain planning documentation; they are not runnable appli
 | Database and identity | Neon Postgres and Neon Auth |
 | Files and live account updates | Private Neon Object Storage and Neon Realtime |
 | Public website hosting | Vercel, with DNS managed in Cloudflare |
-| Android companion | Kotlin — planned |
+| Android companion | Kotlin, Android platform Views, Gradle |
 | Parent mobile | To be selected |
 | Live media | LiveKit under evaluation; no integration implemented |
 
@@ -138,13 +138,13 @@ Both commands cover both web applications. Live service tests create synthetic r
 
 ## Mobile development roadmap
 
-The first **Sideby Connect** milestone focuses on proving the connection:
+The first **Sideby Connect** milestone now proves the connection on an emulator. Follow the [Android setup guide](apps/child-android/README.md) and [test evidence](docs/ANDROID_CONNECTION.md):
 
 1. Install a visible companion on an Android emulator or test phone.
 2. Enter a pairing code and confirm the device in Sideby Parent.
 3. Store the scoped device credential securely.
 4. Send check-ins and verify status in the dashboard.
-5. Test restart, offline recovery, expired codes and revocation.
+5. Test restart, offline recovery and revocation; expand device and expiry testing next.
 
 This milestone does not need contacts, SMS, notification, location, camera or microphone permissions. Those capabilities require separate implementation, disclosure and platform testing. A physical phone also needs a reachable parent backend; the public landing website is not that backend.
 
